@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Noita Hunger Games Simulator</title>
@@ -8,28 +9,36 @@
       font-family: 'NoitaPixel';
       src: url('./NoitaPixel.ttf') format('truetype');
     }
+
     @font-face {
       font-family: 'NoitaBlackletter';
       src: url('./NoitaBlackletter-Regular.ttf') format('truetype');
     }
+
     * {
       -webkit-font-smoothing: none;
       -moz-osx-font-smoothing: grayscale;
       font-smooth: never;
       text-rendering: optimizeSpeed;
     }
-    html { font-size: 18px; }
+
+    html {
+      font-size: 18px;
+    }
+
     body {
       background: #121212;
       color: #fff;
       font-family: 'NoitaPixel', sans-serif;
       margin: 0;
     }
+
     #header {
       display: flex;
       align-items: center;
       padding: 1em;
     }
+
     #header input,
     #header button {
       background: #333;
@@ -42,6 +51,7 @@
       font-size: 1rem;
       transition: background .2s, filter .2s;
     }
+
     #header button:hover,
     #proceedButton:hover,
     .startNewButton:hover,
@@ -50,29 +60,37 @@
       filter: brightness(1.2);
       cursor: pointer;
     }
-    #leaderboardButton { margin-left: auto; }
+
+    #leaderboardButton {
+      margin-left: auto;
+    }
+
     #status {
       font-weight: bold;
       margin-right: 1em;
       font-size: 1rem;
     }
+
     #joinPrompt {
       text-align: center;
       font-size: 8em;
       margin: .2em 0;
       font-family: 'NoitaBlackletter', cursive;
     }
+
     #dayDisplay {
       text-align: center;
       font-size: 3.5em;
       margin: 0;
       font-family: 'NoitaBlackletter', cursive;
     }
+
     #phaseDesc {
       text-align: center;
       font-size: 1rem;
       margin: .5em 0;
     }
+
     #playersGrid {
       display: grid;
       grid-template-columns: repeat(auto-fill,100px);
@@ -81,22 +99,26 @@
       justify-content: center;
       justify-items: center;
     }
+
     .player {
       position: relative;
       width: 80px;
     }
+
     .player img {
       width: 80px;
       height: 80px;
       object-fit: cover;
       border-radius: 8px;
     }
+
     .player .name {
       text-align: center;
       margin-top: .5em;
       word-break: break-word;
       font-size: 1rem;
     }
+
     .removeBtn {
       position: absolute;
       top: 2px;
@@ -115,18 +137,21 @@
       text-align: center;
       transition: background .2s, filter .2s;
     }
+
     #eventLog {
       padding: 1.5em;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .event {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 1em;
     }
+
     .avatars {
       display: flex;
       flex-wrap: wrap;
@@ -134,20 +159,24 @@
       gap: .5em;
       margin: .5em 0;
     }
+
     .avatarWrap {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
     }
+
     .avatarWrap img {
       width: 60px;
       height: 60px;
       object-fit: cover;
       border-radius: 4px;
     }
+
     .avatarWrap img.dead {
       filter: grayscale(100%);
     }
+
     .text {
       text-align: center;
       white-space: pre-wrap;
@@ -155,11 +184,13 @@
       font-size: 1rem;
       margin: .5em 0;
     }
+
     #proceedContainer {
       text-align: center;
       margin: 1em;
       display: none;
     }
+
     #proceedButton {
       background: #333;
       border: none;
@@ -169,22 +200,26 @@
       font-family: 'NoitaPixel', sans-serif;
       font-size: 1rem;
     }
+
     #winnerScreen {
       display: none;
       text-align: center;
       padding: 2em;
     }
+
     #winnerAvatar {
       width: 150px;
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
     }
+
     #winnerText {
       font-size: 3.5em;
       margin: 1em 0;
       font-family: 'NoitaBlackletter', cursive;
     }
+
     #placementsGrid {
       display: grid;
       grid-template-columns: repeat(auto-fill,120px);
@@ -192,26 +227,31 @@
       justify-content: center;
       margin-top: 1em;
     }
+
     .placement {
       text-align: center;
       transition: opacity .3s;
       width: 120px;
     }
+
     .placement.dead img {
       filter: grayscale(100%);
       opacity: .5;
     }
+
     .placement img {
       width: 100px;
       height: 100px;
       object-fit: cover;
       border-radius: 8px;
     }
+
     .placement .rank {
       font-size: 1.2em;
       margin-top: .7em;
       font-family: 'NoitaPixel', sans-serif;
     }
+
     .placement .name,
     .placement .kills {
       font-size: 1rem;
@@ -219,6 +259,7 @@
       word-break: break-word;
       white-space: normal;
     }
+
     .startNewButton {
       margin: .5em;
       padding: .7em 1.2em;
@@ -229,17 +270,20 @@
       font-family: 'NoitaPixel', sans-serif;
       font-size: 1rem;
     }
+
     #deathLogContainer {
       margin: 2em 0;
       width: 100%;
       padding: 0 1em;
     }
+
     #deathLogContainer h3 {
       font-size: 1.2rem;
       margin-bottom: .5em;
       font-family: 'NoitaPixel', sans-serif;
       text-align: left;
     }
+
     #deathLog {
       width: 100%;
       height: 300px;
@@ -253,7 +297,12 @@
       text-align: left;
       white-space: pre-wrap;
     }
-    .tooltip-container { position: relative; display: inline-block; }
+
+    .tooltip-container {
+      position: relative;
+      display: inline-block;
+    }
+
     .tooltip-box {
       visibility: hidden;
       position: absolute;
@@ -273,20 +322,25 @@
       width: max-content;
       max-width: none;
     }
+
     .tooltip-container:hover .tooltip-box {
       visibility: visible;
     }
+
     /* Leaderboard overlay */
     #leaderboardOverlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 1000;
     }
+
     #leaderboardOverlay .overlayContent {
       position: relative;
       background: #222;
@@ -297,13 +351,16 @@
       overflow-y: auto;
       text-align: left;
     }
+
     #leaderboardOverlay h2 {
       margin-top: 0;
       font-family:'NoitaBlackletter', cursive;
     }
+
     #closeOverlay {
       position: absolute;
-      top: 8px; right: 8px;
+      top: 8px;
+      right: 8px;
       background: none;
       border: none;
       color: #fff;
@@ -311,26 +368,39 @@
       cursor: pointer;
       transition: color .2s;
     }
-    #closeOverlay:hover { color: #f55; }
+
+    #closeOverlay:hover {
+      color: #f55;
+    }
+
     #leaderboardTable {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1em;
     }
+
     #leaderboardTable th,
     #leaderboardTable td {
       padding: .5em;
       border-bottom: 1px solid #444;
     }
+
     #leaderboardTable th {
       text-align: left;
       cursor: pointer;
       user-select: none;
     }
-    #leaderboardTable th.sort-asc::after { content: " ▲"; }
-    #leaderboardTable th.sort-desc::after { content: " ▼"; }
+
+    #leaderboardTable th.sort-asc::after {
+      content: " ▲";
+    }
+
+    #leaderboardTable th.sort-desc::after {
+      content: " ▼";
+    }
   </style>
 </head>
+
 <body>
   <div id="header">
     <input id="channelInput" placeholder="Enter Twitch channel">
@@ -471,7 +541,7 @@
     document.head.appendChild(script);
 
     let polymorphedPlayers = new Map();
-    
+
     function getDisplayName(username) {
       if (eventHandlersLoaded && window.eventHandlers && window.eventHandlers.polymorph && polymorphedPlayers.has(username)) {
         return window.eventHandlers.polymorph.getDisplayName(username, { polymorphedPlayers });
@@ -716,10 +786,10 @@
         const useFatal = roll<factor && participants.filter(p=>p.alive).length>1;
         const phasePool = (useFatal ? evObj.fatal : evObj.nonfatal) || [];
         const genericPool = (useFatal ? genericEvents.fatal : genericEvents.nonfatal) || [];
-        
+
         let pool;
         if (isArenaEvent || isFeastEvent || isBloodbathEvent) {
-          const multiplier = (phasePool.length > 0 && genericPool.length > 0) 
+          const multiplier = (phasePool.length > 0 && genericPool.length > 0)
             ? Math.ceil((3 * genericPool.length) / phasePool.length)
             : 1;
           const weightedPhasePool = Array(multiplier).fill(null).flatMap(() => phasePool);
@@ -729,7 +799,7 @@
         }
         pool = pool.filter(a=>a.tributes<=aliveSet.size);
         if(!pool.length) break;
-        
+
         const weightedPool = [];
         pool.forEach(action => {
           const weight = action.weight !== undefined ? action.weight : 1;
@@ -737,7 +807,7 @@
             weightedPool.push(action);
           }
         });
-        
+
         const action=weightedPool[Math.floor(Math.random()*weightedPool.length)];
         const pick=[]; const avail=Array.from(aliveSet);
         for(let i=0;i<action.tributes;i++){
@@ -753,7 +823,7 @@
         }
 
         const killsCount = Array.isArray(action.killed)? action.killed.length : 0;
-        
+
         if (action.customHandler && eventHandlersLoaded && window.eventHandlers && window.eventHandlers[action.customHandler] && typeof window.eventHandlers[action.customHandler].execute === 'function') {
           window.eventHandlers[action.customHandler].execute({
             picks: pick,
@@ -768,9 +838,9 @@
 			"weapon_projectile",
 			"weapon_fire",
 			"weapon_explosive",
-			"weapon_electricity", 
-			"sand_bad", 
-			"sand_good", 
+			"weapon_electricity",
+			"sand_bad",
+			"sand_good",
 			"sand_neutral",
 			"liquid_water",
 			"liquid_poison",
@@ -900,7 +970,7 @@
         globalStats[p.username].totalDays += days;
         if(days>globalStats[p.username].maxDays) globalStats[p.username].maxDays=days;
         globalStats[p.username].wins  += p.alive?1:0;
-        
+
         if(p.alive && eventHandlersLoaded && window.eventHandlers && window.eventHandlers.polymorph && polymorphedPlayers.has(p.username)) {
           const polymorph = polymorphedPlayers.get(p.username);
           if(polymorph && polymorph.newForm) {
@@ -994,7 +1064,7 @@
 
 	function addPlayer(u,c){
 		initGlobal(u);
-		
+
 		globalColors[u]=c||'#fff';
 
 		var color = globalColors[u];
@@ -1115,4 +1185,5 @@
 	}
   </script>
 </body>
+
 </html>
