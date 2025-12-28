@@ -800,15 +800,45 @@
         pool = pool.filter(a=>a.tributes<=aliveSet.size);
         if(!pool.length) break;
 
-        const weightedPool = [];
+        // Calculate total weight
+        let totalWeight = 0;
         pool.forEach(action => {
           const weight = action.weight !== undefined ? action.weight : 1;
-          for (let i = 0; i < weight; i++) {
-            weightedPool.push(action);
+          if (weight <= 0) {
+            action._effectiveWeight = 1;
+          } else {
+            action._effectiveWeight = weight;
           }
+          totalWeight += action._effectiveWeight;
         });
 
-        const action=weightedPool[Math.floor(Math.random()*weightedPool.length)];
+        if (totalWeight <= 0) {
+          console.error('All events have zero or negative weight');
+          break;
+        }
+
+        // Weighted random selection using cumulative distribution
+        const random = Math.random() * totalWeight;
+        let cumulative = 0;
+        let action = null;
+
+        for (const candidate of pool) {
+          cumulative += candidate._effectiveWeight;
+          if (random <= cumulative) {
+            action = candidate;
+            break;
+          }
+        }
+
+        if (!action) {
+          action = pool[0];
+        }
+
+        pool.forEach(a => {
+          if (a._effectiveWeight !== undefined) {
+            delete a._effectiveWeight;
+          }
+        });
         const pick=[]; const avail=Array.from(aliveSet);
         for(let i=0;i<action.tributes;i++){
           const idx=Math.floor(Math.random()*avail.length);
