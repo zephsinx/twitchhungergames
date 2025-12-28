@@ -4,17 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Noita Hunger Games Simulator</title>
+  <script src="theme-config.js"></script>
   <style>
-    @font-face {
-      font-family: 'NoitaPixel';
-      src: url('./NoitaPixel.ttf') format('truetype');
-    }
-
-    @font-face {
-      font-family: 'NoitaBlackletter';
-      src: url('./NoitaBlackletter-Regular.ttf') format('truetype');
-    }
-
     * {
       -webkit-font-smoothing: none;
       -moz-osx-font-smoothing: grayscale;
@@ -29,7 +20,7 @@
     body {
       background: #121212;
       color: #fff;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       margin: 0;
     }
 
@@ -47,7 +38,7 @@
       padding: .7em 1em;
       border-radius: 4px;
       margin-right: .5em;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       font-size: 1rem;
       transition: background .2s, filter .2s;
     }
@@ -75,14 +66,14 @@
       text-align: center;
       font-size: 8em;
       margin: .2em 0;
-      font-family: 'NoitaBlackletter', cursive;
+      font-family: var(--theme-font-decorative, cursive);
     }
 
     #dayDisplay {
       text-align: center;
       font-size: 3.5em;
       margin: 0;
-      font-family: 'NoitaBlackletter', cursive;
+      font-family: var(--theme-font-decorative, cursive);
     }
 
     #phaseDesc {
@@ -180,7 +171,7 @@
     .text {
       text-align: center;
       white-space: pre-wrap;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       font-size: 1rem;
       margin: .5em 0;
     }
@@ -197,7 +188,7 @@
       color: #fff;
       padding: .7em 1em;
       border-radius: 4px;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       font-size: 1rem;
     }
 
@@ -217,7 +208,7 @@
     #winnerText {
       font-size: 3.5em;
       margin: 1em 0;
-      font-family: 'NoitaBlackletter', cursive;
+      font-family: var(--theme-font-decorative, cursive);
     }
 
     #placementsGrid {
@@ -249,13 +240,13 @@
     .placement .rank {
       font-size: 1.2em;
       margin-top: .7em;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
     }
 
     .placement .name,
     .placement .kills {
       font-size: 1rem;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       word-break: break-word;
       white-space: normal;
     }
@@ -267,7 +258,7 @@
       border: none;
       color: #fff;
       border-radius: 4px;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       font-size: 1rem;
     }
 
@@ -280,7 +271,7 @@
     #deathLogContainer h3 {
       font-size: 1.2rem;
       margin-bottom: .5em;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       text-align: left;
     }
 
@@ -291,7 +282,7 @@
       border: 1px solid #555;
       border-radius: 4px;
       padding: .5em;
-      font-family: 'NoitaPixel', monospace;
+      font-family: var(--theme-font-primary, monospace);
       font-size: 1rem;
       overflow-y: scroll;
       text-align: left;
@@ -316,7 +307,7 @@
       padding: .5em;
       border-radius: 4px;
       white-space: pre;
-      font-family: 'NoitaPixel', sans-serif;
+      font-family: var(--theme-font-primary, sans-serif);
       font-size: .9rem;
       text-align: left;
       width: max-content;
@@ -354,7 +345,7 @@
 
     #leaderboardOverlay h2 {
       margin-top: 0;
-      font-family:'NoitaBlackletter', cursive;
+      font-family:var(--theme-font-decorative, cursive);
     }
 
     #closeOverlay {
@@ -459,6 +450,39 @@
     // escape helper
     function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 
+    function injectFonts(config) {
+      const style = document.createElement('style');
+      style.textContent = `
+        @font-face {
+          font-family: '${config.fonts.primary.family}';
+          src: url('${config.fonts.primary.file}') format('truetype');
+        }
+        @font-face {
+          font-family: '${config.fonts.decorative.family}';
+          src: url('${config.fonts.decorative.file}') format('truetype');
+        }
+      `;
+      document.head.appendChild(style);
+
+      document.documentElement.style.setProperty('--theme-font-primary', config.fonts.primary.family);
+      document.documentElement.style.setProperty('--theme-font-decorative', config.fonts.decorative.family);
+    }
+
+    if (typeof window.themeConfig !== 'undefined') {
+      const config = window.themeConfig;
+
+      injectFonts(config);
+
+      document.title = config.title;
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const startBtn = document.getElementById('startButton');
+        const debugBtn = document.getElementById('debugButton');
+        if (startBtn) startBtn.textContent = config.messages.startButtonText;
+        if (debugBtn) debugBtn.textContent = config.messages.debugButtonText;
+      });
+    }
+
     const RENDER_DELAY      = 10;
     const fakeAvatars       = ['images/pfp1.png','images/pfp2.png','images/pfp3.png','images/pfp4.png','images/pfp5.png','images/pfp6.png'];
     const adjectives        = ['Iron','Silver','Golden','Dusky','Silent','Swift','Fierce','Mystic','Crimson','Shadow'];
@@ -471,10 +495,12 @@
     function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
     // global stats
-    let globalStats  = JSON.parse(localStorage.getItem('noitaGlobalStats')  || '{}');
-    let globalColors = JSON.parse(localStorage.getItem('noitaGlobalColors') || '{}');
-    function saveGlobalStats(){ localStorage.setItem('noitaGlobalStats', JSON.stringify(globalStats)); }
-    function saveGlobalColors(){ localStorage.setItem('noitaGlobalColors', JSON.stringify(globalColors)); }
+    const STORAGE_PREFIX = (window.themeConfig && window.themeConfig.storagePrefix) || 'game';
+
+    let globalStats  = JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}GlobalStats`)  || '{}');
+    let globalColors = JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}GlobalColors`) || '{}');
+    function saveGlobalStats(){ localStorage.setItem(`${STORAGE_PREFIX}GlobalStats`, JSON.stringify(globalStats)); }
+    function saveGlobalColors(){ localStorage.setItem(`${STORAGE_PREFIX}GlobalColors`, JSON.stringify(globalColors)); }
     function initGlobal(u){
       if(!globalStats[u]) globalStats[u]={wins:0,kills:0,deaths:0,totalDays:0,maxDays:0};
     }
@@ -600,7 +626,7 @@
     }
 
     btnStart.addEventListener('click', ()=>{
-      if(players.size<1){ alert('Add at least one tribute.'); return; }
+      if(players.size<1){ alert(window.themeConfig.messages.minPlayersRequired); return; }
       gameStarted=true;
       joinPrompt.style.display='none';
       participants=Array.from(players).map(u=>{
@@ -704,7 +730,7 @@
 
     function showFallen(day){
       eventLog.innerHTML='';
-      dayDisplay.textContent=`Fallen Witches ${day}`;
+      dayDisplay.textContent=formatMessage(window.themeConfig.messages.fallenPlayers, { day });
       dayDisplay.style.color='#aaa';
       phaseDesc.textContent='';
       const n=killedThisDay.length;
@@ -860,27 +886,8 @@
             currentRound: currentDay
           }, { polymorphedPlayers });
         }
-		const types = [
-			"weapon_blunt",
-			"weapon_cutting",
-			"weapon_piercing",
-			"weapon_wand",
-			"weapon_projectile",
-			"weapon_fire",
-			"weapon_explosive",
-			"weapon_electricity",
-			"sand_bad",
-			"sand_good",
-			"sand_neutral",
-			"liquid_water",
-			"liquid_poison",
-			"liquid_good",
-			"liquid_bad",
-			"liquid_neutral",
-			"food_good",
-			"food_neutral",
-			"food_bad",
-		];
+		const types = (window.themeConfig && window.themeConfig.itemCategories) ||
+			Object.keys(itemsData).concat(Object.keys(materialsData));
 		[...types, "weapon_any", "item_any", "material_any", "liquid_any", "sand_any", "food_any"].forEach(cat => {
 		let placeholder = `{${cat}}`;
 		let list;
@@ -1017,11 +1024,11 @@
         if (eventHandlersLoaded && window.eventHandlers && window.eventHandlers.polymorph && polymorphedPlayers.has(surv[0].username)) {
           title = window.eventHandlers.polymorph.getWinnerMessage(surv[0].username, { polymorphedPlayers });
         } else {
-          title = `${surv[0].username} won the Noita Games!`;
+          title = formatMessage(window.themeConfig.messages.winnerMessage, { username: surv[0].username });
         }
         avatar=surv[0].avatar;
       } else {
-        title='No one survived the Noita Games!';
+        title=window.themeConfig.messages.noSurvivors;
       }
       winnerAvatar.src=avatar;
       winnerText.textContent=title;

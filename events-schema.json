@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Events JSON Schema",
-  "description": "Schema for validating the events.json file structure for the Noita Hunger Games Simulator",
+  "description": "Schema for validating the events.json file structure for the Hunger Games Simulator",
   "type": "object",
   "required": [
     "bloodbath",
