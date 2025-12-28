@@ -2433,7 +2433,7 @@
                     ]
                 },
                 {
-                    "msg": "{0}, {1}, and {2} all step on a damp floor when a nearby Ukko discharges— none survive.",
+                    "msg": "{0}, {1}, and {2} all step on a damp floor when a nearby Ukko discharges - none survive.",
                     "tributes": 3,
                     "killer": null,
                     "killed": [

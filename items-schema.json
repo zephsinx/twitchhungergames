@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Items JSON Schema",
+  "description": "Schema for validating the items.json file structure for the Noita Hunger Games Simulator",
+  "type": "object",
+  "additionalProperties": {
+    "type": "array",
+    "description": "Array of items in this weapon category",
+    "items": {
+      "$ref": "#/$defs/itemObject"
+    },
+    "minItems": 0
+  },
+  "$defs": {
+    "itemObject": {
+      "type": "object",
+      "required": [
+        "name",
+        "max_kills"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the item"
+        },
+        "max_kills": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of kills this item can cause"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
