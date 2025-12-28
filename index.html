@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Noita Hunger Games Simulator</title>
+  <script src="themes.js"></script>
   <script src="theme-config.js"></script>
   <style>
     * {
@@ -31,7 +32,8 @@
     }
 
     #header input,
-    #header button {
+    #header button,
+    #header select {
       background: #333;
       border: none;
       color: #fff;
@@ -44,6 +46,7 @@
     }
 
     #header button:hover,
+    #header select:hover,
     #proceedButton:hover,
     .startNewButton:hover,
     .removeBtn:hover {
@@ -400,6 +403,9 @@
     <button id="startButton" disabled>Start Noita Games</button>
     <button id="debugButton">Add Fake Witches</button>
     <button id="leaderboardButton">Leaderboard</button>
+    <select id="themeSelector" style="margin-left: auto; margin-right: 0.5em;">
+      <option value="noita">Noita</option>
+    </select>
   </div>
 
   <div id="joinPrompt">!play to join</div>
@@ -450,37 +456,9 @@
     // escape helper
     function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 
-    function injectFonts(config) {
-      const style = document.createElement('style');
-      style.textContent = `
-        @font-face {
-          font-family: '${config.fonts.primary.family}';
-          src: url('${config.fonts.primary.file}') format('truetype');
-        }
-        @font-face {
-          font-family: '${config.fonts.decorative.family}';
-          src: url('${config.fonts.decorative.file}') format('truetype');
-        }
-      `;
-      document.head.appendChild(style);
-
-      document.documentElement.style.setProperty('--theme-font-primary', config.fonts.primary.family);
-      document.documentElement.style.setProperty('--theme-font-decorative', config.fonts.decorative.family);
-    }
-
-    if (typeof window.themeConfig !== 'undefined') {
-      const config = window.themeConfig;
-
-      injectFonts(config);
-
-      document.title = config.title;
-
-      window.addEventListener('DOMContentLoaded', () => {
-        const startBtn = document.getElementById('startButton');
-        const debugBtn = document.getElementById('debugButton');
-        if (startBtn) startBtn.textContent = config.messages.startButtonText;
-        if (debugBtn) debugBtn.textContent = config.messages.debugButtonText;
-      });
+    // Initialize theme on page load
+    if (typeof window.applyTheme !== 'undefined' && typeof window.themeConfig !== 'undefined') {
+      window.applyTheme(window.themeConfig);
     }
 
     const RENDER_DELAY      = 10;
@@ -527,6 +505,9 @@
         gameStarted        = false,
         currentPhaseType   = null,
         leaderboardSort    = { key:null, asc:true };
+
+    // Make gameStarted accessible globally for theme switching
+    window.gameStarted = false;
 
     // DOM refs
     const chInput        = document.getElementById('channelInput');
@@ -599,6 +580,30 @@
       connect(ch);
     });
 
+    // Theme selector
+    const themeSelector = document.getElementById('themeSelector');
+    if (themeSelector) {
+      // Load saved theme preference
+      let currentTheme = localStorage.getItem('selectedTheme') || 'noita';
+      themeSelector.value = currentTheme;
+
+      themeSelector.addEventListener('change', (e) => {
+        const newTheme = e.target.value;
+        const previousTheme = currentTheme;
+        if (window.switchTheme) {
+          const switched = window.switchTheme(newTheme);
+          if (!switched) {
+            // Revert selector if switch failed (game active)
+            themeSelector.value = previousTheme;
+            alert('Cannot change theme during an active game.');
+          } else {
+            // Update current theme on successful switch
+            currentTheme = newTheme;
+          }
+        }
+      });
+    }
+
     function connect(ch){
       if(client) client.disconnect();
       players.clear();
@@ -628,6 +633,7 @@
     btnStart.addEventListener('click', ()=>{
       if(players.size<1){ alert(window.themeConfig.messages.minPlayersRequired); return; }
       gameStarted=true;
+      window.gameStarted = true;
       joinPrompt.style.display='none';
       participants=Array.from(players).map(u=>{
         const el=document.querySelector(`[data-username="${u}"]`);
@@ -696,7 +702,8 @@
         players.clear();
         playersGrid.innerHTML='';
       }
-      gameStarted=false;
+      gameStarted = false;
+      window.gameStarted=false;
       participants=[];
       eliminationOrder=[];
       daysSinceEvent=0;

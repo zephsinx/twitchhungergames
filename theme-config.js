@@ -62,65 +62,86 @@ function validateConfig(config) {
   return merged;
 }
 
-const themeConfigRaw = {
-  title: "Noita Hunger Games Simulator",
-  appName: "Noita Games",
+function loadTheme(themeName) {
+  if (typeof themes === "undefined") {
+    console.error("themes.js not loaded");
+    return validateConfig({});
+  }
+  const theme = themes[themeName] || themes[defaultTheme];
+  return validateConfig(theme.config);
+}
 
-  terminology: {
-    playerSingular: "tribute",
-    playerPlural: "witches",
-    fallenPlayers: "Fallen Witches",
-    deathSound: "nuke",
-  },
+function injectFonts(config) {
+  const oldStyles = document.querySelectorAll("style[data-theme-fonts]");
+  oldStyles.forEach((s) => s.remove());
 
-  messages: {
-    startButtonText: "Start Noita Games",
-    debugButtonText: "Add Fake Witches",
-    minPlayersRequired: "Add at least one tribute.",
-    winnerMessage: "{username} won the Noita Games!",
-    noSurvivors: "No one survived the Noita Games!",
-    fallenPlayers: "Fallen Witches {day}",
-    deathSound: "{count} {sound} can be heard going off.",
-  },
+  // Create new style element with data attribute
+  const style = document.createElement("style");
+  style.setAttribute("data-theme-fonts", "true");
+  style.textContent = `
+    @font-face {
+      font-family: '${config.fonts.primary.family}';
+      src: url('${config.fonts.primary.file}') format('truetype');
+    }
+    @font-face {
+      font-family: '${config.fonts.decorative.family}';
+      src: url('${config.fonts.decorative.file}') format('truetype');
+    }
+  `;
+  document.head.appendChild(style);
 
-  fonts: {
-    primary: {
-      family: "NoitaPixel",
-      file: "./NoitaPixel.ttf",
-    },
-    decorative: {
-      family: "NoitaBlackletter",
-      file: "./NoitaBlackletter-Regular.ttf",
-    },
-  },
+  document.documentElement.style.setProperty(
+    "--theme-font-primary",
+    config.fonts.primary.family
+  );
+  document.documentElement.style.setProperty(
+    "--theme-font-decorative",
+    config.fonts.decorative.family
+  );
+}
 
-  itemCategories: [
-    "weapon_blunt",
-    "weapon_cutting",
-    "weapon_piercing",
-    "weapon_wand",
-    "weapon_projectile",
-    "weapon_fire",
-    "weapon_explosive",
-    "weapon_electricity",
-    "sand_bad",
-    "sand_good",
-    "sand_neutral",
-    "liquid_water",
-    "liquid_poison",
-    "liquid_good",
-    "liquid_bad",
-    "liquid_neutral",
-    "food_good",
-    "food_neutral",
-    "food_bad",
-  ],
+// Apply theme configuration to the page
+function applyTheme(config) {
+  injectFonts(config);
 
-  storagePrefix: "noita",
-};
+  document.title = config.title;
 
-const themeConfig = validateConfig(themeConfigRaw);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      const startBtn = document.getElementById("startButton");
+      const debugBtn = document.getElementById("debugButton");
+      if (startBtn) startBtn.textContent = config.messages.startButtonText;
+      if (debugBtn) debugBtn.textContent = config.messages.debugButtonText;
+    });
+  } else {
+    const startBtn = document.getElementById("startButton");
+    const debugBtn = document.getElementById("debugButton");
+    if (startBtn) startBtn.textContent = config.messages.startButtonText;
+    if (debugBtn) debugBtn.textContent = config.messages.debugButtonText;
+  }
+
+  window.themeConfig = config;
+}
+
+function switchTheme(themeName) {
+  if (typeof window.gameStarted !== "undefined" && window.gameStarted) {
+    return false;
+  }
+
+  const config = loadTheme(themeName);
+  applyTheme(config);
+  localStorage.setItem("selectedTheme", themeName);
+  return true;
+}
+
+const savedTheme = localStorage.getItem("selectedTheme") || defaultTheme;
+const themeConfig = loadTheme(savedTheme);
 
 window.themeConfig = themeConfig;
 window.formatMessage = formatMessage;
 window.pluralize = pluralize;
+window.loadTheme = loadTheme;
+window.switchTheme = switchTheme;
+window.applyTheme = applyTheme;
+window.getAvailableThemes = () =>
+  typeof themes !== "undefined" ? Object.keys(themes) : [];
