@@ -31,6 +31,8 @@ function validateConfig(config) {
       noSurvivors: "No one survived the Games!",
       fallenPlayers: "Fallen Players {day}",
       deathSound: "{count} {sound} can be heard going off.",
+      deathEventsHeader: "Death Events:",
+      killsLabel: "Kills:",
     },
     fonts: {
       primary: {

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Noita Hunger Games Simulator</title>
+  <title>Hunger Games Simulator</title>
   <script src="themes.js"></script>
   <script src="theme-config.js"></script>
   <style>
@@ -400,11 +400,12 @@
     <input id="channelInput" placeholder="Enter Twitch channel">
     <button id="connectButton">Connect</button>
     <span id="status"></span>
-    <button id="startButton" disabled>Start Noita Games</button>
-    <button id="debugButton">Add Fake Witches</button>
+    <button id="startButton" disabled>Start Games</button>
+    <button id="debugButton">Add Fake Players</button>
     <button id="leaderboardButton">Leaderboard</button>
     <select id="themeSelector" style="margin-left: auto; margin-right: 0.5em;">
       <option value="noita">Noita</option>
+      <option value="fridge">Fridge Survival</option>
     </select>
   </div>
 
@@ -424,7 +425,7 @@
     <hr style="width:50%;border-color:#555;margin:2em auto">
     <div id="placementsGrid"></div>
     <div id="deathLogContainer">
-      <h3>Death Events:</h3>
+      <h3 id="deathEventsHeader">Death Events:</h3>
       <div id="deathLog"></div>
     </div>
     <button class="startNewButton" id="newGameSameButton">Start new game (same players)</button>
@@ -459,6 +460,9 @@
     // Initialize theme on page load
     if (typeof window.applyTheme !== 'undefined' && typeof window.themeConfig !== 'undefined') {
       window.applyTheme(window.themeConfig);
+      if (deathEventsHeader && window.themeConfig.messages.deathEventsHeader) {
+        deathEventsHeader.textContent = window.themeConfig.messages.deathEventsHeader;
+      }
     }
 
     const RENDER_DELAY      = 10;
@@ -528,6 +532,7 @@
     const winnerText     = document.getElementById('winnerText');
     const placementsGrid = document.getElementById('placementsGrid');
     const deathLogEl     = document.getElementById('deathLog');
+    const deathEventsHeader = document.getElementById('deathEventsHeader');
     const btnNewSame     = document.getElementById('newGameSameButton');
     const btnNewAll      = document.getElementById('newGameAllButton');
     const overlay        = document.getElementById('leaderboardOverlay');
@@ -621,9 +626,30 @@
     // Theme selector
     const themeSelector = document.getElementById('themeSelector');
     if (themeSelector) {
+      if (typeof window.getAvailableThemes === 'function') {
+        const availableThemes = window.getAvailableThemes();
+        if (availableThemes.length > 0 && availableThemes.length !== themeSelector.options.length) {
+          themeSelector.innerHTML = '';
+          availableThemes.forEach(themeKey => {
+            const option = document.createElement('option');
+            option.value = themeKey;
+            try {
+              const config = window.loadTheme ? window.loadTheme(themeKey) : null;
+              option.textContent = config && config.title ?
+                config.title.replace(' Simulator', '').replace(' Hunger Games', '') :
+                themeKey.charAt(0).toUpperCase() + themeKey.slice(1);
+            } catch (e) {
+              option.textContent = themeKey.charAt(0).toUpperCase() + themeKey.slice(1);
+            }
+            themeSelector.appendChild(option);
+          });
+        }
+      }
       // Load saved theme preference
-      let currentTheme = localStorage.getItem('selectedTheme') || 'noita';
-      themeSelector.value = currentTheme;
+      let currentTheme = localStorage.getItem('selectedTheme') || (typeof defaultTheme !== 'undefined' ? defaultTheme : 'noita');
+      if (themeSelector.querySelector(`option[value="${currentTheme}"]`)) {
+        themeSelector.value = currentTheme;
+      }
 
       themeSelector.addEventListener('change', async (e) => {
         const newTheme = e.target.value;
@@ -637,6 +663,10 @@
             try {
               await loadGameData(newTheme);
               currentTheme = newTheme;
+              // Update theme-specific UI elements
+              if (deathEventsHeader && window.themeConfig && window.themeConfig.messages.deathEventsHeader) {
+                deathEventsHeader.textContent = window.themeConfig.messages.deathEventsHeader;
+              }
             } catch (err) {
               themeSelector.value = previousTheme;
               if (window.switchTheme) {
@@ -788,7 +818,9 @@
       const n=killedThisDay.length;
       const txt=document.createElement('div');
       txt.className='text';
-      txt.textContent=`${n} nuke${n!==1?'s':''} can be heard going off.`;
+      const deathSound = window.themeConfig.terminology.deathSound || 'signal';
+      const pluralizedSound = n !== 1 ? deathSound + 's' : deathSound;
+      txt.textContent = formatMessage(window.themeConfig.messages.deathSound, { count: n, sound: pluralizedSound });
       const grid=document.createElement('div');
       grid.className='avatars';
       killedThisDay.forEach(u=>{
@@ -1105,7 +1137,9 @@
         tip.innerText=getUserTooltipText(u,p.kills,p.deathDay||(currentDay-1));
         nmC.append(sp,tip);
         const kc=document.createElement('div');
-        kc.className='kills'; kc.textContent=`Kills: ${p.kills}`;
+        kc.className='kills';
+        const killsLabel = (window.themeConfig && window.themeConfig.messages.killsLabel) || 'Kills:';
+        kc.textContent=`${killsLabel} ${p.kills}`;
         wrap.append(img,rank,nmC,kc);
         placementsGrid.appendChild(wrap);
       });

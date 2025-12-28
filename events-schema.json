@@ -85,8 +85,7 @@
         },
         "weight": {
           "type": "number",
-          "minimum": 0,
-          "exclusiveMinimum": true,
+          "exclusiveMinimum": 0,
           "description": "Weight for selection probability (higher weight = more likely to be selected)"
         },
         "customHandler": {
