@@ -58,6 +58,12 @@ const themes = {
       ],
 
       storagePrefix: "noita",
+
+      dataFiles: {
+        events: "events.json",
+        items: "items.json",
+        materials: "materials.json",
+      },
     },
   },
 };

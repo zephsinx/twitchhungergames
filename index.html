@@ -556,22 +556,60 @@
       return username;
     }
 
-    // Load events + weapons JSON
-    Promise.all([
-      fetch('events.json').then(r=>r.json()),
-      fetch('items.json').then(r=>r.json()),
-	  fetch('materials.json').then(r=>r.json())
-    ]).then(([e,w,m])=>{
-      eventsData= e;
-      itemsData= w;
-	  materialsData= m;
-      btnStart.disabled = false;
-    });
+    function loadGameData(themeName) {
+      btnStart.disabled = true;
+      if (status) {
+        status.textContent = "Loading data...";
+        status.style.color = "#ffa500";
+      }
 
-    window.addEventListener('load', ()=>{
-      const saved=localStorage.getItem('twitchChannel');
-      if(saved){ chInput.value=saved; connect(saved); }
-    });
+      if (typeof window.loadThemeData === "undefined") {
+        console.error("loadThemeData function not available");
+        if (status) {
+          status.textContent = "Error: Theme system not loaded";
+          status.style.color = "#f00";
+        }
+        return Promise.reject(new Error("Theme system not loaded"));
+      }
+
+      return window
+        .loadThemeData(themeName)
+        .then(({ eventsData: e, itemsData: w, materialsData: m }) => {
+          eventsData = e;
+          itemsData = w;
+          materialsData = m;
+          btnStart.disabled = false;
+          if (status) {
+            status.textContent = "";
+            status.style.color = "";
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to load game data:", err);
+          btnStart.disabled = true;
+          if (status) {
+            status.textContent = `Error: ${err.message}`;
+            status.style.color = "#f00";
+          }
+          throw err;
+        });
+    }
+
+    function initializeData() {
+      const saved = localStorage.getItem('twitchChannel');
+      if (saved) { chInput.value = saved; connect(saved); }
+
+      const currentTheme = localStorage.getItem('selectedTheme') || (typeof defaultTheme !== 'undefined' ? defaultTheme : 'noita');
+      loadGameData(currentTheme).catch(err => {
+        console.error("Initial data load failed:", err);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('load', initializeData);
+    } else {
+      initializeData();
+    }
 
     btnConnect.addEventListener('click', ()=>{
       const ch=chInput.value.trim().toLowerCase();
@@ -587,18 +625,25 @@
       let currentTheme = localStorage.getItem('selectedTheme') || 'noita';
       themeSelector.value = currentTheme;
 
-      themeSelector.addEventListener('change', (e) => {
+      themeSelector.addEventListener('change', async (e) => {
         const newTheme = e.target.value;
         const previousTheme = currentTheme;
         if (window.switchTheme) {
-          const switched = window.switchTheme(newTheme);
+          const switched = await window.switchTheme(newTheme);
           if (!switched) {
-            // Revert selector if switch failed (game active)
             themeSelector.value = previousTheme;
             alert('Cannot change theme during an active game.');
           } else {
-            // Update current theme on successful switch
-            currentTheme = newTheme;
+            try {
+              await loadGameData(newTheme);
+              currentTheme = newTheme;
+            } catch (err) {
+              themeSelector.value = previousTheme;
+              if (window.switchTheme) {
+                await window.switchTheme(previousTheme);
+              }
+              alert(`Failed to load theme data: ${err.message}`);
+            }
           }
         }
       });

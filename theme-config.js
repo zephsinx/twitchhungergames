@@ -46,6 +46,38 @@ function validateConfig(config) {
     storagePrefix: "game",
   };
 
+  if (!config.dataFiles) {
+    throw new Error(
+      "Theme config must include dataFiles with events, items, and materials properties"
+    );
+  }
+
+  if (
+    !config.dataFiles.events ||
+    typeof config.dataFiles.events !== "string" ||
+    config.dataFiles.events.trim() === ""
+  ) {
+    throw new Error("Theme config dataFiles.events must be a non-empty string");
+  }
+
+  if (
+    !config.dataFiles.items ||
+    typeof config.dataFiles.items !== "string" ||
+    config.dataFiles.items.trim() === ""
+  ) {
+    throw new Error("Theme config dataFiles.items must be a non-empty string");
+  }
+
+  if (
+    !config.dataFiles.materials ||
+    typeof config.dataFiles.materials !== "string" ||
+    config.dataFiles.materials.trim() === ""
+  ) {
+    throw new Error(
+      "Theme config dataFiles.materials must be a non-empty string"
+    );
+  }
+
   const merged = {
     title: config.title || defaults.title,
     appName: config.appName || defaults.appName,
@@ -57,6 +89,11 @@ function validateConfig(config) {
     },
     itemCategories: config.itemCategories || defaults.itemCategories,
     storagePrefix: config.storagePrefix || defaults.storagePrefix,
+    dataFiles: {
+      events: config.dataFiles.events,
+      items: config.dataFiles.items,
+      materials: config.dataFiles.materials,
+    },
   };
 
   return merged;
@@ -123,15 +160,86 @@ function applyTheme(config) {
   window.themeConfig = config;
 }
 
+function loadThemeData(themeName) {
+  return new Promise((resolve, reject) => {
+    if (typeof themes === "undefined") {
+      reject(new Error("themes.js not loaded"));
+      return;
+    }
+
+    const theme = themes[themeName] || themes[defaultTheme];
+    if (!theme || !theme.config) {
+      reject(new Error(`Theme "${themeName}" not found`));
+      return;
+    }
+
+    const config = validateConfig(theme.config);
+    const { events, items, materials } = config.dataFiles;
+
+    Promise.all([
+      fetch(events)
+        .then((r) => {
+          if (!r.ok)
+            throw new Error(
+              `Failed to load ${events}: ${r.status} ${r.statusText}`
+            );
+          return r.json();
+        })
+        .catch((err) => {
+          throw new Error(
+            `Failed to load events file "${events}": ${err.message}`
+          );
+        }),
+      fetch(items)
+        .then((r) => {
+          if (!r.ok)
+            throw new Error(
+              `Failed to load ${items}: ${r.status} ${r.statusText}`
+            );
+          return r.json();
+        })
+        .catch((err) => {
+          throw new Error(
+            `Failed to load items file "${items}": ${err.message}`
+          );
+        }),
+      fetch(materials)
+        .then((r) => {
+          if (!r.ok)
+            throw new Error(
+              `Failed to load ${materials}: ${r.status} ${r.statusText}`
+            );
+          return r.json();
+        })
+        .catch((err) => {
+          throw new Error(
+            `Failed to load materials file "${materials}": ${err.message}`
+          );
+        }),
+    ])
+      .then(([eventsData, itemsData, materialsData]) => {
+        resolve({ eventsData, itemsData, materialsData });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 function switchTheme(themeName) {
   if (typeof window.gameStarted !== "undefined" && window.gameStarted) {
-    return false;
+    return Promise.resolve(false);
   }
 
-  const config = loadTheme(themeName);
-  applyTheme(config);
-  localStorage.setItem("selectedTheme", themeName);
-  return true;
+  try {
+    const config = loadTheme(themeName);
+    applyTheme(config);
+    localStorage.setItem("selectedTheme", themeName);
+    return Promise.resolve(true);
+  } catch (err) {
+    console.error("Failed to switch theme:", err);
+    return Promise.resolve(false);
+  }
 }
 
 const savedTheme = localStorage.getItem("selectedTheme") || defaultTheme;
@@ -141,6 +249,7 @@ window.themeConfig = themeConfig;
 window.formatMessage = formatMessage;
 window.pluralize = pluralize;
 window.loadTheme = loadTheme;
+window.loadThemeData = loadThemeData;
 window.switchTheme = switchTheme;
 window.applyTheme = applyTheme;
 window.getAvailableThemes = () =>
