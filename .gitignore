@@ -3,6 +3,7 @@
 /discord-bot/config.json
 
 .venv/
+.idea/
 docs/
 scripts/
 templates/
