@@ -29,11 +29,11 @@ const themes = {
       fonts: {
         primary: {
           family: "NoitaPixel",
-          file: "./NoitaPixel.ttf",
+          file: "assets/fonts/NoitaPixel.ttf",
         },
         decorative: {
           family: "NoitaBlackletter",
-          file: "./NoitaBlackletter-Regular.ttf",
+          file: "assets/fonts/NoitaBlackletter-Regular.ttf",
         },
       },
 
@@ -62,9 +62,9 @@ const themes = {
       storagePrefix: "noita",
 
       dataFiles: {
-        events: "events.json",
-        items: "items.json",
-        materials: "materials.json",
+        events: "data/events.json",
+        items: "data/items.json",
+        materials: "data/materials.json",
       },
     },
   },
@@ -127,9 +127,9 @@ const themes = {
       storagePrefix: "fridge",
 
       dataFiles: {
-        events: "fridge-events.json",
-        items: "fridge-items.json",
-        materials: "fridge-materials.json",
+        events: "data/fridge-events.json",
+        items: "data/fridge-items.json",
+        materials: "data/fridge-materials.json",
       },
     },
   },

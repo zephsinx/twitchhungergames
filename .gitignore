@@ -1,3 +1,10 @@
 /discord-bot/data
 /discord-bot/node_modules
 /discord-bot/config.json
+
+.venv/
+docs/
+scripts/
+templates/
+
+requirements.txt

@@ -11,12 +11,12 @@ if (
 }
 
 const fakeAvatars = [
-  "images/pfp1.png",
-  "images/pfp2.png",
-  "images/pfp3.png",
-  "images/pfp4.png",
-  "images/pfp5.png",
-  "images/pfp6.png",
+  "assets/images/pfp1.png",
+  "assets/images/pfp2.png",
+  "assets/images/pfp3.png",
+  "assets/images/pfp4.png",
+  "assets/images/pfp5.png",
+  "assets/images/pfp6.png",
 ];
 const adjectives = [
   "Iron",
@@ -152,7 +152,7 @@ let eventHandlersLoaded = false;
 window.eventHandlersLoaded = eventHandlersLoaded;
 
 const script = document.createElement("script");
-script.src = "event-handlers.js";
+script.src = "js/event-handlers.js";
 script.onload = () => {
   if (typeof window.eventHandlers !== "undefined") {
     eventHandlersLoaded = true;
