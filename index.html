@@ -1298,7 +1298,9 @@
 		} else if (color.startsWith("rgb")) {
 			[r, g, b] = color.match(/\d+/g).map(Number);
 		} else {
-			[r, g, b] = getComputedStyle(el).color.match(/\d+/g).map(Number);
+			// Fallback to white if color format is unexpected (should not happen after validateColor)
+        console.warn(`Unexpected color format for player ${u}: ${color}, using white as fallback`);
+        r = 255; g = 255; b = 255;
 		}
 		const brightness = r * 0.299 + g * 0.587 + b * 0.114;
 
@@ -1359,7 +1361,8 @@
 		} else if (color.startsWith("rgb")) {
 			[r, g, b] = color.match(/\d+/g).map(Number);
 		} else {
-			[r, g, b] = getComputedStyle(el).color.match(/\d+/g).map(Number);
+			console.warn(`Unexpected color format for player ${u}: ${color}, using white as fallback`);
+        r = 255; g = 255; b = 255;
 		}
 		const brightness = r * 0.299 + g * 0.587 + b * 0.114;
 
