@@ -1,0 +1,385 @@
+* {
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+}
+
+html {
+  font-size: 18px;
+}
+
+body {
+  background: #121212;
+  color: #fff;
+  font-family: var(--theme-font-primary, sans-serif);
+  margin: 0;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+}
+
+#header input,
+#header button,
+#header select {
+  background: #333;
+  border: none;
+  color: #fff;
+  padding: 0.7em 1em;
+  border-radius: 4px;
+  margin-right: 0.5em;
+  font-family: var(--theme-font-primary, sans-serif);
+  font-size: 1rem;
+  transition: background 0.2s, filter 0.2s;
+}
+
+#header button:hover,
+#header select:hover,
+#proceedButton:hover,
+.startNewButton:hover,
+.removeBtn:hover {
+  background: #444;
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+#leaderboardButton {
+  margin-left: auto;
+}
+
+#status {
+  font-weight: bold;
+  margin-right: 1em;
+  font-size: 1rem;
+}
+
+#joinPrompt {
+  text-align: center;
+  font-size: 8em;
+  margin: 0.2em 0;
+  font-family: var(--theme-font-decorative, cursive);
+}
+
+#dayDisplay {
+  text-align: center;
+  font-size: 3.5em;
+  margin: 0;
+  font-family: var(--theme-font-decorative, cursive);
+}
+
+#phaseDesc {
+  text-align: center;
+  font-size: 1rem;
+  margin: 0.5em 0;
+}
+
+#playersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  gap: 1em;
+  padding: 1em;
+  justify-content: center;
+  justify-items: center;
+}
+
+.player {
+  position: relative;
+  width: 80px;
+}
+
+.player img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.player .name {
+  text-align: center;
+  margin-top: 0.5em;
+  word-break: break-word;
+  font-size: 1rem;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #f55;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  transition: background 0.2s, filter 0.2s;
+}
+
+#eventLog {
+  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.avatars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5em;
+  margin: 0.5em 0;
+}
+
+.avatarWrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarWrap img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.avatarWrap img.dead {
+  filter: grayscale(100%);
+}
+
+.text {
+  text-align: center;
+  white-space: pre-wrap;
+  font-family: var(--theme-font-primary, sans-serif);
+  font-size: 1rem;
+  margin: 0.5em 0;
+}
+
+#proceedContainer {
+  text-align: center;
+  margin: 1em;
+  display: none;
+}
+
+#proceedButton {
+  background: #333;
+  border: none;
+  color: #fff;
+  padding: 0.7em 1em;
+  border-radius: 4px;
+  font-family: var(--theme-font-primary, sans-serif);
+  font-size: 1rem;
+}
+
+#winnerScreen {
+  display: none;
+  text-align: center;
+  padding: 2em;
+}
+
+#winnerAvatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#winnerText {
+  font-size: 3.5em;
+  margin: 1em 0;
+  font-family: var(--theme-font-decorative, cursive);
+}
+
+#placementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 120px);
+  gap: 1.5em;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.placement {
+  text-align: center;
+  transition: opacity 0.3s;
+  width: 120px;
+}
+
+.placement.dead img {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.placement img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.placement .rank {
+  font-size: 1.2em;
+  margin-top: 0.7em;
+  font-family: var(--theme-font-primary, sans-serif);
+}
+
+.placement .name,
+.placement .kills {
+  font-size: 1rem;
+  font-family: var(--theme-font-primary, sans-serif);
+  word-break: break-word;
+  white-space: normal;
+}
+
+.startNewButton {
+  margin: 0.5em;
+  padding: 0.7em 1.2em;
+  background: #333;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  font-family: var(--theme-font-primary, sans-serif);
+  font-size: 1rem;
+}
+
+#deathLogContainer {
+  margin: 2em 0;
+  width: 100%;
+  padding: 0 1em;
+}
+
+#deathLogContainer h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
+  font-family: var(--theme-font-primary, sans-serif);
+  text-align: left;
+}
+
+#deathLog {
+  width: 100%;
+  height: 300px;
+  background: #222;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 0.5em;
+  font-family: var(--theme-font-primary, monospace);
+  font-size: 1rem;
+  overflow-y: scroll;
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-box {
+  visibility: hidden;
+  position: absolute;
+  z-index: 100;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #222;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 0.5em;
+  border-radius: 4px;
+  white-space: pre;
+  font-family: var(--theme-font-primary, sans-serif);
+  font-size: 0.9rem;
+  text-align: left;
+  width: max-content;
+  max-width: none;
+}
+
+.tooltip-container:hover .tooltip-box {
+  visibility: visible;
+}
+
+/* Leaderboard overlay */
+#leaderboardOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#leaderboardOverlay .overlayContent {
+  position: relative;
+  background: #222;
+  padding: 2em;
+  border-radius: 8px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow-y: auto;
+  text-align: left;
+}
+
+#leaderboardOverlay h2 {
+  margin-top: 0;
+  font-family: var(--theme-font-decorative, cursive);
+}
+
+#closeOverlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#closeOverlay:hover {
+  color: #f55;
+}
+
+#leaderboardTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+#leaderboardTable th,
+#leaderboardTable td {
+  padding: 0.5em;
+  border-bottom: 1px solid #444;
+}
+
+#leaderboardTable th {
+  text-align: left;
+  cursor: pointer;
+  user-select: none;
+}
+
+#leaderboardTable th.sort-asc::after {
+  content: " ▲";
+}
+
+#leaderboardTable th.sort-desc::after {
+  content: " ▼";
+}

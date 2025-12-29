@@ -1,0 +1,569 @@
+const RENDER_DELAY = 10;
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function getStepType(isDay) {
+  const daysSinceEvent = window.daysSinceEvent || 0;
+  const fc = 100 * (daysSinceEvent ** 2 / 55) + 9 / 55;
+  if (isDay && Math.random() * 100 < fc) {
+    window.daysSinceEvent = 0;
+    return "feast";
+  }
+  if (daysSinceEvent > 0 && Math.floor(Math.random() * 20) === 0) {
+    window.daysSinceEvent = 0;
+    return "arena";
+  }
+  window.daysSinceEvent = (window.daysSinceEvent || 0) + 1;
+  return isDay ? "day" : "night";
+}
+
+async function runPhase(type) {
+  const eventLog = document.getElementById("eventLog");
+  const phaseDesc = document.getElementById("phaseDesc");
+  const dayDisplay = document.getElementById("dayDisplay");
+  const eventsData = window.eventsData;
+  const currentDay = window.currentDay || 1;
+
+  eventLog.innerHTML = "";
+  let step = type;
+  if (type === "day" || type === "night") {
+    window.currentPhaseType = getStepType(type === "day");
+    step = window.currentPhaseType;
+  } else {
+    window.currentPhaseType = type;
+  }
+  if (step === "feast") {
+    const ev = eventsData.feast;
+    phaseDesc.textContent = ev.description;
+    dayDisplay.textContent = ev.title;
+    dayDisplay.style.color = ev.color;
+    await runEvents(ev);
+  } else if (step === "arena") {
+    const ev =
+      eventsData.arena[Math.floor(Math.random() * eventsData.arena.length)];
+    phaseDesc.textContent = ev.description;
+    dayDisplay.textContent = ev.title;
+    dayDisplay.style.color = ev.color;
+    await runEvents(ev);
+  } else {
+    const ev = eventsData[step];
+    phaseDesc.textContent = ev.description || "";
+    const title = ev.title.replace(
+      "{0}",
+      step === "bloodbath" ? "" : currentDay
+    );
+    dayDisplay.textContent = title;
+    dayDisplay.style.color = step === "night" ? "#88ccff" : ev.color;
+    await runEvents(ev);
+  }
+  const killedThisDay = window.killedThisDay || [];
+  window.consecutiveNoDeaths =
+    killedThisDay.length === 0 ? (window.consecutiveNoDeaths || 0) + 1 : 0;
+}
+
+async function runEvents(evObj) {
+  const participants = window.participants || [];
+  const eventsData = window.eventsData;
+  const itemsData = window.itemsData;
+  const materialsData = window.materialsData;
+  const currentDay = window.currentDay || 1;
+  const stage = window.stage || 0;
+  const consecutiveNoDeaths = window.consecutiveNoDeaths || 0;
+  const eventHandlersLoaded = window.eventHandlersLoaded || false;
+  const polymorphedPlayers = window.polymorphedPlayers || new Map();
+  const globalStats = window.globalStats || {};
+  const killedThisDay = window.killedThisDay || [];
+  const eliminationOrder = window.eliminationOrder || [];
+  const deathEventsLog = window.deathEventsLog || [];
+  const eventLog = document.getElementById("eventLog");
+
+  const aliveSet = new Set(participants.filter((p) => p.alive));
+  const base = Math.floor(Math.random() * 3) + 1;
+  const factor = base + consecutiveNoDeaths + (stage === 0 ? 1 : 0);
+  const msgs = [];
+
+  const genericEvents = eventsData.generic || { nonfatal: [], fatal: [] };
+  const isArenaEvent = evObj.title && evObj.title.startsWith("Arena Event");
+  const isFeastEvent = evObj.title && evObj.title === "The Feast";
+  const isBloodbathEvent = evObj.title && evObj.title === "The Bloodbath";
+
+  while (aliveSet.size > 0) {
+    const roll = Math.floor(Math.random() * 11);
+    const useFatal =
+      roll < factor && participants.filter((p) => p.alive).length > 1;
+    const phasePool = (useFatal ? evObj.fatal : evObj.nonfatal) || [];
+    const genericPool =
+      (useFatal ? genericEvents.fatal : genericEvents.nonfatal) || [];
+
+    let pool;
+    if (isArenaEvent || isFeastEvent || isBloodbathEvent) {
+      const multiplier =
+        phasePool.length > 0 && genericPool.length > 0
+          ? Math.ceil((3 * genericPool.length) / phasePool.length)
+          : 1;
+      const weightedPhasePool = Array(multiplier)
+        .fill(null)
+        .flatMap(() => phasePool);
+      pool = [...weightedPhasePool, ...genericPool];
+    } else {
+      pool = [...phasePool, ...genericPool];
+    }
+    pool = pool.filter((a) => a.tributes <= aliveSet.size);
+    if (!pool.length) break;
+
+    let totalWeight = 0;
+    pool.forEach((action) => {
+      const weight = action.weight !== undefined ? action.weight : 1;
+      if (weight <= 0) {
+        action._effectiveWeight = 1;
+      } else {
+        action._effectiveWeight = weight;
+      }
+      totalWeight += action._effectiveWeight;
+    });
+
+    if (totalWeight <= 0) {
+      console.error("All events have zero or negative weight");
+      break;
+    }
+
+    const random = Math.random() * totalWeight;
+    let cumulative = 0;
+    let action = null;
+
+    for (const candidate of pool) {
+      cumulative += candidate._effectiveWeight;
+      if (random <= cumulative) {
+        action = candidate;
+        break;
+      }
+    }
+
+    if (!action) {
+      action = pool[0];
+    }
+
+    pool.forEach((a) => {
+      if (a._effectiveWeight !== undefined) {
+        delete a._effectiveWeight;
+      }
+    });
+    const pick = [];
+    const avail = Array.from(aliveSet);
+    for (let i = 0; i < action.tributes; i++) {
+      const idx = Math.floor(Math.random() * avail.length);
+      pick.push(avail.splice(idx, 1)[0]);
+      aliveSet.delete(pick[pick.length - 1]);
+    }
+
+    let txt = action.msg;
+    for (let i = 0; i < pick.length; i++) {
+      const displayName = window.getDisplayName(pick[i].username);
+      txt = txt.replace(new RegExp(`\\{${i}\\}`, "g"), displayName);
+    }
+
+    const killsCount = Array.isArray(action.killed) ? action.killed.length : 0;
+
+    if (
+      action.customHandler &&
+      eventHandlersLoaded &&
+      window.eventHandlers &&
+      window.eventHandlers[action.customHandler] &&
+      typeof window.eventHandlers[action.customHandler].execute === "function"
+    ) {
+      window.eventHandlers[action.customHandler].execute(
+        {
+          picks: pick,
+          currentRound: currentDay,
+        },
+        { polymorphedPlayers }
+      );
+    }
+    const types =
+      (window.themeConfig && window.themeConfig.itemCategories) ||
+      Object.keys(itemsData).concat(Object.keys(materialsData));
+    [
+      ...types,
+      "weapon_any",
+      "item_any",
+      "material_any",
+      "liquid_any",
+      "sand_any",
+      "food_any",
+      "hazard_any",
+    ].forEach((cat) => {
+      let placeholder = `{${cat}}`;
+      let list;
+      if (cat === "weapon_any") {
+        list = types
+          .flatMap((c) => itemsData[c] || [])
+          .filter((w) => w.max_kills >= killsCount);
+      } else if (cat.startsWith("weapon_")) {
+        list = (itemsData[cat] || []).filter((w) => w.max_kills >= killsCount);
+      } else if (cat === "material_any") {
+        list = types.flatMap((c) => materialsData[c] || []);
+      } else if (cat === "liquid_any") {
+        list = types
+          .filter((c) => c.startsWith("liquid_"))
+          .flatMap((c) => materialsData[c] || []);
+      } else if (cat === "sand_any") {
+        list = types
+          .filter((c) => c.startsWith("sand_"))
+          .flatMap((c) => materialsData[c] || []);
+      } else if (cat === "food_any") {
+        list = types
+          .filter((c) => c.startsWith("food_"))
+          .flatMap((c) => materialsData[c] || []);
+      } else if (cat === "hazard_any") {
+        list = types
+          .filter((c) => c.startsWith("hazard_"))
+          .flatMap((c) => materialsData[c] || []);
+      } else if (
+        cat.startsWith("material_") ||
+        cat.startsWith("liquid_") ||
+        cat.startsWith("sand_") ||
+        cat.startsWith("food_") ||
+        cat.startsWith("hazard_")
+      ) {
+        list = materialsData[cat] || [];
+      } else if (cat === "item_any") {
+        list = types.flatMap((c) => itemsData[c] || []);
+      } else {
+        list = itemsData[cat] || [];
+      }
+
+      if (txt.includes(placeholder)) {
+        const candidates = list;
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        const chosen = candidates.length
+          ? pick.name !== undefined
+            ? pick.name
+            : pick
+          : placeholder;
+        const safeChosen = window.escapeHtml(String(chosen));
+        txt = txt.replace(
+          new RegExp(window.escapeRegExp(placeholder), "g"),
+          safeChosen
+        );
+      }
+    });
+
+    msgs.push({
+      picks: pick,
+      text: txt,
+      killed: action.killed || [],
+      killer: action.killer || [],
+      hidden: action.hidden === true,
+    });
+  }
+
+  for (const m of msgs) {
+    if (m.killed.length) {
+      m.killer.forEach((kr) => {
+        const kp = m.picks[kr];
+        kp.kills += m.killed.length;
+        if (typeof window.initGlobal === "function") {
+          window.initGlobal(kp.username);
+        }
+        if (!globalStats[kp.username]) {
+          globalStats[kp.username] = {
+            wins: 0,
+            kills: 0,
+            deaths: 0,
+            totalDays: 0,
+            maxDays: 0,
+          };
+        }
+        globalStats[kp.username].kills += m.killed.length;
+      });
+      m.killed.forEach((idx) => {
+        const v = m.picks[idx];
+        if (v && v.alive) {
+          v.alive = false;
+          v.deathDay = currentDay;
+          killedThisDay.push(v.username);
+          eliminationOrder.push(v.username);
+          if (typeof window.initGlobal === "function") {
+            window.initGlobal(v.username);
+          }
+          if (!globalStats[v.username]) {
+            globalStats[v.username] = {
+              wins: 0,
+              kills: 0,
+              deaths: 0,
+              totalDays: 0,
+              maxDays: 0,
+            };
+          }
+          globalStats[v.username].deaths++;
+        }
+      });
+      if (typeof window.saveGlobalStats === "function") {
+        window.saveGlobalStats();
+      }
+    }
+    if (m.killed.length && !m.hidden) {
+      const tempContainer = document.createElement("div");
+      let remainingText = m.text;
+      const pickMap = new Map();
+      m.picks.forEach((p) => {
+        const displayName = window.getDisplayName(p.username);
+        if (!pickMap.has(displayName)) {
+          pickMap.set(displayName, []);
+        }
+        pickMap.get(displayName).push(p);
+      });
+
+      const sortedNames = Array.from(pickMap.keys()).sort(
+        (a, b) => b.length - a.length
+      );
+      const replacements = [];
+
+      for (const displayName of sortedNames) {
+        const picks = pickMap.get(displayName);
+        let searchIndex = 0;
+        while (true) {
+          const index = remainingText.indexOf(displayName, searchIndex);
+          if (index === -1) break;
+          replacements.push({
+            index: index,
+            length: displayName.length,
+            displayName: displayName,
+            pick: picks[0],
+          });
+          searchIndex = index + 1;
+        }
+      }
+
+      replacements.sort((a, b) => {
+        if (a.index !== b.index) return a.index - b.index;
+        return b.length - a.length;
+      });
+
+      const nonOverlapping = [];
+      let lastEnd = 0;
+      replacements.forEach((repl) => {
+        if (repl.index >= lastEnd) {
+          nonOverlapping.push(repl);
+          lastEnd = repl.index + repl.length;
+        }
+      });
+
+      let currentIndex = 0;
+      nonOverlapping.forEach((repl) => {
+        if (repl.index > currentIndex) {
+          const textNode = document.createTextNode(
+            remainingText.substring(currentIndex, repl.index)
+          );
+          tempContainer.appendChild(textNode);
+        }
+
+        const p = repl.pick;
+        const safeColor = window.validateColor(p.color);
+        const nameSpan = document.createElement("span");
+        nameSpan.style.color = safeColor;
+        nameSpan.textContent = repl.displayName;
+        tempContainer.appendChild(nameSpan);
+
+        currentIndex = repl.index + repl.length;
+      });
+
+      if (currentIndex < remainingText.length) {
+        const textNode = document.createTextNode(
+          remainingText.substring(currentIndex)
+        );
+        tempContainer.appendChild(textNode);
+      }
+
+      deathEventsLog.push(tempContainer.innerHTML);
+    }
+    if (!m.hidden) {
+      const evEl = document.createElement("div");
+      const avs = document.createElement("div");
+      evEl.className = "event";
+      avs.className = "avatars";
+      m.picks.forEach((p) => {
+        const wrap = document.createElement("div");
+        wrap.className = "avatarWrap";
+        const img = document.createElement("img");
+        img.src = p.avatar;
+        wrap.append(img);
+        avs.appendChild(wrap);
+      });
+      const txtEl = document.createElement("div");
+      txtEl.className = "text";
+      let remainingText = m.text;
+      const pickMap = new Map();
+      m.picks.forEach((p) => {
+        const displayName = window.getDisplayName(p.username);
+        if (!pickMap.has(displayName)) {
+          pickMap.set(displayName, []);
+        }
+        pickMap.get(displayName).push(p);
+      });
+
+      const sortedNames = Array.from(pickMap.keys()).sort(
+        (a, b) => b.length - a.length
+      );
+      const replacements = [];
+
+      for (const displayName of sortedNames) {
+        const picks = pickMap.get(displayName);
+        let searchIndex = 0;
+        while (true) {
+          const index = remainingText.indexOf(displayName, searchIndex);
+          if (index === -1) break;
+          replacements.push({
+            index: index,
+            length: displayName.length,
+            displayName: displayName,
+            pick: picks[0],
+          });
+          searchIndex = index + 1;
+        }
+      }
+
+      replacements.sort((a, b) => {
+        if (a.index !== b.index) return a.index - b.index;
+        return b.length - a.length;
+      });
+
+      const nonOverlapping = [];
+      let lastEnd = 0;
+      replacements.forEach((repl) => {
+        if (repl.index >= lastEnd) {
+          nonOverlapping.push(repl);
+          lastEnd = repl.index + repl.length;
+        }
+      });
+
+      let currentIndex = 0;
+      nonOverlapping.forEach((repl) => {
+        if (repl.index > currentIndex) {
+          const textNode = document.createTextNode(
+            remainingText.substring(currentIndex, repl.index)
+          );
+          txtEl.appendChild(textNode);
+        }
+
+        const p = repl.pick;
+        const safeColor = window.validateColor(p.color);
+        const tooltipContainer = document.createElement("span");
+        tooltipContainer.className = "tooltip-container";
+        const nameSpan = document.createElement("span");
+        nameSpan.style.color = safeColor;
+        nameSpan.textContent = repl.displayName;
+        const tooltipBox = document.createElement("div");
+        tooltipBox.className = "tooltip-box";
+        tooltipBox.textContent = window.getUserTooltipText(
+          p.username,
+          p.kills,
+          currentDay
+        );
+        tooltipContainer.appendChild(nameSpan);
+        tooltipContainer.appendChild(tooltipBox);
+        txtEl.appendChild(tooltipContainer);
+
+        currentIndex = repl.index + repl.length;
+      });
+
+      if (currentIndex < remainingText.length) {
+        const textNode = document.createTextNode(
+          remainingText.substring(currentIndex)
+        );
+        txtEl.appendChild(textNode);
+      }
+      evEl.append(avs, txtEl);
+      eventLog.appendChild(evEl);
+      await sleep(RENDER_DELAY);
+    }
+  }
+
+  window.killedThisDay = killedThisDay;
+  window.eliminationOrder = eliminationOrder;
+  window.deathEventsLog = deathEventsLog;
+}
+
+async function nextPhase() {
+  const participants = window.participants || [];
+  const killedThisDay = window.killedThisDay || [];
+  const currentDay = window.currentDay || 1;
+  const stage = window.stage || 0;
+
+  if (participants.filter((p) => p.alive).length <= 1) {
+    window.showWinner();
+    return;
+  }
+  switch (stage) {
+    case 0:
+      await runPhase("bloodbath");
+      window.stage = 1;
+      break;
+    case 1:
+      await runPhase("day");
+      window.stage = 2;
+      break;
+    case 2:
+      if (killedThisDay.length > 0) {
+        window.showFallen(currentDay);
+        window.stage = 3;
+      } else {
+        window.stage = 3;
+        await nextPhase();
+      }
+      break;
+    case 3:
+      await runPhase("night");
+      window.currentDay = (window.currentDay || 1) + 1;
+      window.stage = 1;
+      break;
+  }
+}
+
+function backToJoin(samePlayers) {
+  const winnerScreen = document.getElementById("winnerScreen");
+  const procCont = document.getElementById("proceedContainer");
+  const eventLog = document.getElementById("eventLog");
+  const dayDisplay = document.getElementById("dayDisplay");
+  const phaseDesc = document.getElementById("phaseDesc");
+  const joinPrompt = document.getElementById("joinPrompt");
+  const playersGrid = document.getElementById("playersGrid");
+  const btnStart = document.getElementById("startButton");
+  const btnDebug = document.getElementById("debugButton");
+  const players = window.players;
+  const polymorphedPlayers = window.polymorphedPlayers || new Map();
+
+  winnerScreen.style.display = "none";
+  procCont.style.display = "none";
+  eventLog.innerHTML = "";
+  dayDisplay.textContent = "";
+  phaseDesc.textContent = "";
+  joinPrompt.style.display = "block";
+  playersGrid.style.display = "grid";
+  btnStart.style.display = "inline-block";
+  btnDebug.style.display = "inline-block";
+  btnStart.disabled = !samePlayers && players.size === 0;
+
+  if (!samePlayers) {
+    players.clear();
+    playersGrid.innerHTML = "";
+  }
+  window.gameStarted = false;
+  window.participants = [];
+  window.eliminationOrder = [];
+  window.daysSinceEvent = 0;
+  window.consecutiveNoDeaths = 0;
+  window.killedThisDay = [];
+  window.deathEventsLog = [];
+  window.currentPhaseType = null;
+  polymorphedPlayers.clear();
+}
+
+window.getStepType = getStepType;
+window.runPhase = runPhase;
+window.runEvents = runEvents;
+window.nextPhase = nextPhase;
+window.backToJoin = backToJoin;
+window.sleep = sleep;
