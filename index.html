@@ -1036,7 +1036,8 @@
 			const chosen = candidates.length
 			? (pick.name !== undefined ? pick.name : pick)
 			: placeholder;
-			txt = txt.replace(new RegExp(escapeRegExp(placeholder), 'g'), chosen);
+			const safeChosen = escapeHtml(String(chosen));
+            txt = txt.replace(new RegExp(escapeRegExp(placeholder), 'g'), safeChosen);
 		}
 		});
 
@@ -1071,15 +1072,74 @@
           saveGlobalStats();
         }
         if(m.killed.length && !m.hidden){
-          let rec=m.text;
+          const tempContainer = document.createElement('div');
+          let remainingText = m.text;
+          const pickMap = new Map();
           m.picks.forEach(p=>{
             const displayName = getDisplayName(p.username);
-            const safeDisplayName = escapeHtml(displayName);
-            const safeColor = validateColor(p.color);
-            const col=`<span style="color:${safeColor}">${safeDisplayName}</span>`;
-            rec=rec.split(displayName).join(col);
+            if (!pickMap.has(displayName)) {
+              pickMap.set(displayName, []);
+            }
+            pickMap.get(displayName).push(p);
           });
-          deathEventsLog.push(rec);
+
+          const sortedNames = Array.from(pickMap.keys()).sort((a, b) => b.length - a.length);
+          let lastIndex = 0;
+          const replacements = [];
+
+          for (const displayName of sortedNames) {
+            const picks = pickMap.get(displayName);
+            let searchIndex = 0;
+            while (true) {
+              const index = remainingText.indexOf(displayName, searchIndex);
+              if (index === -1) break;
+              replacements.push({
+                index: index,
+                length: displayName.length,
+                displayName: displayName,
+                pick: picks[0]
+              });
+              searchIndex = index + 1;
+            }
+          }
+
+          replacements.sort((a, b) => {
+            if (a.index !== b.index) return a.index - b.index;
+            return b.length - a.length;
+          });
+
+          const nonOverlapping = [];
+          let lastEnd = 0;
+          replacements.forEach(repl => {
+            if (repl.index >= lastEnd) {
+              nonOverlapping.push(repl);
+              lastEnd = repl.index + repl.length;
+            }
+          });
+
+          let currentIndex = 0;
+          nonOverlapping.forEach(repl => {
+            if (repl.index > currentIndex) {
+              const textNode = document.createTextNode(remainingText.substring(currentIndex, repl.index));
+              tempContainer.appendChild(textNode);
+            }
+
+            const p = repl.pick;
+            const safeColor = validateColor(p.color);
+            const nameSpan = document.createElement('span');
+            nameSpan.style.color = safeColor;
+            nameSpan.textContent = repl.displayName;
+            tempContainer.appendChild(nameSpan);
+
+            currentIndex = repl.index + repl.length;
+          });
+
+          if (currentIndex < remainingText.length) {
+            const textNode = document.createTextNode(remainingText.substring(currentIndex));
+            tempContainer.appendChild(textNode);
+          }
+
+          deathEventsLog.push(tempContainer.innerHTML);
         }
         if(!m.hidden){
           const evEl=document.createElement('div'), avs=document.createElement('div');
