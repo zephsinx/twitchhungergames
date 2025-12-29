@@ -731,10 +731,22 @@
       joinPrompt.style.display='none';
       participants=Array.from(players).map(u=>{
         const el=document.querySelector(`[data-username="${u}"]`);
+        if (!el) {
+          console.warn(`Player element not found for username: ${u}, using defaults`);
+          return {
+            username: u,
+            color: globalColors[u] || '#fff',
+            avatar: 'https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png',
+            alive: true,
+            kills: 0
+          };
+        }
+        const nameEl = el.querySelector('.name');
+        const imgEl = el.querySelector('img');
         return {
           username:u,
-          color:globalColors[u]||el.querySelector('.name').style.color||'#fff',
-          avatar:el.querySelector('img').src,
+          color:globalColors[u]||(nameEl?.style.color) || '#fff',
+          avatar: imgEl?.src || 'https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png',
           alive:true,
           kills:0
         };
