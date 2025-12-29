@@ -117,16 +117,30 @@ function injectFonts(config) {
   // Create new style element with data attribute
   const style = document.createElement("style");
   style.setAttribute("data-theme-fonts", "true");
-  style.textContent = `
+
+  let fontFaceCSS = "";
+
+  // Only add @font-face rules if font files are provided
+  if (config.fonts.primary.file && config.fonts.primary.file.trim() !== "") {
+    fontFaceCSS += `
     @font-face {
       font-family: '${config.fonts.primary.family}';
       src: url('${config.fonts.primary.file}') format('truetype');
-    }
+    }`;
+  }
+
+  if (
+    config.fonts.decorative.file &&
+    config.fonts.decorative.file.trim() !== ""
+  ) {
+    fontFaceCSS += `
     @font-face {
       font-family: '${config.fonts.decorative.family}';
       src: url('${config.fonts.decorative.file}') format('truetype');
-    }
-  `;
+    }`;
+  }
+
+  style.textContent = fontFaceCSS;
   document.head.appendChild(style);
 
   document.documentElement.style.setProperty(

@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Hunger Games Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
   <script src="themes.js"></script>
   <script src="theme-config.js"></script>
   <style>
@@ -460,8 +463,9 @@
     // Initialize theme on page load
     if (typeof window.applyTheme !== 'undefined' && typeof window.themeConfig !== 'undefined') {
       window.applyTheme(window.themeConfig);
-      if (deathEventsHeader && window.themeConfig.messages.deathEventsHeader) {
-        deathEventsHeader.textContent = window.themeConfig.messages.deathEventsHeader;
+      const deathEventsHeaderEl = document.getElementById('deathEventsHeader');
+      if (deathEventsHeaderEl && window.themeConfig.messages.deathEventsHeader) {
+        deathEventsHeaderEl.textContent = window.themeConfig.messages.deathEventsHeader;
       }
     }
 

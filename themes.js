@@ -96,11 +96,11 @@ const themes = {
 
       fonts: {
         primary: {
-          family: "Arial",
+          family: "Lexend",
           file: "",
         },
         decorative: {
-          family: "Arial",
+          family: "Lexend",
           file: "",
         },
       },
