@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Events JSON Schema",
+  "description": "Schema for validating the events.json file structure for the Hunger Games Simulator",
+  "type": "object",
+  "required": [
+    "bloodbath",
+    "day",
+    "night",
+    "feast",
+    "arena",
+    "generic"
+  ],
+  "properties": {
+    "bloodbath": {
+      "$ref": "#/$defs/phaseObject"
+    },
+    "day": {
+      "$ref": "#/$defs/phaseObject"
+    },
+    "night": {
+      "$ref": "#/$defs/phaseObject"
+    },
+    "feast": {
+      "$ref": "#/$defs/phaseObject"
+    },
+    "arena": {
+      "type": "array",
+      "description": "Array of special arena event phase objects",
+      "items": {
+        "$ref": "#/$defs/phaseObject"
+      },
+      "minItems": 1
+    },
+    "generic": {
+      "$ref": "#/$defs/genericEventsObject"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "eventObject": {
+      "type": "object",
+      "required": [
+        "msg",
+        "tributes"
+      ],
+      "properties": {
+        "msg": {
+          "type": "string",
+          "description": "Template message with placeholders like {0}, {1} for players and {weapon_any}, {liquid_any}, etc. for items"
+        },
+        "tributes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of players involved in this event"
+        },
+        "killed": {
+          "type": "array",
+          "description": "Array of tribute indices (0-based) indicating which players die. All values must be less than the 'tributes' count.",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "uniqueItems": true
+        },
+        "killer": {
+          "description": "Array of tribute indices (0-based) indicating which players get kill credit, or null for environmental deaths. All values must be less than the 'tributes' count.",
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "If true, this event is hidden from the event log"
+        },
+        "weight": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Weight for selection probability (higher weight = more likely to be selected)"
+        },
+        "customHandler": {
+          "type": "string",
+          "description": "Name of custom event handler function in event-handlers.js"
+        },
+        "order": {
+          "type": "integer",
+          "description": "Order value for special event sequencing (e.g., -1 for early execution)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "phaseObject": {
+      "type": "object",
+      "required": [
+        "title",
+        "description",
+        "color",
+        "nonfatal",
+        "fatal"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the phase (may contain {0} placeholder for day number)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description text for the phase"
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Hex color code for the phase (format: #RRGGBB)"
+        },
+        "nonfatal": {
+          "type": "array",
+          "description": "Array of non-fatal events",
+          "items": {
+            "$ref": "#/$defs/eventObject"
+          },
+          "minItems": 0
+        },
+        "fatal": {
+          "type": "array",
+          "description": "Array of fatal events",
+          "items": {
+            "$ref": "#/$defs/eventObject"
+          },
+          "minItems": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "genericEventsObject": {
+      "type": "object",
+      "required": [
+        "nonfatal",
+        "fatal"
+      ],
+      "properties": {
+        "nonfatal": {
+          "type": "array",
+          "description": "Array of generic non-fatal events that can be used across phases",
+          "items": {
+            "$ref": "#/$defs/eventObject"
+          },
+          "minItems": 0
+        },
+        "fatal": {
+          "type": "array",
+          "description": "Array of generic fatal events that can be used across phases",
+          "items": {
+            "$ref": "#/$defs/eventObject"
+          },
+          "minItems": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

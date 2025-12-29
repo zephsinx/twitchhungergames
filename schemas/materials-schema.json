@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Materials JSON Schema",
+  "description": "Schema for validating the materials.json file structure for the Noita Hunger Games Simulator",
+  "type": "object",
+  "additionalProperties": {
+    "type": "array",
+    "description": "Array of material names in this category",
+    "items": {
+      "type": "string",
+      "description": "Name of a material"
+    },
+    "minItems": 0,
+    "uniqueItems": true
+  }
+}
