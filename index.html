@@ -457,10 +457,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/tmi.js@latest/dist/tmi.min.js"></script>
   <script>
-    // escape helper
     function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 
-    // Security utility functions
     function escapeHtml(text) {
       if (typeof text !== 'string') return '';
       const div = document.createElement('div');
@@ -470,13 +468,10 @@
 
     function validateColor(color) {
       if (!color || typeof color !== 'string') return '#fff';
-      // Remove whitespace
       color = color.trim();
-      // Check for hex format (#RRGGBB or #RGB)
       if (/^#[0-9A-Fa-f]{3}$/.test(color) || /^#[0-9A-Fa-f]{6}$/.test(color)) {
         return color;
       }
-      // Check for rgb() or rgba() format
       const rgbMatch = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)$/);
       if (rgbMatch) {
         const r = Math.max(0, Math.min(255, parseInt(rgbMatch[1])));
@@ -484,11 +479,9 @@
         const b = Math.max(0, Math.min(255, parseInt(rgbMatch[3])));
         return `rgb(${r}, ${g}, ${b})`;
       }
-      // Invalid color, return default
       return '#fff';
     }
 
-    // Initialize theme on page load
     if (typeof window.applyTheme !== 'undefined' && typeof window.themeConfig !== 'undefined') {
       window.applyTheme(window.themeConfig);
       const deathEventsHeaderEl = document.getElementById('deathEventsHeader');
@@ -508,7 +501,6 @@
     }
     function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-    // global stats
     const STORAGE_PREFIX = (window.themeConfig && window.themeConfig.storagePrefix) || 'game';
 
     let globalStats  = JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}GlobalStats`)  || '{}');
@@ -542,10 +534,8 @@
         currentPhaseType   = null,
         leaderboardSort    = { key:null, asc:true };
 
-    // Make gameStarted accessible globally for theme switching
     window.gameStarted = false;
 
-    // DOM refs
     const chInput        = document.getElementById('channelInput');
     const btnConnect     = document.getElementById('connectButton');
     const status         = document.getElementById('status');
@@ -655,7 +645,6 @@
       connect(ch);
     });
 
-    // Theme selector
     const themeSelector = document.getElementById('themeSelector');
     if (themeSelector) {
       if (typeof window.getAvailableThemes === 'function') {
@@ -677,7 +666,6 @@
           });
         }
       }
-      // Load saved theme preference
       let currentTheme = localStorage.getItem('selectedTheme') || (typeof defaultTheme !== 'undefined' ? defaultTheme : 'noita');
       if (themeSelector.querySelector(`option[value="${currentTheme}"]`)) {
         themeSelector.value = currentTheme;
@@ -695,7 +683,6 @@
             try {
               await loadGameData(newTheme);
               currentTheme = newTheme;
-              // Update theme-specific UI elements
               if (deathEventsHeader && window.themeConfig && window.themeConfig.messages.deathEventsHeader) {
                 deathEventsHeader.textContent = window.themeConfig.messages.deathEventsHeader;
               }
@@ -942,7 +929,6 @@
         pool = pool.filter(a=>a.tributes<=aliveSet.size);
         if(!pool.length) break;
 
-        // Calculate total weight
         let totalWeight = 0;
         pool.forEach(action => {
           const weight = action.weight !== undefined ? action.weight : 1;
@@ -959,7 +945,6 @@
           break;
         }
 
-        // Weighted random selection using cumulative distribution
         const random = Math.random() * totalWeight;
         let cumulative = 0;
         let action = null;
@@ -1054,7 +1039,6 @@
 
       for(const m of msgs){
         if(m.killed.length){
-          // track kills/deaths
           m.killer.forEach(kr=>{
             const kp=m.picks[kr];
             kp.kills+=m.killed.length;
@@ -1099,8 +1083,6 @@
           });
           const txtEl=document.createElement('div');
           txtEl.className='text';
-          // Build DOM structure safely instead of using innerHTML
-          // Process text and replace displayNames with DOM elements
           let remainingText = m.text;
           const pickMap = new Map();
           m.picks.forEach(p=>{
@@ -1111,13 +1093,10 @@
             pickMap.get(displayName).push(p);
           });
 
-          // Process text and replace displayNames with DOM elements
-          // Sort names by length descending to handle longer names first (avoid partial matches)
           const sortedNames = Array.from(pickMap.keys()).sort((a, b) => b.length - a.length);
           let lastIndex = 0;
           const replacements = [];
 
-          // Find all occurrences of each displayName
           for (const displayName of sortedNames) {
             const picks = pickMap.get(displayName);
             let searchIndex = 0;
@@ -1128,19 +1107,17 @@
                 index: index,
                 length: displayName.length,
                 displayName: displayName,
-                pick: picks[0] // Use first pick if multiple have same displayName
+                pick: picks[0]
               });
               searchIndex = index + 1;
             }
           }
 
-          // Sort replacements by index, then by length descending (prefer longer matches)
           replacements.sort((a, b) => {
             if (a.index !== b.index) return a.index - b.index;
-            return b.length - a.length; // Longer matches first at same index
+            return b.length - a.length;
           });
 
-          // Remove overlapping replacements (keep longer ones)
           const nonOverlapping = [];
           let lastEnd = 0;
           replacements.forEach(repl => {
@@ -1150,16 +1127,13 @@
             }
           });
 
-          // Build DOM structure
           let currentIndex = 0;
           nonOverlapping.forEach(repl => {
-            // Add text before the match
             if (repl.index > currentIndex) {
               const textNode = document.createTextNode(remainingText.substring(currentIndex, repl.index));
               txtEl.appendChild(textNode);
             }
 
-            // Add tooltip element for the displayName
             const p = repl.pick;
             const safeColor = validateColor(p.color);
             const tooltipContainer = document.createElement('span');
@@ -1177,7 +1151,6 @@
             currentIndex = repl.index + repl.length;
           });
 
-          // Add remaining text
           if (currentIndex < remainingText.length) {
             const textNode = document.createTextNode(remainingText.substring(currentIndex));
             txtEl.appendChild(textNode);
@@ -1254,19 +1227,13 @@
         placementsGrid.appendChild(wrap);
       });
 
-      // Clear and rebuild death log using DOM methods for security
-      deathLogEl.textContent = ''; // Clear existing content
+      deathLogEl.textContent = '';
       deathEventsLog.forEach((logEntry, index) => {
         if (index > 0) {
-          // Add line break between entries
           deathLogEl.appendChild(document.createElement('br'));
         }
-        // Create a container for this log entry
-        // Since logEntry already contains HTML (with escaped user data), we need to parse it safely
-        // Use a temporary div to parse the HTML, then move nodes
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = logEntry; // Safe because we escaped user data when building deathEventsLog
-        // Move all child nodes to deathLogEl
+        tempDiv.innerHTML = logEntry;
         while (tempDiv.firstChild) {
           deathLogEl.appendChild(tempDiv.firstChild);
         }
@@ -1314,7 +1281,6 @@
 	function addPlayer(u,c){
 		initGlobal(u);
 
-		// Validate and sanitize color input to prevent XSS
       globalColors[u] = validateColor(c);
 
 		var color = globalColors[u];
@@ -1337,13 +1303,12 @@
 		const brightness = r * 0.299 + g * 0.587 + b * 0.114;
 
 		if (brightness < 60) {
-			// make color 50% brighter
 			r = Math.min(255, Math.floor(r * 1.5));
-			g = Math.min(255, Math.floor(g * 1.5));
-			b = Math.min(255, Math.floor(b * 1.5));
-			globalColors[u] = `rgb(${r}, ${g}, ${b})`;
-			c = globalColors[u];
-		}
+        g = Math.min(255, Math.floor(g * 1.5));
+        b = Math.min(255, Math.floor(b * 1.5));
+        globalColors[u] = `rgb(${r}, ${g}, ${b})`;
+        c = globalColors[u];
+      }
 
 
 		saveGlobalColors();
@@ -1375,9 +1340,8 @@
 		playersGrid.appendChild(cont);
 	}
 
-	function addFakePlayer(u,c){
-		initGlobal(u);
-		// Validate and sanitize color input to prevent XSS
+    function addFakePlayer(u, c) {
+      initGlobal(u);
       globalColors[u] = validateColor(c);
 
 		var color = globalColors[u];
@@ -1400,13 +1364,12 @@
 		const brightness = r * 0.299 + g * 0.587 + b * 0.114;
 
 		if (brightness < 60) {
-			// make color 50% brighter
 			r = Math.min(255, Math.floor(r * 1.5));
-			g = Math.min(255, Math.floor(g * 1.5));
-			b = Math.min(255, Math.floor(b * 1.5));
-			globalColors[u] = `rgb(${r}, ${g}, ${b})`;
-			c = globalColors[u];
-		}
+        g = Math.min(255, Math.floor(g * 1.5));
+        b = Math.min(255, Math.floor(b * 1.5));
+        globalColors[u] = `rgb(${r}, ${g}, ${b})`;
+        c = globalColors[u];
+      }
 
 		saveGlobalColors();
 		const cont=document.createElement('div');
