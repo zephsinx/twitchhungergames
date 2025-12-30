@@ -41,10 +41,28 @@ async function runPhase(type) {
     window.currentPhaseType = type;
   }
   if (step === "feast") {
+    if (!window.usedFeastIndices) {
+      window.usedFeastIndices = [];
+    }
     const feastEvents = Array.isArray(eventsData.feast)
       ? eventsData.feast
       : [eventsData.feast];
-    const ev = feastEvents[Math.floor(Math.random() * feastEvents.length)];
+    let availableFeastIndices = feastEvents
+      .map((_, idx) => idx)
+      .filter((idx) => !window.usedFeastIndices.includes(idx));
+
+    if (availableFeastIndices.length === 0) {
+      // All feasts used, reset tracking
+      window.usedFeastIndices = [];
+      availableFeastIndices = feastEvents.map((_, idx) => idx);
+    }
+
+    const randomIndex =
+      availableFeastIndices[
+        Math.floor(Math.random() * availableFeastIndices.length)
+      ];
+    window.usedFeastIndices.push(randomIndex);
+    const ev = feastEvents[randomIndex];
     phaseDesc.textContent = ev.description;
     dayDisplay.textContent = ev.title;
     const eventColor = ev.color || "#ffffff";
@@ -53,8 +71,25 @@ async function runPhase(type) {
       : eventColor;
     await runEvents(ev);
   } else if (step === "arena") {
-    const ev =
-      eventsData.arena[Math.floor(Math.random() * eventsData.arena.length)];
+    if (!window.usedArenaIndices) {
+      window.usedArenaIndices = [];
+    }
+    let availableArenaIndices = eventsData.arena
+      .map((_, idx) => idx)
+      .filter((idx) => !window.usedArenaIndices.includes(idx));
+
+    if (availableArenaIndices.length === 0) {
+      // All arenas used, reset tracking
+      window.usedArenaIndices = [];
+      availableArenaIndices = eventsData.arena.map((_, idx) => idx);
+    }
+
+    const randomIndex =
+      availableArenaIndices[
+        Math.floor(Math.random() * availableArenaIndices.length)
+      ];
+    window.usedArenaIndices.push(randomIndex);
+    const ev = eventsData.arena[randomIndex];
     phaseDesc.textContent = ev.description;
     dayDisplay.textContent = ev.title;
     const eventColor = ev.color || "#ffffff";
@@ -630,6 +665,8 @@ function backToJoin(samePlayers) {
   window.killedThisDay = [];
   window.deathEventsLog = [];
   window.currentPhaseType = null;
+  window.usedFeastIndices = [];
+  window.usedArenaIndices = [];
   polymorphedPlayers.clear();
 
   if (typeof window.updateHeaderForGameState === "function") {

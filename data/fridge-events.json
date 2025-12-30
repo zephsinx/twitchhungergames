@@ -939,11 +939,6 @@
             "color": "#ff4444",
             "nonfatal": [
                 {
-                    "msg": "{0} grabs supplies from the warm leftovers.",
-                    "tributes": 1,
-                    "weight": 1.3
-                },
-                {
                     "msg": "{0} and {1} fight over a piece of pepperoni. {0} wins.",
                     "tributes": 2
                 },
@@ -952,214 +947,95 @@
                     "tributes": 2
                 },
                 {
-                    "msg": "{0} takes what they need and retreats.",
-                    "tributes": 1,
-                    "weight": 1.3
-                },
-                {
-                    "msg": "{0} and {1} agree to split the pizza crust fairly.",
-                    "tributes": 2,
-                    "weight": 1.2
-                },
-                {
-                    "msg": "{0} sneaks away with some garlic bread while everyone fights.",
-                    "tributes": 1,
-                    "weight": 1.2
-                },
-                {
-                    "msg": "{0}, {1}, and {2} form a temporary truce to raid the container together.",
-                    "tributes": 3,
-                    "weight": 0.7
-                },
-                {
                     "msg": "{0} uses the chaos to steal {weapon_any} from {1}.",
+                    "tributes": 2
+                }
+            ],
+            "fatal": []
+        },
+        {
+            "title": "Grocery Delivery",
+            "description": "Fresh groceries have arrived. New supplies rain down from above as bags are unpacked.",
+            "color": "#32cd32",
+            "nonfatal": [
+                {
+                    "msg": "{0} and {1} race to claim a fresh strawberry. {0} gets there first.",
                     "tributes": 2
                 },
                 {
-                    "msg": "{0} gorges themselves on warm pasta.",
-                    "tributes": 1,
-                    "weight": 1.2
+                    "msg": "{0} and {1} race to claim a fresh strawberry. {1} gets there first.",
+                    "tributes": 2
                 },
                 {
-                    "msg": "{0} fills their pockets with breadcrumbs.",
-                    "tributes": 1,
-                    "weight": 1.3
+                    "msg": "{0} finds {weapon_any} that fell from a grocery bag.",
+                    "tributes": 1
                 },
                 {
-                    "msg": "{0} and {1} get into a food fight with mashed potatoes.",
-                    "tributes": 2,
-                    "weight": 0.8
+                    "msg": "{0} and {1} establish a base camp in the fresh produce section.",
+                    "tributes": 2
                 },
                 {
-                    "msg": "{0} slips away unnoticed with the best scraps.",
-                    "tributes": 1,
-                    "weight": 1.2
-                },
-                {
-                    "msg": "{0} raids the Chinese takeout container and emerges with a fortune.",
-                    "tributes": 1,
-                    "weight": 0.8
-                },
-                {
-                    "msg": "{0} and {1} coordinate a pincer attack on the Thanksgiving leftovers.",
-                    "tributes": 2,
-                    "weight": 0.7
-                },
-                {
-                    "msg": "{0} hoards an entire grain of rice and refuses to share.",
-                    "tributes": 1,
-                    "weight": 1.2
-                },
-                {
-                    "msg": "{0}, {1}, and {2} barter scraps like seasoned merchants.",
-                    "tributes": 3,
-                    "weight": 0.7
-                },
-                {
-                    "msg": "{0} discovers the mac and cheese is still warm and claims it as territory.",
-                    "tributes": 1,
-                    "weight": 0.9
+                    "msg": "{0} and {1} form an alliance over a shared cheese wheel discovery.",
+                    "tributes": 2
                 }
             ],
-            "fatal": [
+            "fatal": []
+        },
+        {
+            "title": "Midnight Snack Raid",
+            "description": "A human hand reaches in, searching for a midnight snack. Chaos erupts as the fridge is disturbed.",
+            "color": "#191970",
+            "nonfatal": [
                 {
-                    "msg": "{0} is killed at the feast by {1} using {weapon_any}.",
-                    "tributes": 2,
-                    "killed": [
-                        0
-                    ],
-                    "killer": [
-                        1
-                    ]
+                    "msg": "{0} and {1} dive for cover when the light turns on.",
+                    "tributes": 2
                 },
                 {
-                    "msg": "{0} eliminates {1} at the feast with a chopstick through the heart.",
-                    "tributes": 2,
-                    "killed": [
-                        1
-                    ],
-                    "killer": [
-                        0
-                    ]
+                    "msg": "{0} and {1} cling to each other as containers shift around them.",
+                    "tributes": 2
                 },
                 {
-                    "msg": "{0}, {1}, and {2} ambush {3} at the feast.",
-                    "tributes": 4,
-                    "killed": [
-                        3
-                    ],
-                    "killer": [
-                        0,
-                        1,
-                        2
-                    ],
-                    "weight": 0.4
+                    "msg": "{0} and {1} form a pact to warn each other of future raids.",
+                    "tributes": 2
                 },
                 {
-                    "msg": "{0} shoves {1} into the still-hot gravy.",
-                    "tributes": 2,
-                    "killed": [
-                        1
-                    ],
-                    "killer": [
-                        0
-                    ],
-                    "weight": 0.7
+                    "msg": "{0} steals {weapon_any} while everyone else panics.",
+                    "tributes": 1
                 },
                 {
-                    "msg": "{0} and {1} fight to the death over the last meatball. {0} wins.",
-                    "tributes": 2,
-                    "killed": [
-                        1
-                    ],
-                    "killer": [
-                        0
-                    ]
-                },
-                {
-                    "msg": "{0} and {1} fight to the death over the last meatball. {1} wins.",
-                    "tributes": 2,
-                    "killed": [
-                        0
-                    ],
-                    "killer": [
-                        1
-                    ]
-                },
-                {
-                    "msg": "{0} chokes on their feast loot while fleeing.",
-                    "tributes": 1,
-                    "killed": [
-                        0
-                    ],
-                    "killer": null,
-                    "weight": 0.6
-                },
-                {
-                    "msg": "{0}, {1}, {2}, and {3} descend into a free-for-all. Only {0} survives.",
-                    "tributes": 4,
-                    "killed": [
-                        1,
-                        2,
-                        3
-                    ],
-                    "killer": [
-                        0
-                    ],
-                    "weight": 0.3
-                },
-                {
-                    "msg": "{0} is scalded by the still-steaming soup.",
-                    "tributes": 1,
-                    "killed": [
-                        0
-                    ],
-                    "killer": null,
-                    "weight": 0.7
-                },
-                {
-                    "msg": "{0} is trampled in the stampede toward the fresh bread.",
-                    "tributes": 1,
-                    "killed": [
-                        0
-                    ],
-                    "killer": null,
-                    "weight": 0.6
-                },
-                {
-                    "msg": "{0} and {1} agree to a truce. {0} immediately breaks it.",
-                    "tributes": 2,
-                    "killed": [
-                        1
-                    ],
-                    "killer": [
-                        0
-                    ],
-                    "weight": 0.6
-                },
-                {
-                    "msg": "{0} betrays their alliance with {1} for a piece of pepperoni.",
-                    "tributes": 2,
-                    "killed": [
-                        1
-                    ],
-                    "killer": [
-                        0
-                    ],
-                    "weight": 0.6
-                },
-                {
-                    "msg": "{0}, {1}, and {2} are crushed when the takeout container lid falls shut.",
-                    "tributes": 3,
-                    "killed": [
-                        0,
-                        1,
-                        2
-                    ],
-                    "killer": null,
-                    "weight": 0.3
+                    "msg": "{0} and {1} find themselves on the same shelf after the chaos.",
+                    "tributes": 2
                 }
-            ]
+            ],
+            "fatal": []
+        },
+        {
+            "title": "Holiday Leftovers Bonanza",
+            "description": "The fridge overflows with holiday feast remnants. A cornucopia of chaos awaits.",
+            "color": "#daa520",
+            "nonfatal": [
+                {
+                    "msg": "{0} and {1} share a piece of holiday ham in an unlikely truce.",
+                    "tributes": 2
+                },
+                {
+                    "msg": "{0} finds {weapon_any} stuck in the cranberry sauce.",
+                    "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} establish territory in the turkey leftovers.",
+                    "tributes": 2
+                },
+                {
+                    "msg": "{0} and {1} navigate through towers of Tupperware containers.",
+                    "tributes": 2
+                },
+                {
+                    "msg": "{0} and {1} form an alliance based on shared love of sweet potato casserole.",
+                    "tributes": 2
+                }
+            ],
+            "fatal": []
         }
     ],
     "arena": [

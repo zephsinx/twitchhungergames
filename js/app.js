@@ -29,6 +29,26 @@ const adjectives = [
   "Mystic",
   "Crimson",
   "Shadow",
+  "Blazing",
+  "Frozen",
+  "Ancient",
+  "Vengeful",
+  "Spectral",
+  "Hollow",
+  "Ashen",
+  "Verdant",
+  "Obsidian",
+  "Azure",
+  "Pale",
+  "Dark",
+  "Wild",
+  "Lone",
+  "Storm",
+  "Night",
+  "Void",
+  "Grim",
+  "Cursed",
+  "Feral",
 ];
 const nouns = [
   "Wolf",
@@ -41,13 +61,33 @@ const nouns = [
   "Stalker",
   "Hunter",
   "Wraith",
+  "Serpent",
+  "Hawk",
+  "Bear",
+  "Shade",
+  "Specter",
+  "Knight",
+  "Mage",
+  "Reaper",
+  "Crow",
+  "Lynx",
+  "Owl",
+  "Jackal",
+  "Golem",
+  "Warden",
+  "Ranger",
+  "Blade",
+  "Tempest",
+  "Flame",
+  "Frost",
+  "Thorn",
 ];
 
 function randomName() {
   return (
     adjectives[Math.floor(Math.random() * adjectives.length)] +
     nouns[Math.floor(Math.random() * nouns.length)] +
-    Math.floor(Math.random() * 1000)
+    Math.floor(Math.random() * 100)
   );
 }
 
@@ -223,7 +263,7 @@ function initializeData() {
   loadGameData(currentTheme).catch((err) => {
     console.error("Initial data load failed:", err);
   });
-  
+
   updateHeaderForGameState();
 }
 
@@ -351,12 +391,12 @@ function connect(ch) {
 
 function updateHeaderForGameState() {
   const isGameStarted = window.gameStarted === true;
-  
+
   const themeSelectorEl = document.getElementById("themeSelector");
   const chInputEl = document.getElementById("channelInput");
   const btnConnectEl = document.getElementById("connectButton");
   const btnRestartEl = document.getElementById("restartButton");
-  
+
   if (themeSelectorEl) {
     themeSelectorEl.style.display = isGameStarted ? "none" : "block";
   }
@@ -375,7 +415,11 @@ window.updateHeaderForGameState = updateHeaderForGameState;
 
 if (btnRestart) {
   btnRestart.addEventListener("click", () => {
-    if (confirm("Are you sure you want to restart? This will reset the current game.")) {
+    if (
+      confirm(
+        "Are you sure you want to restart? This will reset the current game."
+      )
+    ) {
       window.backToJoin(false);
     }
   });
@@ -425,6 +469,8 @@ btnStart.addEventListener("click", () => {
   killedThisDay = [];
   deathEventsLog = [];
   currentPhaseType = null;
+  const usedFeastIndices = [];
+  const usedArenaIndices = [];
 
   window.participants = participants;
   window.eliminationOrder = eliminationOrder;
@@ -435,6 +481,8 @@ btnStart.addEventListener("click", () => {
   window.killedThisDay = killedThisDay;
   window.deathEventsLog = deathEventsLog;
   window.currentPhaseType = currentPhaseType;
+  window.usedFeastIndices = usedFeastIndices;
+  window.usedArenaIndices = usedArenaIndices;
 
   playersGrid.style.display = "none";
   btnStart.style.display = "none";

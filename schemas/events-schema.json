@@ -22,7 +22,19 @@
       "$ref": "#/$defs/phaseObject"
     },
     "feast": {
-      "$ref": "#/$defs/phaseObject"
+      "description": "Feast event(s) - can be a single phase object or array of phase objects",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/phaseObject"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/phaseObject"
+          },
+          "minItems": 1
+        }
+      ]
     },
     "arena": {
       "type": "array",
