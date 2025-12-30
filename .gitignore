@@ -7,5 +7,7 @@
 docs/
 scripts/
 templates/
+dist/
+node_modules/
 
 requirements.txt
