@@ -31,6 +31,7 @@ function getUserTooltipText(u, runKills, runDays) {
   if (typeof window.initGlobal === "function") {
     window.initGlobal(u);
   }
+  const displayName = getDisplayName(u);
   const globalStats = window.globalStats || {};
   const g = globalStats[u] || {
     wins: 0,
@@ -39,7 +40,7 @@ function getUserTooltipText(u, runKills, runDays) {
     totalDays: 0,
     maxDays: 0,
   };
-  return `Run Stats:\nKills: ${runKills}\nDays Survived: ${runDays}\n---\nGlobal Stats:\nWins: ${g.wins}\nKills: ${g.kills}\nDeaths: ${g.deaths}\nMax Days: ${g.maxDays}\nTotal Days: ${g.totalDays}`;
+  return `${displayName}\n---\nRun Stats:\nKills: ${runKills}\nDays Survived: ${runDays}\n---\nGlobal Stats:\nWins: ${g.wins}\nKills: ${g.kills}\nDeaths: ${g.deaths}\nMax Days: ${g.maxDays}\nTotal Days: ${g.totalDays}`;
 }
 
 function getDisplayName(username) {
@@ -87,20 +88,24 @@ function showFallen(day) {
     const p = participants.find((x) => x.username === u);
     const displayName = getDisplayName(u);
     const wrap = document.createElement("div");
-    wrap.className = "avatarWrap";
+    wrap.className = "avatarWrap has-dead";
     const img = document.createElement("img");
     img.src = p.avatar;
     img.className = "dead";
+    const imgTooltipContainer = document.createElement("div");
+    imgTooltipContainer.className = "tooltip-container";
+    const imgTooltipBox = document.createElement("div");
+    imgTooltipBox.className = "tooltip-box";
+    imgTooltipBox.textContent = getUserTooltipText(u, p.kills, day);
+    imgTooltipContainer.appendChild(img);
+    imgTooltipContainer.appendChild(imgTooltipBox);
     const nmC = document.createElement("div");
-    nmC.className = "tooltip-container text";
+    nmC.className = "text";
     const sp = document.createElement("span");
     sp.textContent = displayName;
     sp.style.color = p.color;
-    const tip = document.createElement("div");
-    tip.className = "tooltip-box";
-    tip.innerText = getUserTooltipText(u, p.kills, day);
-    nmC.append(sp, tip);
-    wrap.append(img, nmC);
+    nmC.append(sp);
+    wrap.append(imgTooltipContainer, nmC);
     grid.appendChild(wrap);
   });
   eventLog.append(txt, grid);
@@ -203,6 +208,43 @@ function showWinner() {
     title = window.themeConfig.messages.noSurvivors;
   }
   winnerAvatar.src = avatar;
+
+  if (
+    !winnerAvatar.parentElement ||
+    !winnerAvatar.parentElement.classList.contains("tooltip-container")
+  ) {
+    const winnerTooltipContainer = document.createElement("div");
+    winnerTooltipContainer.className = "tooltip-container";
+    const winnerTooltipBox = document.createElement("div");
+    winnerTooltipBox.className = "tooltip-box";
+    if (surv.length === 1) {
+      winnerTooltipBox.textContent = getUserTooltipText(
+        surv[0].username,
+        surv[0].kills,
+        currentDay - 1
+      );
+    } else {
+      winnerTooltipBox.textContent = getUserTooltipText("", 0, 0);
+    }
+    winnerAvatar.parentNode.insertBefore(winnerTooltipContainer, winnerAvatar);
+    winnerTooltipContainer.appendChild(winnerAvatar);
+    winnerTooltipContainer.appendChild(winnerTooltipBox);
+  } else {
+    const existingTooltip =
+      winnerAvatar.parentElement.querySelector(".tooltip-box");
+    if (existingTooltip) {
+      if (surv.length === 1) {
+        existingTooltip.textContent = getUserTooltipText(
+          surv[0].username,
+          surv[0].kills,
+          currentDay - 1
+        );
+      } else {
+        existingTooltip.textContent = getUserTooltipText("", 0, 0);
+      }
+    }
+  }
+
   winnerText.textContent = title;
   placementsGrid.innerHTML = "";
 
@@ -219,29 +261,33 @@ function showWinner() {
     wrap.className = "placement" + (p.alive ? "" : " dead");
     const img = document.createElement("img");
     img.src = p.avatar;
-    const rank = document.createElement("div");
-    rank.className = "rank";
-    rank.textContent = `#${i + 1}`;
-    const nmC = document.createElement("div");
-    nmC.className = "name tooltip-container";
-    const sp = document.createElement("span");
-    sp.textContent = displayName;
-    sp.style.color = p.color;
-    const tip = document.createElement("div");
-    tip.className = "tooltip-box";
-    tip.innerText = getUserTooltipText(
+    const imgTooltipContainer = document.createElement("div");
+    imgTooltipContainer.className = "tooltip-container";
+    const imgTooltipBox = document.createElement("div");
+    imgTooltipBox.className = "tooltip-box";
+    imgTooltipBox.textContent = getUserTooltipText(
       u,
       p.kills,
       p.deathDay || currentDay - 1
     );
-    nmC.append(sp, tip);
+    imgTooltipContainer.appendChild(img);
+    imgTooltipContainer.appendChild(imgTooltipBox);
+    const rank = document.createElement("div");
+    rank.className = "rank";
+    rank.textContent = `#${i + 1}`;
+    const nmC = document.createElement("div");
+    nmC.className = "name";
+    const sp = document.createElement("span");
+    sp.textContent = displayName;
+    sp.style.color = p.color;
+    nmC.append(sp);
     const kc = document.createElement("div");
     kc.className = "kills";
     const killsLabel =
       (window.themeConfig && window.themeConfig.messages.killsLabel) ||
       "Kills:";
     kc.textContent = `${killsLabel} ${p.kills}`;
-    wrap.append(img, rank, nmC, kc);
+    wrap.append(imgTooltipContainer, rank, nmC, kc);
     placementsGrid.appendChild(wrap);
   });
 
@@ -369,16 +415,20 @@ function addPlayer(u, c) {
     .then((url) => {
       if (url.startsWith("http")) img.src = url;
     });
+  const imgTooltipContainer = document.createElement("div");
+  imgTooltipContainer.className = "tooltip-container";
+  const imgTooltipBox = document.createElement("div");
+  imgTooltipBox.className = "tooltip-box";
+  imgTooltipBox.textContent = getUserTooltipText(u, 0, 0);
+  imgTooltipContainer.appendChild(img);
+  imgTooltipContainer.appendChild(imgTooltipBox);
   const nmC = document.createElement("div");
-  nmC.className = "tooltip-container name";
+  nmC.className = "name";
   const sp = document.createElement("span");
   sp.textContent = u;
   sp.style.color = c || "#fff";
-  const tip = document.createElement("div");
-  tip.className = "tooltip-box";
-  tip.innerText = getUserTooltipText(u, 0, 0);
-  nmC.append(sp, tip);
-  cont.append(btn, img, nmC);
+  nmC.append(sp);
+  cont.append(btn, imgTooltipContainer, nmC);
   playersGrid.appendChild(cont);
 }
 
@@ -449,16 +499,20 @@ function addFakePlayer(u, c) {
   });
   const img = document.createElement("img");
   img.src = fakeAvatars[Math.floor(Math.random() * fakeAvatars.length)];
+  const imgTooltipContainer = document.createElement("div");
+  imgTooltipContainer.className = "tooltip-container";
+  const imgTooltipBox = document.createElement("div");
+  imgTooltipBox.className = "tooltip-box";
+  imgTooltipBox.textContent = getUserTooltipText(u, 0, 0);
+  imgTooltipContainer.appendChild(img);
+  imgTooltipContainer.appendChild(imgTooltipBox);
   const nmC = document.createElement("div");
-  nmC.className = "tooltip-container name";
+  nmC.className = "name";
   const sp = document.createElement("span");
   sp.textContent = u;
   sp.style.color = c || "#fff";
-  const tip = document.createElement("div");
-  tip.className = "tooltip-box";
-  tip.innerText = getUserTooltipText(u, 0, 0);
-  nmC.append(sp, tip);
-  cont.append(btn, img, nmC);
+  nmC.append(sp);
+  cont.append(btn, imgTooltipContainer, nmC);
   playersGrid.appendChild(cont);
 }
 

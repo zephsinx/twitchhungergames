@@ -415,9 +415,26 @@ async function runEvents(evObj) {
       m.picks.forEach((p) => {
         const wrap = document.createElement("div");
         wrap.className = "avatarWrap";
+        if (!p.alive) {
+          wrap.classList.add("has-dead");
+        }
         const img = document.createElement("img");
         img.src = p.avatar;
-        wrap.append(img);
+        if (!p.alive) {
+          img.className = "dead";
+        }
+        const imgTooltipContainer = document.createElement("div");
+        imgTooltipContainer.className = "tooltip-container";
+        const imgTooltipBox = document.createElement("div");
+        imgTooltipBox.className = "tooltip-box";
+        imgTooltipBox.textContent = window.getUserTooltipText(
+          p.username,
+          p.kills,
+          currentDay
+        );
+        imgTooltipContainer.appendChild(img);
+        imgTooltipContainer.appendChild(imgTooltipBox);
+        wrap.append(imgTooltipContainer);
         avs.appendChild(wrap);
       });
       const txtEl = document.createElement("div");

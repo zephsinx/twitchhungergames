@@ -149,6 +149,7 @@ body {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .avatarWrap img {
@@ -160,6 +161,25 @@ body {
 
 .avatarWrap img.dead {
   filter: grayscale(100%);
+  opacity: var(--death-opacity, 0.6);
+  border: var(--death-border-width, 2px) solid var(--death-border-color, #f00);
+  box-shadow: 0 0 var(--death-shadow-size, 6px)
+    var(--death-shadow-color, rgba(255, 0, 0, 0.5));
+}
+
+.avatarWrap.has-dead::after {
+  content: var(--death-overlay-icon, "✕");
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--death-overlay-color, #f00);
+  font-size: var(--death-overlay-size, 1.8em);
+  font-weight: bold;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.9),
+    0 0 8px var(--death-overlay-glow, rgba(255, 0, 0, 0.8));
+  pointer-events: none;
+  z-index: 10;
 }
 
 .text {
@@ -217,11 +237,30 @@ body {
   text-align: center;
   transition: opacity 0.3s;
   width: 120px;
+  position: relative;
 }
 
 .placement.dead img {
   filter: grayscale(100%);
-  opacity: 0.5;
+  opacity: var(--death-opacity, 0.6);
+  border: var(--death-border-width, 2px) solid var(--death-border-color, #f00);
+  box-shadow: 0 0 var(--death-shadow-size-large, 8px)
+    var(--death-shadow-color, rgba(255, 0, 0, 0.5));
+}
+
+.placement.dead::after {
+  content: var(--death-overlay-icon, "✕");
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--death-overlay-color, #f00);
+  font-size: var(--death-overlay-size-large, 2.5em);
+  font-weight: bold;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.9),
+    0 0 8px var(--death-overlay-glow, rgba(255, 0, 0, 0.8));
+  pointer-events: none;
+  z-index: 10;
 }
 
 .placement img {
@@ -229,6 +268,7 @@ body {
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
+  position: relative;
 }
 
 .placement .rank {

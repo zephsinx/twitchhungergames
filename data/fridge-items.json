@@ -1,410 +1,410 @@
 {
-  "weapon_blunt": [
-    {
-      "name": "a frozen pea",
-      "max_kills": 1
-    },
-    {
-      "name": "a crouton",
-      "max_kills": 1
-    },
-    {
-      "name": "a stale breadcrumb",
-      "max_kills": 1
-    },
-    {
-      "name": "a cheese cube",
-      "max_kills": 1
-    },
-    {
-      "name": "a grape",
-      "max_kills": 1
-    },
-    {
-      "name": "a cherry tomato",
-      "max_kills": 2
-    },
-    {
-      "name": "a marble-sized meatball",
-      "max_kills": 2
-    },
-    {
-      "name": "a bottle cap",
-      "max_kills": 1
-    },
-    {
-      "name": "a frozen blueberry",
-      "max_kills": 1
-    },
-    {
-      "name": "a hardened pasta noodle",
-      "max_kills": 1
-    },
-    {
-      "name": "a petrified raisin",
-      "max_kills": 1
-    },
-    {
-      "name": "an olive pit",
-      "max_kills": 1
-    },
-    {
-      "name": "a sugar cube",
-      "max_kills": 1
-    }
-  ],
-  "weapon_cutting": [
-    {
-      "name": "a broken eggshell shard",
-      "max_kills": 1
-    },
-    {
-      "name": "a cheese grater fragment",
-      "max_kills": 2
-    },
-    {
-      "name": "a twist-tie garrote",
-      "max_kills": 1
-    },
-    {
-      "name": "a jagged pickle chip",
-      "max_kills": 1
-    },
-    {
-      "name": "a shattered toothpick",
-      "max_kills": 1
-    },
-    {
-      "name": "a razor-thin carrot slice",
-      "max_kills": 1
-    },
-    {
-      "name": "a sardine can lid",
-      "max_kills": 2
-    },
-    {
-      "name": "an aluminum foil blade",
-      "max_kills": 1
-    },
-    {
-      "name": "a broken pretzel stick",
-      "max_kills": 1
-    },
-    {
-      "name": "a crystallized sugar edge",
-      "max_kills": 1
-    },
-    {
-      "name": "a shard of hard candy",
-      "max_kills": 2
-    },
-    {
-      "name": "a sharp cheese rind",
-      "max_kills": 1
-    }
-  ],
-  "weapon_piercing": [
-    {
-      "name": "a toothpick",
-      "max_kills": 1
-    },
-    {
-      "name": "a cocktail sword",
-      "max_kills": 1
-    },
-    {
-      "name": "a fork tine",
-      "max_kills": 1
-    },
-    {
-      "name": "a splintered chopstick",
-      "max_kills": 1
-    },
-    {
-      "name": "a corn holder spike",
-      "max_kills": 2
-    },
-    {
-      "name": "a bamboo skewer shard",
-      "max_kills": 2
-    },
-    {
-      "name": "a pushpin",
-      "max_kills": 1
-    },
-    {
-      "name": "a bent staple",
-      "max_kills": 1
-    },
-    {
-      "name": "a sewing needle",
-      "max_kills": 2
-    },
-    {
-      "name": "a cactus spine from a forgotten plant",
-      "max_kills": 1
-    },
-    {
-      "name": "a fish bone",
-      "max_kills": 1
-    },
-    {
-      "name": "a sharpened pretzel",
-      "max_kills": 1
-    },
-    {
-      "name": "a metal twist-tie point",
-      "max_kills": 1
-    }
-  ],
-  "weapon_projectile": [
-    {
-      "name": "a rubber band slingshot",
-      "max_kills": 1
-    },
-    {
-      "name": "a popcorn kernel launcher",
-      "max_kills": 1
-    },
-    {
-      "name": "a dried rice grain gun",
-      "max_kills": 1
-    },
-    {
-      "name": "a pea shooter",
-      "max_kills": 1
-    },
-    {
-      "name": "a spring-loaded paperclip",
-      "max_kills": 2
-    },
-    {
-      "name": "a catapult made from a spoon",
-      "max_kills": 2
-    },
-    {
-      "name": "a bean flicker",
-      "max_kills": 1
-    },
-    {
-      "name": "a nut launcher",
-      "max_kills": 1
-    },
-    {
-      "name": "a seed spitter",
-      "max_kills": 1
-    },
-    {
-      "name": "a crumb cannon",
-      "max_kills": 2
-    },
-    {
-      "name": "a grape shot launcher",
-      "max_kills": 3
-    },
-    {
-      "name": "a toothpick crossbow",
-      "max_kills": 2
-    }
-  ],
-  "weapon_fire": [
-    {
-      "name": "a hot sauce grenade",
-      "max_kills": 2
-    },
-    {
-      "name": "a sriracha splash bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a wasabi paste bomb",
-      "max_kills": 1
-    },
-    {
-      "name": "a jalapeño juice vial",
-      "max_kills": 1
-    },
-    {
-      "name": "a horseradish flask",
-      "max_kills": 1
-    },
-    {
-      "name": "a cayenne powder bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a ghost pepper extract",
-      "max_kills": 3
-    },
-    {
-      "name": "a mustard gas bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a chili oil flask",
-      "max_kills": 1
-    },
-    {
-      "name": "a battery acid dropper",
-      "max_kills": 2
-    },
-    {
-      "name": "a friction-heated crumb",
-      "max_kills": 1
-    },
-    {
-      "name": "a tiny magnifying glass",
-      "max_kills": 2
-    }
-  ],
-  "weapon_cold": [
-    {
-      "name": "a freezer-burn blast",
-      "max_kills": 1
-    },
-    {
-      "name": "an ice crystal spike",
-      "max_kills": 1
-    },
-    {
-      "name": "frozen condensation shards",
-      "max_kills": 1
-    },
-    {
-      "name": "an icicle javelin",
-      "max_kills": 2
-    },
-    {
-      "name": "a frost breath attack",
-      "max_kills": 1
-    },
-    {
-      "name": "a liquid nitrogen drop",
-      "max_kills": 3
-    },
-    {
-      "name": "a frozen grape mace",
-      "max_kills": 2
-    },
-    {
-      "name": "an ice cube bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a brain freeze inducer",
-      "max_kills": 1
-    },
-    {
-      "name": "a freezer coil whip",
-      "max_kills": 2
-    },
-    {
-      "name": "a frost-covered wire",
-      "max_kills": 1
-    },
-    {
-      "name": "a sub-zero metal touch",
-      "max_kills": 1
-    }
-  ],
-  "weapon_chemical": [
-    {
-      "name": "a baking soda bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a vinegar spray gun",
-      "max_kills": 1
-    },
-    {
-      "name": "a lemon juice squirter",
-      "max_kills": 1
-    },
-    {
-      "name": "an ammonia flask",
-      "max_kills": 2
-    },
-    {
-      "name": "a bleach droplet",
-      "max_kills": 3
-    },
-    {
-      "name": "a mold spore grenade",
-      "max_kills": 2
-    },
-    {
-      "name": "a spoiled milk splash",
-      "max_kills": 1
-    },
-    {
-      "name": "a fermented juice bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a cleaning solution sprayer",
-      "max_kills": 2
-    },
-    {
-      "name": "a soap residue slick",
-      "max_kills": 1
-    },
-    {
-      "name": "a mystery liquid vial",
-      "max_kills": 2
-    },
-    {
-      "name": "an expired medicine capsule",
-      "max_kills": 1
-    }
-  ],
-  "weapon_explosive": [
-    {
-      "name": "a pressurized soda can bomb",
-      "max_kills": 4
-    },
-    {
-      "name": "a Mentos-cola device",
-      "max_kills": 5
-    },
-    {
-      "name": "a fermented yogurt bomb",
-      "max_kills": 2
-    },
-    {
-      "name": "a baking soda and vinegar bomb",
-      "max_kills": 3
-    },
-    {
-      "name": "a carbonation grenade",
-      "max_kills": 2
-    },
-    {
-      "name": "an overpressured bottle cap mine",
-      "max_kills": 2
-    },
-    {
-      "name": "a champagne cork launcher",
-      "max_kills": 3
-    },
-    {
-      "name": "a pickle jar bomb",
-      "max_kills": 4
-    },
-    {
-      "name": "a compressed air burst",
-      "max_kills": 2
-    },
-    {
-      "name": "an unstable gas pocket",
-      "max_kills": 3
-    },
-    {
-      "name": "a yeast explosion trap",
-      "max_kills": 2
-    },
-    {
-      "name": "a pressure cooker burst",
-      "max_kills": 5
-    }
-  ]
+	"weapon_blunt": [
+		{
+			"name": "a frozen pea",
+			"max_kills": 1
+		},
+		{
+			"name": "a crouton",
+			"max_kills": 1
+		},
+		{
+			"name": "a stale breadcrumb",
+			"max_kills": 1
+		},
+		{
+			"name": "a cheese cube",
+			"max_kills": 1
+		},
+		{
+			"name": "a grape",
+			"max_kills": 1
+		},
+		{
+			"name": "a cherry tomato",
+			"max_kills": 2
+		},
+		{
+			"name": "a marble-sized meatball",
+			"max_kills": 2
+		},
+		{
+			"name": "a bottle cap",
+			"max_kills": 1
+		},
+		{
+			"name": "a frozen blueberry",
+			"max_kills": 1
+		},
+		{
+			"name": "a hardened pasta noodle",
+			"max_kills": 1
+		},
+		{
+			"name": "a petrified raisin",
+			"max_kills": 1
+		},
+		{
+			"name": "an olive pit",
+			"max_kills": 1
+		},
+		{
+			"name": "a sugar cube",
+			"max_kills": 1
+		}
+	],
+	"weapon_cutting": [
+		{
+			"name": "a broken eggshell shard",
+			"max_kills": 1
+		},
+		{
+			"name": "a cheese grater fragment",
+			"max_kills": 2
+		},
+		{
+			"name": "a twist-tie garrote",
+			"max_kills": 1
+		},
+		{
+			"name": "a jagged pickle chip",
+			"max_kills": 1
+		},
+		{
+			"name": "a shattered toothpick",
+			"max_kills": 1
+		},
+		{
+			"name": "a razor-thin carrot slice",
+			"max_kills": 1
+		},
+		{
+			"name": "a sardine can lid",
+			"max_kills": 2
+		},
+		{
+			"name": "an aluminum foil blade",
+			"max_kills": 1
+		},
+		{
+			"name": "a broken pretzel stick",
+			"max_kills": 1
+		},
+		{
+			"name": "a crystallized sugar edge",
+			"max_kills": 1
+		},
+		{
+			"name": "a shard of hard candy",
+			"max_kills": 2
+		},
+		{
+			"name": "a sharp cheese rind",
+			"max_kills": 1
+		}
+	],
+	"weapon_piercing": [
+		{
+			"name": "a toothpick",
+			"max_kills": 1
+		},
+		{
+			"name": "a cocktail sword",
+			"max_kills": 1
+		},
+		{
+			"name": "a fork tine",
+			"max_kills": 1
+		},
+		{
+			"name": "a splintered chopstick",
+			"max_kills": 1
+		},
+		{
+			"name": "a corn holder spike",
+			"max_kills": 2
+		},
+		{
+			"name": "a bamboo skewer shard",
+			"max_kills": 2
+		},
+		{
+			"name": "a pushpin",
+			"max_kills": 1
+		},
+		{
+			"name": "a bent staple",
+			"max_kills": 1
+		},
+		{
+			"name": "a sewing needle",
+			"max_kills": 2
+		},
+		{
+			"name": "a cactus spine from a forgotten plant",
+			"max_kills": 1
+		},
+		{
+			"name": "a fish bone",
+			"max_kills": 1
+		},
+		{
+			"name": "a sharpened pretzel",
+			"max_kills": 1
+		},
+		{
+			"name": "a metal twist-tie point",
+			"max_kills": 1
+		}
+	],
+	"weapon_projectile": [
+		{
+			"name": "a rubber band slingshot",
+			"max_kills": 1
+		},
+		{
+			"name": "a popcorn kernel launcher",
+			"max_kills": 1
+		},
+		{
+			"name": "a dried rice grain gun",
+			"max_kills": 1
+		},
+		{
+			"name": "a pea shooter",
+			"max_kills": 1
+		},
+		{
+			"name": "a spring-loaded paperclip",
+			"max_kills": 2
+		},
+		{
+			"name": "a catapult made from a spoon",
+			"max_kills": 2
+		},
+		{
+			"name": "a bean flicker",
+			"max_kills": 1
+		},
+		{
+			"name": "a nut launcher",
+			"max_kills": 1
+		},
+		{
+			"name": "a seed spitter",
+			"max_kills": 1
+		},
+		{
+			"name": "a crumb cannon",
+			"max_kills": 2
+		},
+		{
+			"name": "a grape shot launcher",
+			"max_kills": 3
+		},
+		{
+			"name": "a toothpick crossbow",
+			"max_kills": 2
+		}
+	],
+	"weapon_fire": [
+		{
+			"name": "a hot sauce grenade",
+			"max_kills": 2
+		},
+		{
+			"name": "a sriracha splash bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a wasabi paste bomb",
+			"max_kills": 1
+		},
+		{
+			"name": "a jalapeño juice vial",
+			"max_kills": 1
+		},
+		{
+			"name": "a horseradish flask",
+			"max_kills": 1
+		},
+		{
+			"name": "a cayenne powder bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a ghost pepper extract",
+			"max_kills": 3
+		},
+		{
+			"name": "a mustard gas bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a chili oil flask",
+			"max_kills": 1
+		},
+		{
+			"name": "a battery acid dropper",
+			"max_kills": 2
+		},
+		{
+			"name": "a friction-heated crumb",
+			"max_kills": 1
+		},
+		{
+			"name": "a tiny magnifying glass",
+			"max_kills": 2
+		}
+	],
+	"weapon_cold": [
+		{
+			"name": "a freezer-burn blast",
+			"max_kills": 1
+		},
+		{
+			"name": "an ice crystal spike",
+			"max_kills": 1
+		},
+		{
+			"name": "frozen condensation shards",
+			"max_kills": 1
+		},
+		{
+			"name": "an icicle javelin",
+			"max_kills": 2
+		},
+		{
+			"name": "a frost breath attack",
+			"max_kills": 1
+		},
+		{
+			"name": "a liquid nitrogen drop",
+			"max_kills": 3
+		},
+		{
+			"name": "a frozen grape mace",
+			"max_kills": 2
+		},
+		{
+			"name": "an ice cube bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a brain freeze inducer",
+			"max_kills": 1
+		},
+		{
+			"name": "a freezer coil whip",
+			"max_kills": 2
+		},
+		{
+			"name": "a frost-covered wire",
+			"max_kills": 1
+		},
+		{
+			"name": "a sub-zero metal touch",
+			"max_kills": 1
+		}
+	],
+	"weapon_chemical": [
+		{
+			"name": "a baking soda bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a vinegar spray gun",
+			"max_kills": 1
+		},
+		{
+			"name": "a lemon juice squirter",
+			"max_kills": 1
+		},
+		{
+			"name": "an ammonia flask",
+			"max_kills": 2
+		},
+		{
+			"name": "a bleach droplet",
+			"max_kills": 3
+		},
+		{
+			"name": "a mold spore grenade",
+			"max_kills": 2
+		},
+		{
+			"name": "a spoiled milk splash",
+			"max_kills": 1
+		},
+		{
+			"name": "a fermented juice bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a cleaning solution sprayer",
+			"max_kills": 2
+		},
+		{
+			"name": "a soap residue slick",
+			"max_kills": 1
+		},
+		{
+			"name": "a mystery liquid vial",
+			"max_kills": 2
+		},
+		{
+			"name": "an expired medicine capsule",
+			"max_kills": 1
+		}
+	],
+	"weapon_explosive": [
+		{
+			"name": "a pressurized soda can bomb",
+			"max_kills": 4
+		},
+		{
+			"name": "a Mentos-cola device",
+			"max_kills": 5
+		},
+		{
+			"name": "a fermented yogurt bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a baking soda and vinegar bomb",
+			"max_kills": 3
+		},
+		{
+			"name": "a carbonation grenade",
+			"max_kills": 2
+		},
+		{
+			"name": "an overpressured bottle cap mine",
+			"max_kills": 2
+		},
+		{
+			"name": "a champagne cork launcher",
+			"max_kills": 3
+		},
+		{
+			"name": "a pickle jar bomb",
+			"max_kills": 4
+		},
+		{
+			"name": "a compressed air burst",
+			"max_kills": 2
+		},
+		{
+			"name": "an unstable gas pocket",
+			"max_kills": 3
+		},
+		{
+			"name": "a yeast explosion trap",
+			"max_kills": 2
+		},
+		{
+			"name": "a pressure cooker burst",
+			"max_kills": 5
+		}
+	]
 }
