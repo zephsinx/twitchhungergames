@@ -886,65 +886,67 @@
       }
     ]
   },
-  "feast": {
-    "title": "The Feast",
-    "description": "The Holy Mountain is replenished with food, supplies, weapons, and memoirs from the witches' families.",
-    "color": "#39ea09",
-    "nonfatal": [
-      {
-        "msg": "{0} gathers as much food into a pouch as they can before fleeing.",
-        "tributes": 1
-      },
-      {
-        "msg": "{0} and {1} decide to work together to get more supplies.",
-        "tributes": 2
-      },
-      {
-        "msg": "{0} and {1} get into a fight over raw meat, but {1} gives up and runs away.",
-        "tributes": 2
-      },
-      {
-        "msg": "{0} and {1} get into a fight over raw meat, but {0} gives up and runs away.",
-        "tributes": 2
-      },
-      {
-        "msg": "{0}, {1}, and {2} confront each other, but grab what they want slowly to avoid conflict.",
-        "tributes": 3
-      },
-      {
-        "msg": "{0} destroys {1}'s memoirs out of spite.",
-        "tributes": 2
-      },
-      {
-        "msg": "{0}, {1}, {2}, and {3} team up to grab food, supplies, weapons, and memoirs.",
-        "tributes": 4
-      },
-      {
-        "msg": "{0} steals {1}'s memoirs.",
-        "tributes": 2
-      },
-      {
-        "msg": "{0} takes {weapon_wand} leaning against the inside of the Holy Mountain.",
-        "tributes": 1
-      },
-      {
-        "msg": "{0} stuffs a bundle of purple garments into a pouch before sprinting away.",
-        "tributes": 1
-      }
-    ],
-    "fatal": [
-      {
-        "msg": "{0} throws a potion at {1}",
-        "tributes": 2,
-        "killer": [
-          0
-        ],
-        "killed": [
-          1
-        ]
-      }
-    ]
-  },
+  "feast": [
+    {
+      "title": "The Feast",
+      "description": "The Holy Mountain is replenished with food, supplies, weapons, and memoirs from the witches' families.",
+      "color": "#39ea09",
+      "nonfatal": [
+        {
+          "msg": "{0} gathers as much food into a pouch as they can before fleeing.",
+          "tributes": 1
+        },
+        {
+          "msg": "{0} and {1} decide to work together to get more supplies.",
+          "tributes": 2
+        },
+        {
+          "msg": "{0} and {1} get into a fight over raw meat, but {1} gives up and runs away.",
+          "tributes": 2
+        },
+        {
+          "msg": "{0} and {1} get into a fight over raw meat, but {0} gives up and runs away.",
+          "tributes": 2
+        },
+        {
+          "msg": "{0}, {1}, and {2} confront each other, but grab what they want slowly to avoid conflict.",
+          "tributes": 3
+        },
+        {
+          "msg": "{0} destroys {1}'s memoirs out of spite.",
+          "tributes": 2
+        },
+        {
+          "msg": "{0}, {1}, {2}, and {3} team up to grab food, supplies, weapons, and memoirs.",
+          "tributes": 4
+        },
+        {
+          "msg": "{0} steals {1}'s memoirs.",
+          "tributes": 2
+        },
+        {
+          "msg": "{0} takes {weapon_wand} leaning against the inside of the Holy Mountain.",
+          "tributes": 1
+        },
+        {
+          "msg": "{0} stuffs a bundle of purple garments into a pouch before sprinting away.",
+          "tributes": 1
+        }
+      ],
+      "fatal": [
+        {
+          "msg": "{0} throws a potion at {1}",
+          "tributes": 2,
+          "killer": [
+            0
+          ],
+          "killed": [
+            1
+          ]
+        }
+      ]
+    }
+  ],
   "arena": [
     {
       "title": "Arena Event: Hämis",

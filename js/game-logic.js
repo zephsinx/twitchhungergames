@@ -6,15 +6,21 @@ function sleep(ms) {
 
 function getStepType(isDay) {
   const daysSinceEvent = window.daysSinceEvent || 0;
-  const fc = 100 * (daysSinceEvent ** 2 / 55) + 9 / 55;
-  if (isDay && Math.random() * 100 < fc) {
-    window.daysSinceEvent = 0;
-    return "feast";
+
+  if (isDay) {
+    const feastChance = Math.min(8 + daysSinceEvent * 3, 30);
+    if (Math.random() * 100 < feastChance) {
+      window.daysSinceEvent = 0;
+      return "feast";
+    }
   }
-  if (daysSinceEvent > 0 && Math.floor(Math.random() * 20) === 0) {
+
+  const arenaChance = Math.min(6 + daysSinceEvent * 2, 25);
+  if (Math.random() * 100 < arenaChance) {
     window.daysSinceEvent = 0;
     return "arena";
   }
+
   window.daysSinceEvent = (window.daysSinceEvent || 0) + 1;
   return isDay ? "day" : "night";
 }
@@ -35,7 +41,10 @@ async function runPhase(type) {
     window.currentPhaseType = type;
   }
   if (step === "feast") {
-    const ev = eventsData.feast;
+    const feastEvents = Array.isArray(eventsData.feast)
+      ? eventsData.feast
+      : [eventsData.feast];
+    const ev = feastEvents[Math.floor(Math.random() * feastEvents.length)];
     phaseDesc.textContent = ev.description;
     dayDisplay.textContent = ev.title;
     const eventColor = ev.color || "#ffffff";
@@ -622,7 +631,7 @@ function backToJoin(samePlayers) {
   window.deathEventsLog = [];
   window.currentPhaseType = null;
   polymorphedPlayers.clear();
-  
+
   if (typeof window.updateHeaderForGameState === "function") {
     window.updateHeaderForGameState();
   }
