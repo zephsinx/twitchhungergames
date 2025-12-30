@@ -180,7 +180,7 @@ function showWinner() {
   }
 
   const surv = participants.filter((p) => p.alive);
-  let title = "",
+  let title,
     avatar = "";
   if (surv.length === 1) {
     if (

@@ -45,6 +45,7 @@ function validateConfig(config) {
       },
     },
     itemCategories: [],
+    nightPhaseColor: "#88ccff",
     storagePrefix: "game",
   };
 
@@ -80,7 +81,7 @@ function validateConfig(config) {
     );
   }
 
-  const merged = {
+  return {
     title: config.title || defaults.title,
     appName: config.appName || defaults.appName,
     terminology: { ...defaults.terminology, ...config.terminology },
@@ -90,6 +91,7 @@ function validateConfig(config) {
       decorative: { ...defaults.fonts.decorative, ...config.fonts?.decorative },
     },
     itemCategories: config.itemCategories || defaults.itemCategories,
+    nightPhaseColor: config.nightPhaseColor || defaults.nightPhaseColor,
     storagePrefix: config.storagePrefix || defaults.storagePrefix,
     dataFiles: {
       events: config.dataFiles.events,
@@ -97,8 +99,6 @@ function validateConfig(config) {
       materials: config.dataFiles.materials,
     },
   };
-
-  return merged;
 }
 
 function loadTheme(themeName) {

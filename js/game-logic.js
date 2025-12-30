@@ -50,12 +50,14 @@ async function runPhase(type) {
   } else {
     const ev = eventsData[step];
     phaseDesc.textContent = ev.description || "";
-    const title = ev.title.replace(
+    dayDisplay.textContent = ev.title.replace(
       "{0}",
       step === "bloodbath" ? "" : currentDay
     );
-    dayDisplay.textContent = title;
-    dayDisplay.style.color = step === "night" ? "#88ccff" : ev.color;
+    dayDisplay.style.color =
+      step === "night"
+        ? window.themeConfig?.nightPhaseColor || "#88ccff"
+        : ev.color;
     await runEvents(ev);
   }
   const killedThisDay = window.killedThisDay || [];
@@ -85,9 +87,10 @@ async function runEvents(evObj) {
   const msgs = [];
 
   const genericEvents = eventsData.generic || { nonfatal: [], fatal: [] };
-  const isArenaEvent = evObj.title && evObj.title.startsWith("Arena Event");
-  const isFeastEvent = evObj.title && evObj.title === "The Feast";
-  const isBloodbathEvent = evObj.title && evObj.title === "The Bloodbath";
+  const currentPhaseType = window.currentPhaseType || "";
+  const isArenaEvent = currentPhaseType === "arena";
+  const isFeastEvent = currentPhaseType === "feast";
+  const isBloodbathEvent = currentPhaseType === "bloodbath";
 
   while (aliveSet.size > 0) {
     const roll = Math.floor(Math.random() * 11);
@@ -184,71 +187,96 @@ async function runEvents(evObj) {
     const types =
       (window.themeConfig && window.themeConfig.itemCategories) ||
       Object.keys(itemsData).concat(Object.keys(materialsData));
-    [
-      ...types,
-      "weapon_any",
-      "item_any",
-      "material_any",
-      "liquid_any",
-      "sand_any",
-      "food_any",
-      "hazard_any",
-    ].forEach((cat) => {
-      let placeholder = `{${cat}}`;
-      let list;
-      if (cat === "weapon_any") {
-        list = types
-          .flatMap((c) => itemsData[c] || [])
-          .filter((w) => w.max_kills >= killsCount);
-      } else if (cat.startsWith("weapon_")) {
-        list = (itemsData[cat] || []).filter((w) => w.max_kills >= killsCount);
-      } else if (cat === "material_any") {
-        list = types.flatMap((c) => materialsData[c] || []);
-      } else if (cat === "liquid_any") {
-        list = types
-          .filter((c) => c.startsWith("liquid_"))
-          .flatMap((c) => materialsData[c] || []);
-      } else if (cat === "sand_any") {
-        list = types
-          .filter((c) => c.startsWith("sand_"))
-          .flatMap((c) => materialsData[c] || []);
-      } else if (cat === "food_any") {
-        list = types
-          .filter((c) => c.startsWith("food_"))
-          .flatMap((c) => materialsData[c] || []);
-      } else if (cat === "hazard_any") {
-        list = types
-          .filter((c) => c.startsWith("hazard_"))
-          .flatMap((c) => materialsData[c] || []);
-      } else if (
-        cat.startsWith("material_") ||
-        cat.startsWith("liquid_") ||
-        cat.startsWith("sand_") ||
-        cat.startsWith("food_") ||
-        cat.startsWith("hazard_")
-      ) {
-        list = materialsData[cat] || [];
-      } else if (cat === "item_any") {
-        list = types.flatMap((c) => itemsData[c] || []);
-      } else {
-        list = itemsData[cat] || [];
-      }
 
-      if (txt.includes(placeholder)) {
-        const candidates = list;
-        const pick = candidates[Math.floor(Math.random() * candidates.length)];
-        const chosen = candidates.length
-          ? pick.name !== undefined
-            ? pick.name
-            : pick
-          : placeholder;
-        const safeChosen = window.escapeHtml(String(chosen));
-        txt = txt.replace(
-          new RegExp(window.escapeRegExp(placeholder), "g"),
-          safeChosen
-        );
+    // Dynamically generate _any categories from theme categories
+    const prefixGroups = new Map();
+    types.forEach((cat) => {
+      const underscoreIndex = cat.indexOf("_");
+      if (underscoreIndex > 0) {
+        const prefix = cat.substring(0, underscoreIndex + 1);
+        if (!prefixGroups.has(prefix)) {
+          prefixGroups.set(prefix, []);
+        }
+        prefixGroups.get(prefix).push(cat);
       }
     });
+
+    const dynamicAnyCategories = [];
+    prefixGroups.forEach((categories, prefix) => {
+      if (categories.length > 1) {
+        const prefixName = prefix.slice(0, -1);
+        dynamicAnyCategories.push(`${prefixName}_any`);
+      }
+    });
+
+    const specialAnyCategories = ["item_any", "material_any"];
+
+    [...types, ...specialAnyCategories, ...dynamicAnyCategories].forEach(
+      (cat) => {
+        let placeholder = `{${cat}}`;
+        let list;
+
+        if (cat === "item_any") {
+          list = types.flatMap((c) => itemsData[c] || []);
+        } else if (cat === "material_any") {
+          list = types.flatMap((c) => materialsData[c] || []);
+        } else if (cat === "weapon_any") {
+          list = types
+            .flatMap((c) => itemsData[c] || [])
+            .filter((w) => w.max_kills >= killsCount);
+        } else if (cat.endsWith("_any")) {
+          const prefix = cat.slice(0, -4) + "_";
+          const prefixCategories = types.filter((c) => c.startsWith(prefix));
+
+          const hasItems = prefixCategories.some(
+            (c) => itemsData[c] && itemsData[c].length > 0
+          );
+          const hasMaterials = prefixCategories.some(
+            (c) => materialsData[c] && materialsData[c].length > 0
+          );
+
+          if (hasItems) {
+            list = prefixCategories
+              .flatMap((c) => itemsData[c] || [])
+              .filter((w) => w.max_kills >= killsCount);
+          } else if (hasMaterials) {
+            list = prefixCategories.flatMap((c) => materialsData[c] || []);
+          } else {
+            list = [];
+          }
+        } else if (cat.startsWith("weapon_")) {
+          list = (itemsData[cat] || []).filter(
+            (w) => w.max_kills >= killsCount
+          );
+        } else if (
+          cat.startsWith("material_") ||
+          cat.startsWith("liquid_") ||
+          cat.startsWith("sand_") ||
+          cat.startsWith("food_") ||
+          cat.startsWith("hazard_")
+        ) {
+          list = materialsData[cat] || [];
+        } else {
+          list = itemsData[cat] || [];
+        }
+
+        if (txt.includes(placeholder)) {
+          const candidates = list;
+          const pick =
+            candidates[Math.floor(Math.random() * candidates.length)];
+          const chosen = candidates.length
+            ? pick.name !== undefined
+              ? pick.name
+              : pick
+            : placeholder;
+          const safeChosen = window.escapeHtml(String(chosen));
+          txt = txt.replace(
+            new RegExp(window.escapeRegExp(placeholder), "g"),
+            safeChosen
+          );
+        }
+      }
+    );
 
     msgs.push({
       picks: pick,

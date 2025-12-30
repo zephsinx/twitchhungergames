@@ -69,7 +69,7 @@ var eventHandlers = {
 
       const config =
         (typeof window !== "undefined" && window.themeConfig) || {};
-      const appName = config.appName || "Noita Games";
+      const appName = config.appName || "Hunger Games";
       return `${newFormDisplay} won the ${appName}! wait.. thats not right.. ${originalDisplay} won? what?`;
     },
 
@@ -81,7 +81,7 @@ var eventHandlers = {
 
       const config =
         (typeof window !== "undefined" && window.themeConfig) || {};
-      const appName = config.appName || "Noita Games";
+      const appName = config.appName || "Hunger Games";
       return `${polymorph.newForm} won the ${appName}! wait.. thats not right.. ${polymorph.originalName} won? what?`;
     },
 

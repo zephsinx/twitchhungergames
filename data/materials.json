@@ -1,64 +1,64 @@
 {
-	"sand_bad": [
-		"gunpowder",
-		"monstrous powder"
-	],
-	"sand_good": [
-		"meat",
-		"weird fungus"
-	],
-	"sand_neutral": [
-		"meat",
-		"sand",
-		"coal"
-	],
-	"food_good": [
-		"meat",
-		"healthy porridge"
-	],
-	"food_neutral": [
-		"weird fungus"
-	],
-	"food_bad": [
-		"spoiled meat"
-	],
-	"liquid_bad": [
-		"toxic sludge",
-		"poison",
-		"lava",
-		"acid",
-		"instant deathium",
-		"cement"
-	],
-	"liquid_good": [
-		"pea soup",
-		"healthium",
-		"healthy porridge",
-		"ambrosia",
-		"sima",
-		"whiskey",
-		"milk"
-	],
-	"liquid_neutral": [
-		"swamp",
-		"water",
-		"sludge",
-		"pea soup",
-		"blood",
-		"sima",
-		"whiskey",
-		"milk"
-	],
-	"liquid_water": [
-		"swamp",
-		"water",
-		"sludge"
-	],
-	"liquid_poison": [
-		"toxic sludge",
-		"poison",
-		"lava",
-		"acid",
-		"instant deathium"
-	]
+  "sand_bad": [
+    "gunpowder",
+    "monstrous powder"
+  ],
+  "sand_good": [
+    "meat",
+    "weird fungus"
+  ],
+  "sand_neutral": [
+    "meat",
+    "sand",
+    "coal"
+  ],
+  "food_good": [
+    "meat",
+    "healthy porridge"
+  ],
+  "food_neutral": [
+    "weird fungus"
+  ],
+  "food_bad": [
+    "spoiled meat"
+  ],
+  "liquid_bad": [
+    "toxic sludge",
+    "poison",
+    "lava",
+    "acid",
+    "instant deathium",
+    "cement"
+  ],
+  "liquid_good": [
+    "pea soup",
+    "healthium",
+    "healthy porridge",
+    "ambrosia",
+    "sima",
+    "whiskey",
+    "milk"
+  ],
+  "liquid_neutral": [
+    "swamp",
+    "water",
+    "sludge",
+    "pea soup",
+    "blood",
+    "sima",
+    "whiskey",
+    "milk"
+  ],
+  "liquid_water": [
+    "swamp",
+    "water",
+    "sludge"
+  ],
+  "liquid_poison": [
+    "toxic sludge",
+    "poison",
+    "lava",
+    "acid",
+    "instant deathium"
+  ]
 }

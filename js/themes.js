@@ -59,6 +59,8 @@ const themes = {
         "food_bad",
       ],
 
+      nightPhaseColor: "#88ccff",
+
       storagePrefix: "noita",
 
       dataFiles: {
@@ -123,6 +125,8 @@ const themes = {
         "hazard_cold",
         "hazard_slippery",
       ],
+
+      nightPhaseColor: "#88ccff",
 
       storagePrefix: "fridge",
 
