@@ -31,48 +31,50 @@
     </select>
   </div>
 
-  <div id="joinPrompt">!play to join</div>
-  <div id="dayDisplay"></div>
-  <div id="phaseDesc"></div>
-  <div id="playersGrid"></div>
-  <div id="eventLog"></div>
+  <main>
+    <div id="joinPrompt">!play to join</div>
+    <div id="dayDisplay"></div>
+    <div id="phaseDesc"></div>
+    <div id="playersGrid"></div>
+    <div id="eventLog"></div>
 
-  <div id="proceedContainer">
-    <button id="proceedButton">Proceed to Next Phase</button>
-  </div>
-
-  <div id="winnerScreen">
-    <img id="winnerAvatar" src="" alt="Winner avatar">
-    <div id="winnerText"></div>
-    <hr style="width:50%;border-color:var(--border-color);margin:2em auto">
-    <div id="placementsGrid"></div>
-    <div id="deathLogContainer">
-      <h3 id="deathEventsHeader">Death Events:</h3>
-      <div id="deathLog"></div>
+    <div id="proceedContainer">
+      <button id="proceedButton">Proceed to Next Phase</button>
     </div>
-    <button class="startNewButton" id="newGameSameButton">Start new game (same players)</button>
-    <button class="startNewButton" id="newGameAllButton">Start new game</button>
-  </div>
 
-  <div id="leaderboardOverlay">
-    <div class="overlayContent">
-      <button id="closeOverlay">x</button>
-      <h2>Leaderboard</h2>
-      <table id="leaderboardTable">
-        <thead>
-          <tr>
-            <th data-key="username">Name</th>
-            <th data-key="wins">Wins</th>
-            <th data-key="kills">Kills</th>
-            <th data-key="deaths">Deaths</th>
-            <th data-key="maxDays">Max Days</th>
-            <th data-key="totalDays">Total Days</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <div id="winnerScreen">
+      <img id="winnerAvatar" src="" alt="Winner avatar">
+      <div id="winnerText"></div>
+      <hr style="width:50%;border-color:var(--border-color);margin:2em auto">
+      <div id="placementsGrid"></div>
+      <div id="deathLogContainer">
+        <h3 id="deathEventsHeader">Death Events:</h3>
+        <div id="deathLog"></div>
+      </div>
+      <button class="startNewButton" id="newGameSameButton">Start new game (same players)</button>
+      <button class="startNewButton" id="newGameAllButton">Start new game</button>
     </div>
-  </div>
+
+    <div id="leaderboardOverlay">
+      <div class="overlayContent">
+        <button id="closeOverlay">x</button>
+        <h2>Leaderboard</h2>
+        <table id="leaderboardTable">
+          <thead>
+            <tr>
+              <th data-key="username">Name</th>
+              <th data-key="wins">Wins</th>
+              <th data-key="kills">Kills</th>
+              <th data-key="deaths">Deaths</th>
+              <th data-key="maxDays">Max Days</th>
+              <th data-key="totalDays">Total Days</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/tmi.js@latest/dist/tmi.min.js"></script>
   <script src="./js/ui-helpers.js"></script>

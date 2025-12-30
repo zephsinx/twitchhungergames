@@ -434,6 +434,7 @@ async function runEvents(evObj) {
         }
         const img = document.createElement("img");
         img.src = p.avatar;
+        img.alt = `${window.getDisplayName(p.username)} avatar`;
         if (!p.alive) {
           img.className = "dead";
         }

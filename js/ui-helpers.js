@@ -189,6 +189,7 @@ function showFallen(day) {
     wrap.className = "avatarWrap has-dead";
     const img = document.createElement("img");
     img.src = p.avatar;
+    img.alt = `${displayName} avatar`;
     img.className = "dead";
     const imgTooltipContainer = document.createElement("div");
     imgTooltipContainer.className = "tooltip-container";
@@ -363,6 +364,7 @@ function showWinner() {
     wrap.className = "placement" + (p.alive ? "" : " dead");
     const img = document.createElement("img");
     img.src = p.avatar;
+    img.alt = `${displayName} avatar`;
     const imgTooltipContainer = document.createElement("div");
     imgTooltipContainer.className = "tooltip-container";
     const imgTooltipBox = document.createElement("div");
@@ -493,6 +495,7 @@ function addPlayer(u, c) {
   const img = document.createElement("img");
   img.src =
     "https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png";
+  img.alt = `${u} avatar`;
   fetch(`https://decapi.me/twitch/avatar/${u}`, { mode: "cors" })
     .then((r) => r.text())
     .then((url) => {
@@ -556,6 +559,7 @@ function addFakePlayer(u, c) {
   });
   const img = document.createElement("img");
   img.src = fakeAvatars[Math.floor(Math.random() * fakeAvatars.length)];
+  img.alt = `${u} avatar`;
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";
   const imgTooltipBox = document.createElement("div");
