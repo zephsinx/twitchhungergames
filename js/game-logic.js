@@ -622,6 +622,10 @@ function backToJoin(samePlayers) {
   window.deathEventsLog = [];
   window.currentPhaseType = null;
   polymorphedPlayers.clear();
+  
+  if (typeof window.updateHeaderForGameState === "function") {
+    window.updateHeaderForGameState();
+  }
 }
 
 window.getStepType = getStepType;

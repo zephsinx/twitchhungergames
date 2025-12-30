@@ -128,6 +128,7 @@ const status = document.getElementById("status");
 const btnStart = document.getElementById("startButton");
 const btnDebug = document.getElementById("debugButton");
 const btnLeaderboard = document.getElementById("leaderboardButton");
+const btnRestart = document.getElementById("restartButton");
 const joinPrompt = document.getElementById("joinPrompt");
 const procCont = document.getElementById("proceedContainer");
 const btnProc = document.getElementById("proceedButton");
@@ -222,6 +223,8 @@ function initializeData() {
   loadGameData(currentTheme).catch((err) => {
     console.error("Initial data load failed:", err);
   });
+  
+  updateHeaderForGameState();
 }
 
 if (document.readyState === "loading") {
@@ -346,6 +349,38 @@ function connect(ch) {
   });
 }
 
+function updateHeaderForGameState() {
+  const isGameStarted = window.gameStarted === true;
+  
+  const themeSelectorEl = document.getElementById("themeSelector");
+  const chInputEl = document.getElementById("channelInput");
+  const btnConnectEl = document.getElementById("connectButton");
+  const btnRestartEl = document.getElementById("restartButton");
+  
+  if (themeSelectorEl) {
+    themeSelectorEl.style.display = isGameStarted ? "none" : "block";
+  }
+  if (chInputEl) {
+    chInputEl.style.display = isGameStarted ? "none" : "inline-block";
+  }
+  if (btnConnectEl) {
+    btnConnectEl.style.display = isGameStarted ? "none" : "inline-block";
+  }
+  if (btnRestartEl) {
+    btnRestartEl.style.display = isGameStarted ? "inline-block" : "none";
+  }
+}
+
+window.updateHeaderForGameState = updateHeaderForGameState;
+
+if (btnRestart) {
+  btnRestart.addEventListener("click", () => {
+    if (confirm("Are you sure you want to restart? This will reset the current game.")) {
+      window.backToJoin(false);
+    }
+  });
+}
+
 btnStart.addEventListener("click", () => {
   if (players.size < 1) {
     alert(window.themeConfig.messages.minPlayersRequired);
@@ -353,6 +388,7 @@ btnStart.addEventListener("click", () => {
   }
   gameStarted = true;
   window.gameStarted = true;
+  updateHeaderForGameState();
   joinPrompt.style.display = "none";
   participants = Array.from(players).map((u) => {
     const el = document.querySelector(`[data-username="${u}"]`);
