@@ -9,6 +9,104 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function colorToRgb(color) {
+  if (!color || typeof color !== "string") return [255, 255, 255];
+  color = color.trim();
+
+  if (color[0] === "#") {
+    if (color.length === 4) {
+      const r = parseInt(color[1] + color[1], 16);
+      const g = parseInt(color[2] + color[2], 16);
+      const b = parseInt(color[3] + color[3], 16);
+      return [r, g, b];
+    } else if (color.length === 7) {
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      return [r, g, b];
+    }
+  }
+
+  const rgbMatch = color.match(
+    /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)$/
+  );
+  if (rgbMatch) {
+    const r = Math.max(0, Math.min(255, parseInt(rgbMatch[1])));
+    const g = Math.max(0, Math.min(255, parseInt(rgbMatch[2])));
+    const b = Math.max(0, Math.min(255, parseInt(rgbMatch[3])));
+    return [r, g, b];
+  }
+
+  return [255, 255, 255];
+}
+
+function getRelativeLuminance(rgb) {
+  const [r, g, b] = rgb.map((val) => {
+    val = val / 255;
+    return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function calculateContrastRatio(color1, color2) {
+  const rgb1 = colorToRgb(color1);
+  const rgb2 = colorToRgb(color2);
+  const lum1 = getRelativeLuminance(rgb1);
+  const lum2 = getRelativeLuminance(rgb2);
+  const lighter = Math.max(lum1, lum2);
+  const darker = Math.min(lum1, lum2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function isAccessibleContrast(textColor, backgroundColor, isLargeText = false) {
+  const ratio = calculateContrastRatio(textColor, backgroundColor);
+  return isLargeText ? ratio >= 3.0 : ratio >= 4.5;
+}
+
+function ensureContrast(textColor, backgroundColor, minRatio = 4.5) {
+  const bgRgb = colorToRgb(backgroundColor);
+  const textRgb = colorToRgb(textColor);
+  const currentRatio = calculateContrastRatio(textColor, backgroundColor);
+
+  if (currentRatio >= minRatio) {
+    return textColor;
+  }
+
+  const bgLum = getRelativeLuminance(bgRgb);
+  const isDarkBg = bgLum < 0.5;
+
+  let [r, g, b] = textRgb;
+  let attempts = 0;
+  const maxAttempts = 50;
+
+  while (attempts < maxAttempts) {
+    const ratio = calculateContrastRatio(
+      `rgb(${r}, ${g}, ${b})`,
+      backgroundColor
+    );
+    if (ratio >= minRatio) {
+      if (typeof textColor === "string" && textColor[0] === "#") {
+        const toHex = (val) => Math.round(val).toString(16).padStart(2, "0");
+        return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+      }
+      return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+    }
+
+    if (isDarkBg) {
+      r = Math.min(255, r + 10);
+      g = Math.min(255, g + 10);
+      b = Math.min(255, b + 10);
+    } else {
+      r = Math.max(0, r - 10);
+      g = Math.max(0, g - 10);
+      b = Math.max(0, b - 10);
+    }
+    attempts++;
+  }
+
+  return isDarkBg ? "#ffffff" : "#000000";
+}
+
 function validateColor(color) {
   if (!color || typeof color !== "string") return "#fff";
   color = color.trim();
@@ -71,7 +169,7 @@ function showFallen(day) {
     window.themeConfig.messages.fallenPlayers,
     { day }
   );
-  dayDisplay.style.color = "#aaa";
+  dayDisplay.style.color = "#cccccc";
   phaseDesc.textContent = "";
   const n = killedThisDay.length;
   const txt = document.createElement("div");
@@ -103,7 +201,11 @@ function showFallen(day) {
     nmC.className = "text";
     const sp = document.createElement("span");
     sp.textContent = displayName;
-    sp.style.color = p.color;
+    let playerColor = window.validateColor(p.color);
+    if (window.ensureContrast) {
+      playerColor = window.ensureContrast(playerColor, "#121212", 4.5);
+    }
+    sp.style.color = playerColor;
     nmC.append(sp);
     wrap.append(imgTooltipContainer, nmC);
     grid.appendChild(wrap);
@@ -279,7 +381,11 @@ function showWinner() {
     nmC.className = "name";
     const sp = document.createElement("span");
     sp.textContent = displayName;
-    sp.style.color = p.color;
+    let playerColor = window.validateColor(p.color);
+    if (window.ensureContrast) {
+      playerColor = window.ensureContrast(playerColor, "#121212", 4.5);
+    }
+    sp.style.color = playerColor;
     nmC.append(sp);
     const kc = document.createElement("div");
     kc.className = "kills";
@@ -328,7 +434,11 @@ function renderLeaderboard() {
     const tr = document.createElement("tr");
     const tdName = document.createElement("td");
     tdName.textContent = u;
-    tdName.style.color = globalColors[u] || "#fff";
+    let playerColor = globalColors[u] || "#fff";
+    if (window.ensureContrast) {
+      playerColor = window.ensureContrast(playerColor, "#222222", 4.5);
+    }
+    tdName.style.color = playerColor;
     tr.appendChild(tdName);
     ["wins", "kills", "deaths", "maxDays", "totalDays"].forEach((k) => {
       const td = document.createElement("td");
@@ -360,36 +470,9 @@ function addPlayer(u, c) {
 
   globalColors[u] = validateColor(c);
 
-  var color = globalColors[u];
-  let r, g, b;
-  if (color[0] === "#") {
-    if (color.length === 4) {
-      r = parseInt(color[1] + color[1], 16);
-      g = parseInt(color[2] + color[2], 16);
-      b = parseInt(color[3] + color[3], 16);
-    } else {
-      r = parseInt(color.slice(1, 3), 16);
-      g = parseInt(color.slice(3, 5), 16);
-      b = parseInt(color.slice(5, 7), 16);
-    }
-  } else if (color.startsWith("rgb")) {
-    [r, g, b] = color.match(/\d+/g).map(Number);
-  } else {
-    // Fallback to white if color format is unexpected
-    console.warn(
-      `Unexpected color format for player ${u}: ${color}, using white as fallback`
-    );
-    r = 255;
-    g = 255;
-    b = 255;
-  }
-  const brightness = r * 0.299 + g * 0.587 + b * 0.114;
-
-  if (brightness < 60) {
-    r = Math.min(255, Math.floor(r * 1.5));
-    g = Math.min(255, Math.floor(g * 1.5));
-    b = Math.min(255, Math.floor(b * 1.5));
-    globalColors[u] = `rgb(${r}, ${g}, ${b})`;
+  const backgroundColor = "#121212";
+  if (!isAccessibleContrast(globalColors[u], backgroundColor, false)) {
+    globalColors[u] = ensureContrast(globalColors[u], backgroundColor, 4.5);
     c = globalColors[u];
   }
 
@@ -426,7 +509,7 @@ function addPlayer(u, c) {
   nmC.className = "name";
   const sp = document.createElement("span");
   sp.textContent = u;
-  sp.style.color = c || "#fff";
+  sp.style.color = globalColors[u] || "#fff";
   nmC.append(sp);
   cont.append(btn, imgTooltipContainer, nmC);
   playersGrid.appendChild(cont);
@@ -451,35 +534,9 @@ function addFakePlayer(u, c) {
   }
   globalColors[u] = validateColor(c);
 
-  var color = globalColors[u];
-  let r, g, b;
-  if (color[0] === "#") {
-    if (color.length === 4) {
-      r = parseInt(color[1] + color[1], 16);
-      g = parseInt(color[2] + color[2], 16);
-      b = parseInt(color[3] + color[3], 16);
-    } else {
-      r = parseInt(color.slice(1, 3), 16);
-      g = parseInt(color.slice(3, 5), 16);
-      b = parseInt(color.slice(5, 7), 16);
-    }
-  } else if (color.startsWith("rgb")) {
-    [r, g, b] = color.match(/\d+/g).map(Number);
-  } else {
-    console.warn(
-      `Unexpected color format for player ${u}: ${color}, using white as fallback`
-    );
-    r = 255;
-    g = 255;
-    b = 255;
-  }
-  const brightness = r * 0.299 + g * 0.587 + b * 0.114;
-
-  if (brightness < 60) {
-    r = Math.min(255, Math.floor(r * 1.5));
-    g = Math.min(255, Math.floor(g * 1.5));
-    b = Math.min(255, Math.floor(b * 1.5));
-    globalColors[u] = `rgb(${r}, ${g}, ${b})`;
+  const backgroundColor = "#121212";
+  if (!isAccessibleContrast(globalColors[u], backgroundColor, false)) {
+    globalColors[u] = ensureContrast(globalColors[u], backgroundColor, 4.5);
     c = globalColors[u];
   }
 
@@ -510,7 +567,7 @@ function addFakePlayer(u, c) {
   nmC.className = "name";
   const sp = document.createElement("span");
   sp.textContent = u;
-  sp.style.color = c || "#fff";
+  sp.style.color = globalColors[u] || "#fff";
   nmC.append(sp);
   cont.append(btn, imgTooltipContainer, nmC);
   playersGrid.appendChild(cont);
@@ -519,6 +576,9 @@ function addFakePlayer(u, c) {
 window.escapeRegExp = escapeRegExp;
 window.escapeHtml = escapeHtml;
 window.validateColor = validateColor;
+window.calculateContrastRatio = calculateContrastRatio;
+window.isAccessibleContrast = isAccessibleContrast;
+window.ensureContrast = ensureContrast;
 window.getUserTooltipText = getUserTooltipText;
 window.getDisplayName = getDisplayName;
 window.showFallen = showFallen;

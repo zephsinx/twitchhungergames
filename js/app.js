@@ -160,14 +160,20 @@ function loadGameData(themeName) {
   btnStart.disabled = true;
   if (status) {
     status.textContent = "Loading data...";
-    status.style.color = "#ffa500";
+    status.style.color =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--status-warning")
+        .trim() || "#ff9800";
   }
 
   if (typeof window.loadThemeData === "undefined") {
     console.error("loadThemeData function not available");
     if (status) {
       status.textContent = "Error: Theme system not loaded";
-      status.style.color = "#f00";
+      status.style.color =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--status-error")
+          .trim() || "#f44336";
     }
     return Promise.reject(new Error("Theme system not loaded"));
   }
@@ -192,7 +198,10 @@ function loadGameData(themeName) {
       btnStart.disabled = true;
       if (status) {
         status.textContent = `Error: ${err.message}`;
-        status.style.color = "#f00";
+        status.style.color =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue("--status-error")
+            .trim() || "#f44336";
       }
       throw err;
     });
@@ -307,11 +316,17 @@ function connect(ch) {
     .connect()
     .then(() => {
       status.textContent = "Connected";
-      status.style.color = "#0f0";
+      status.style.color =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--status-success")
+          .trim() || "#4caf50";
     })
     .catch(() => {
       status.textContent = "Error";
-      status.style.color = "#f00";
+      status.style.color =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--status-error")
+          .trim() || "#f44336";
     });
 
   client.on("message", (_, tags, msg) => {

@@ -38,14 +38,20 @@ async function runPhase(type) {
     const ev = eventsData.feast;
     phaseDesc.textContent = ev.description;
     dayDisplay.textContent = ev.title;
-    dayDisplay.style.color = ev.color;
+    const eventColor = ev.color || "#ffffff";
+    dayDisplay.style.color = window.ensureContrast
+      ? window.ensureContrast(eventColor, "#121212", 3.0)
+      : eventColor;
     await runEvents(ev);
   } else if (step === "arena") {
     const ev =
       eventsData.arena[Math.floor(Math.random() * eventsData.arena.length)];
     phaseDesc.textContent = ev.description;
     dayDisplay.textContent = ev.title;
-    dayDisplay.style.color = ev.color;
+    const eventColor = ev.color || "#ffffff";
+    dayDisplay.style.color = window.ensureContrast
+      ? window.ensureContrast(eventColor, "#121212", 3.0)
+      : eventColor;
     await runEvents(ev);
   } else {
     const ev = eventsData[step];
@@ -54,10 +60,15 @@ async function runPhase(type) {
       "{0}",
       step === "bloodbath" ? "" : currentDay
     );
-    dayDisplay.style.color =
-      step === "night"
-        ? window.themeConfig?.nightPhaseColor || "#88ccff"
-        : ev.color;
+    let eventColor;
+    if (step === "night") {
+      eventColor = window.themeConfig?.nightPhaseColor || "#88ccff";
+    } else {
+      eventColor = ev.color || "#ffffff";
+    }
+    dayDisplay.style.color = window.ensureContrast
+      ? window.ensureContrast(eventColor, "#121212", 3.0)
+      : eventColor;
     await runEvents(ev);
   }
   const killedThisDay = window.killedThisDay || [];
@@ -389,7 +400,10 @@ async function runEvents(evObj) {
         }
 
         const p = repl.pick;
-        const safeColor = window.validateColor(p.color);
+        let safeColor = window.validateColor(p.color);
+        if (window.ensureContrast) {
+          safeColor = window.ensureContrast(safeColor, "#121212", 4.5);
+        }
         const nameSpan = document.createElement("span");
         nameSpan.style.color = safeColor;
         nameSpan.textContent = repl.displayName;
@@ -494,7 +508,10 @@ async function runEvents(evObj) {
         }
 
         const p = repl.pick;
-        const safeColor = window.validateColor(p.color);
+        let safeColor = window.validateColor(p.color);
+        if (window.ensureContrast) {
+          safeColor = window.ensureContrast(safeColor, "#121212", 4.5);
+        }
         const tooltipContainer = document.createElement("span");
         tooltipContainer.className = "tooltip-container";
         const nameSpan = document.createElement("span");
