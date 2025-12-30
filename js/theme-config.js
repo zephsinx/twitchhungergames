@@ -1,7 +1,7 @@
 // Theme Configuration
 // This file contains all theme-specific configuration for the Hunger Games Simulator
 
-import { themes, defaultTheme } from './themes.js';
+import { themes, defaultTheme } from "./themes.js";
 
 function formatMessage(template, values) {
   let result = template;

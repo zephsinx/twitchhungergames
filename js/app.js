@@ -11,12 +11,12 @@ if (
 }
 
 const fakeAvatars = [
-  "assets/images/pfp1.png",
-  "assets/images/pfp2.png",
-  "assets/images/pfp3.png",
-  "assets/images/pfp4.png",
-  "assets/images/pfp5.png",
-  "assets/images/pfp6.png",
+  "/images/pfp1.png",
+  "/images/pfp2.png",
+  "/images/pfp3.png",
+  "/images/pfp4.png",
+  "/images/pfp5.png",
+  "/images/pfp6.png",
 ];
 const adjectives = [
   "Iron",
@@ -143,7 +143,7 @@ let eventHandlersLoaded = false;
 window.eventHandlersLoaded = eventHandlersLoaded;
 
 const script = document.createElement("script");
-script.src = "js/event-handlers.js";
+script.src = "/js/event-handlers.js";
 script.onload = () => {
   if (typeof window.eventHandlers !== "undefined") {
     eventHandlersLoaded = true;
@@ -216,7 +216,9 @@ function initializeData() {
 
   const currentTheme =
     localStorage.getItem("selectedTheme") ||
-    (typeof window.defaultTheme !== "undefined" ? window.defaultTheme : "noita");
+    (typeof window.defaultTheme !== "undefined"
+      ? window.defaultTheme
+      : "noita");
   loadGameData(currentTheme).catch((err) => {
     console.error("Initial data load failed:", err);
   });
@@ -265,7 +267,9 @@ if (themeSelector) {
   }
   let currentTheme =
     localStorage.getItem("selectedTheme") ||
-    (typeof window.defaultTheme !== "undefined" ? window.defaultTheme : "noita");
+    (typeof window.defaultTheme !== "undefined"
+      ? window.defaultTheme
+      : "noita");
   if (themeSelector.querySelector(`option[value="${currentTheme}"]`)) {
     themeSelector.value = currentTheme;
   }

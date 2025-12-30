@@ -524,12 +524,12 @@ function addFakePlayer(u, c) {
   const playersGrid = document.getElementById("playersGrid");
   const btnStart = document.getElementById("startButton");
   const fakeAvatars = window.fakeAvatars || [
-    "assets/images/pfp1.png",
-    "assets/images/pfp2.png",
-    "assets/images/pfp3.png",
-    "assets/images/pfp4.png",
-    "assets/images/pfp5.png",
-    "assets/images/pfp6.png",
+    "/images/pfp1.png",
+    "/images/pfp2.png",
+    "/images/pfp3.png",
+    "/images/pfp4.png",
+    "/images/pfp5.png",
+    "/images/pfp6.png",
   ];
 
   if (typeof window.initGlobal === "function") {

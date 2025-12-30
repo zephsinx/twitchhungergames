@@ -29,11 +29,11 @@ const themes = {
       fonts: {
         primary: {
           family: "NoitaPixel",
-          file: "assets/fonts/NoitaPixel.ttf",
+          file: "/fonts/NoitaPixel.ttf",
         },
         decorative: {
           family: "NoitaBlackletter",
-          file: "assets/fonts/NoitaBlackletter-Regular.ttf",
+          file: "/fonts/NoitaBlackletter-Regular.ttf",
         },
       },
 
