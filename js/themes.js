@@ -140,3 +140,5 @@ const themes = {
 };
 
 const defaultTheme = "noita";
+
+export { themes, defaultTheme };

@@ -216,7 +216,7 @@ function initializeData() {
 
   const currentTheme =
     localStorage.getItem("selectedTheme") ||
-    (typeof defaultTheme !== "undefined" ? defaultTheme : "noita");
+    (typeof window.defaultTheme !== "undefined" ? window.defaultTheme : "noita");
   loadGameData(currentTheme).catch((err) => {
     console.error("Initial data load failed:", err);
   });
@@ -265,7 +265,7 @@ if (themeSelector) {
   }
   let currentTheme =
     localStorage.getItem("selectedTheme") ||
-    (typeof defaultTheme !== "undefined" ? defaultTheme : "noita");
+    (typeof window.defaultTheme !== "undefined" ? window.defaultTheme : "noita");
   if (themeSelector.querySelector(`option[value="${currentTheme}"]`)) {
     themeSelector.value = currentTheme;
   }

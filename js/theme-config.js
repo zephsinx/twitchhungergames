@@ -1,6 +1,8 @@
 // Theme Configuration
 // This file contains all theme-specific configuration for the Hunger Games Simulator
 
+import { themes, defaultTheme } from './themes.js';
+
 function formatMessage(template, values) {
   let result = template;
   for (const [key, value] of Object.entries(values)) {
@@ -102,10 +104,6 @@ function validateConfig(config) {
 }
 
 function loadTheme(themeName) {
-  if (typeof themes === "undefined") {
-    console.error("themes.js not loaded");
-    return validateConfig({});
-  }
   const theme = themes[themeName] || themes[defaultTheme];
   return validateConfig(theme.config);
 }
@@ -178,11 +176,6 @@ function applyTheme(config) {
 
 function loadThemeData(themeName) {
   return new Promise((resolve, reject) => {
-    if (typeof themes === "undefined") {
-      reject(new Error("themes.js not loaded"));
-      return;
-    }
-
     const theme = themes[themeName] || themes[defaultTheme];
     if (!theme || !theme.config) {
       reject(new Error(`Theme "${themeName}" not found`));
@@ -268,5 +261,5 @@ window.loadTheme = loadTheme;
 window.loadThemeData = loadThemeData;
 window.switchTheme = switchTheme;
 window.applyTheme = applyTheme;
-window.getAvailableThemes = () =>
-  typeof themes !== "undefined" ? Object.keys(themes) : [];
+window.getAvailableThemes = () => Object.keys(themes);
+window.defaultTheme = defaultTheme;
