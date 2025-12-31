@@ -1,5 +1,4 @@
 // Theme Configuration
-// This file contains all theme-specific configuration for the Hunger Games Simulator
 
 import { themes, defaultTheme } from "./themes.js";
 
@@ -112,7 +111,6 @@ function injectFonts(config) {
   const oldStyles = document.querySelectorAll("style[data-theme-fonts]");
   oldStyles.forEach((s) => s.remove());
 
-  // Create new style element with data attribute
   const style = document.createElement("style");
   style.setAttribute("data-theme-fonts", "true");
 
@@ -151,7 +149,6 @@ function injectFonts(config) {
   );
 }
 
-// Apply theme configuration to the page
 function applyTheme(config) {
   injectFonts(config);
 

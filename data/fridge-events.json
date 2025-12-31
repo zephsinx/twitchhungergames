@@ -939,6 +939,11 @@
             "color": "#ff4444",
             "nonfatal": [
                 {
+                    "msg": "{0} grabs supplies from the warm leftovers.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
                     "msg": "{0} and {1} fight over a piece of pepperoni. {0} wins.",
                     "tributes": 2
                 },
@@ -947,17 +952,225 @@
                     "tributes": 2
                 },
                 {
+                    "msg": "{0} takes what they need and retreats.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
+                    "msg": "{0} and {1} agree to split the pizza crust fairly.",
+                    "tributes": 2,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0} sneaks away with some garlic bread while everyone fights.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0}, {1}, and {2} form a temporary truce to raid the container together.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
                     "msg": "{0} uses the chaos to steal {weapon_any} from {1}.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0} gorges themselves on warm pasta.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0} fills their pockets with breadcrumbs.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
+                    "msg": "{0} and {1} get into a food fight with mashed potatoes.",
+                    "tributes": 2,
+                    "weight": 0.8
+                },
+                {
+                    "msg": "{0} slips away unnoticed with the best scraps.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0} raids the Chinese takeout container and emerges with a fortune.",
+                    "tributes": 1,
+                    "weight": 0.8
+                },
+                {
+                    "msg": "{0} and {1} coordinate a pincer attack on the Thanksgiving leftovers.",
+                    "tributes": 2,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} hoards an entire grain of rice and refuses to share.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0}, {1}, and {2} barter scraps like seasoned merchants.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} discovers the mac and cheese is still warm and claims it as territory.",
+                    "tributes": 1,
+                    "weight": 0.9
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is killed at the feast by {1} using {weapon_any}.",
+                    "tributes": 2,
+                    "killed": [
+                        0
+                    ],
+                    "killer": [
+                        1
+                    ]
+                },
+                {
+                    "msg": "{0} eliminates {1} at the feast with a chopstick through the heart.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0}, {1}, and {2} ambush {3} at the feast.",
+                    "tributes": 4,
+                    "killed": [
+                        3
+                    ],
+                    "killer": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "weight": 0.4
+                },
+                {
+                    "msg": "{0} shoves {1} into the still-hot gravy.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} and {1} fight to the death over the last meatball. {0} wins.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} fight to the death over the last meatball. {1} wins.",
+                    "tributes": 2,
+                    "killed": [
+                        0
+                    ],
+                    "killer": [
+                        1
+                    ]
+                },
+                {
+                    "msg": "{0} chokes on their feast loot while fleeing.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0}, {1}, {2}, and {3} descend into a free-for-all. Only {0} survives.",
+                    "tributes": 4,
+                    "killed": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.3
+                },
+                {
+                    "msg": "{0} is scalded by the still-steaming soup.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} is trampled in the stampede toward the fresh bread.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0} and {1} agree to a truce. {0} immediately breaks it.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0} betrays their alliance with {1} for a piece of pepperoni.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0}, {1}, and {2} are crushed when the takeout container lid falls shut.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                }
+            ]
         },
         {
             "title": "Grocery Delivery",
             "description": "Fresh groceries have arrived. New supplies rain down from above as bags are unpacked.",
             "color": "#32cd32",
             "nonfatal": [
+                {
+                    "msg": "{0} catches a falling grape and secures it as supplies.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
                 {
                     "msg": "{0} and {1} race to claim a fresh strawberry. {0} gets there first.",
                     "tributes": 2
@@ -967,19 +1180,170 @@
                     "tributes": 2
                 },
                 {
+                    "msg": "{0} hides inside a new egg carton before it's placed in the fridge.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0} discovers a fresh loaf of bread and claims a crumb empire.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0}, {1}, and {2} work together to drag a blueberry to safety.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
                     "msg": "{0} finds {weapon_any} that fell from a grocery bag.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} takes shelter inside a new yogurt container.",
+                    "tributes": 1,
+                    "weight": 1.2
                 },
                 {
                     "msg": "{0} and {1} establish a base camp in the fresh produce section.",
                     "tributes": 2
                 },
                 {
+                    "msg": "{0} stockpiles fresh {food_good} while others are distracted.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
+                    "msg": "{0} rides a rolling orange to a new hiding spot.",
+                    "tributes": 1,
+                    "weight": 0.8
+                },
+                {
                     "msg": "{0} and {1} form an alliance over a shared cheese wheel discovery.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0} claims an entire baby carrot as their territory.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0}, {1}, and {2} divide up a fresh deli slice fairly.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} discovers the new milk jug provides excellent cover.",
+                    "tributes": 1,
+                    "weight": 1.2
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is crushed by a falling can of beans.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is knocked off the shelf by incoming groceries.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the path of a rolling apple.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} fight over a fresh grape. Only {0} survives.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} fight over a fresh grape. Only {1} survives.",
+                    "tributes": 2,
+                    "killed": [
+                        0
+                    ],
+                    "killer": [
+                        1
+                    ]
+                },
+                {
+                    "msg": "{0} is buried under an avalanche of new produce.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0}, {1}, and {2} are swept away when a milk carton tips over.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                },
+                {
+                    "msg": "{0} kills {1} with {weapon_any} while everyone is distracted by the new food.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} is trapped and suffocates in a sealed bag of spinach.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0} throws {1} into the chaos of falling groceries.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} mistakes {liquid_bad} for {liquid_good} in the confusion.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                }
+            ]
         },
         {
             "title": "Midnight Snack Raid",
@@ -987,16 +1351,56 @@
             "color": "#191970",
             "nonfatal": [
                 {
+                    "msg": "{0} hides behind the ketchup as the hand passes by.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
                     "msg": "{0} and {1} dive for cover when the light turns on.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0} freezes perfectly still and avoids detection.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
+                    "msg": "{0} uses the distraction to relocate to a better position.",
+                    "tributes": 1,
+                    "weight": 1.2
                 },
                 {
                     "msg": "{0} and {1} cling to each other as containers shift around them.",
                     "tributes": 2
                 },
                 {
+                    "msg": "{0} rides a jar being moved to a safer shelf.",
+                    "tributes": 1,
+                    "weight": 0.8
+                },
+                {
+                    "msg": "{0}, {1}, and {2} huddle in the back corner until it's over.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} grabs supplies that fell during the disturbance.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0} discovers a new hiding spot revealed by the reorganization.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
                     "msg": "{0} and {1} form a pact to warn each other of future raids.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0} plays dead among the crumbs. The human doesn't notice.",
+                    "tributes": 1,
+                    "weight": 1.2
                 },
                 {
                     "msg": "{0} steals {weapon_any} while everyone else panics.",
@@ -1005,9 +1409,124 @@
                 {
                     "msg": "{0} and {1} find themselves on the same shelf after the chaos.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0} emerges from the chaos with a handful of {food_good}.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0}, {1}, and {2} survive by hiding in the vegetable crisper.",
+                    "tributes": 3,
+                    "weight": 0.7
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is grabbed by the human hand, mistaken for a crumb.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is crushed when a container is carelessly replaced.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} falls from a disturbed shelf to their death.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the human's line of sight.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} uses the darkness to eliminate {1} unnoticed.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} are both knocked off the shelf by a swinging door.",
+                    "tributes": 2,
+                    "killed": [
+                        0,
+                        1
+                    ],
+                    "killer": null,
+                    "weight": 0.5
+                },
+                {
+                    "msg": "{0} is swept out of the fridge when the human grabs the wrong container.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0}, {1}, and {2} are discovered and removed from the fridge.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                },
+                {
+                    "msg": "{0} kills {1} with {weapon_any} while the human blocks the light.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} panics and runs into a puddle of {liquid_bad}.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0} throws {1} at the human as a distraction. It doesn't end well for {1}.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                }
+            ]
         },
         {
             "title": "Holiday Leftovers Bonanza",
@@ -1015,8 +1534,18 @@
             "color": "#daa520",
             "nonfatal": [
                 {
+                    "msg": "{0} discovers an entire slice of pie and guards it jealously.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
                     "msg": "{0} and {1} share a piece of holiday ham in an unlikely truce.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0} builds a fort from mashed potato containers.",
+                    "tributes": 1,
+                    "weight": 1.2
                 },
                 {
                     "msg": "{0} finds {weapon_any} stuck in the cranberry sauce.",
@@ -1027,15 +1556,174 @@
                     "tributes": 2
                 },
                 {
+                    "msg": "{0}, {1}, and {2} feast together on stuffing crumbs.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} rolls around in the gravy boat, coating themselves for warmth.",
+                    "tributes": 1,
+                    "weight": 0.8
+                },
+                {
+                    "msg": "{0} claims the entire dinner roll as their home.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
                     "msg": "{0} and {1} navigate through towers of Tupperware containers.",
                     "tributes": 2
                 },
                 {
+                    "msg": "{0} stockpiles enough {food_good} to last for days.",
+                    "tributes": 1,
+                    "weight": 1.3
+                },
+                {
+                    "msg": "{0} hides inside a carved pumpkin decoration.",
+                    "tributes": 1,
+                    "weight": 0.9
+                },
+                {
                     "msg": "{0} and {1} form an alliance based on shared love of sweet potato casserole.",
                     "tributes": 2
+                },
+                {
+                    "msg": "{0}, {1}, and {2} barter holiday scraps like black market traders.",
+                    "tributes": 3,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} discovers a cache of {food_good} behind the eggnog.",
+                    "tributes": 1,
+                    "weight": 1.2
+                },
+                {
+                    "msg": "{0} makes armor from a candy cane wrapper.",
+                    "tributes": 1,
+                    "weight": 0.8
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} drowns in a sea of gravy.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is buried under an avalanche of leftovers.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the cranberry sauce. They never resurface.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} fight to the death over the last piece of pie. {0} wins.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} fight to the death over the last piece of pie. {1} wins.",
+                    "tributes": 2,
+                    "killed": [
+                        0
+                    ],
+                    "killer": [
+                        1
+                    ]
+                },
+                {
+                    "msg": "{0} chokes on a piece of fruitcake.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0}, {1}, and {2} are crushed by a falling ham bone.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                },
+                {
+                    "msg": "{0} eliminates {1} with {weapon_any} during the holiday chaos.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} is scalded by hot mulled cider that was just added.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} slips on a candy cane and falls to their doom.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0} betrays {1} for the last gingerbread crumb.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0}, {1}, {2}, and {3} get trapped in the cookie tin. Only {0} escapes.",
+                    "tributes": 4,
+                    "killed": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.3
+                }
+            ]
         }
     ],
     "arena": [
@@ -1045,15 +1733,80 @@
             "color": "#87ceeb",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the defrost.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} surfs a wave of meltwater to safety.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} cling to a floating ice cube together.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} finds shelter under a frozen pizza box.",
                     "tributes": 1
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is crushed by a collapsing ice shelf.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} drowns in the flood of meltwater.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is impaled by a falling icicle.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} knocks {1} into the freezing water.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} pushes {1} under a collapsing ice wall.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} are both swept away by the flood.",
+                    "tributes": 2,
+                    "killed": [
+                        0,
+                        1
+                    ],
+                    "killer": null,
+                    "weight": 0.5
+                }
+            ]
         },
         {
             "title": "The Condiment Avalanche",
@@ -1061,15 +1814,71 @@
             "color": "#cc0000",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the condiment flood.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} climbs to higher ground just in time.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} help each other escape the ketchup tsunami.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} uses a bread crust as a raft.",
                     "tributes": 1
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is swept away by the ketchup flood.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} drowns in condiments. A tragic end.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is buried under an avalanche of relish.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the ketchup current.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0}, {1}, and {2} are all consumed by the condiment catastrophe.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                }
+            ]
         },
         {
             "title": "Mold Outbreak",
@@ -1077,11 +1886,73 @@
             "color": "#556b2f",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the mold outbreak.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} holds their breath and escapes the spore cloud.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} share a piece of napkin as a makeshift mask.",
+                    "tributes": 2,
+                    "weight": 0.8
+                },
+                {
+                    "msg": "{0} was already immune due to eating {food_bad} earlier.",
+                    "tributes": 1,
+                    "weight": 0.6
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} inhales the spores and collapses.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} succumbs to the toxic mold.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the spore cloud.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} locks {1} in the moldy container.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} both refuse to retreat and die together in the mold.",
+                    "tributes": 2,
+                    "killed": [
+                        0,
+                        1
+                    ],
+                    "killer": null,
+                    "weight": 0.5
+                }
+            ]
         },
         {
             "title": "The Hand",
@@ -1089,8 +1960,18 @@
             "color": "#ffcc99",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the giant hand.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} hides behind a jar as the hand passes by.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} dive for cover just in time.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} freezes perfectly still and goes unnoticed.",
@@ -1101,7 +1982,54 @@
                     "tributes": 1
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is grabbed by the hand and removed from the fridge.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is mistaken for a piece of food and eaten.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.6
+                },
+                {
+                    "msg": "{0} is crushed when the hand knocks over a jar.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the hand's path.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} uses {1} as a decoy while they escape.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                }
+            ]
         },
         {
             "title": "Mystery Tupperware Opens",
@@ -1109,15 +2037,75 @@
             "color": "#4a0080",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the Tupperware horror.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} runs away before getting a good look at it.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} seal themselves in a jar until it passes.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} pretends to be dead and the thing ignores them.",
                     "tributes": 1
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} looks directly at the contents and dies of shock.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} is consumed by whatever was in the Tupperware.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} throws {1} at the horror as a distraction.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} and {1} are both absorbed by the ancient leftovers.",
+                    "tributes": 2,
+                    "killed": [
+                        0,
+                        1
+                    ],
+                    "killer": null,
+                    "weight": 0.5
+                },
+                {
+                    "msg": "{0}, {1}, and {2} attempt to fight it. They all fail.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                }
+            ]
         },
         {
             "title": "Power Outage",
@@ -1125,8 +2113,18 @@
             "color": "#333333",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the power outage.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} finds a warm spot and enjoys the temporary comfort.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} form an emergency alliance as chaos spreads.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} relocates to higher ground before the meltwater arrives.",
@@ -1137,7 +2135,64 @@
                     "tributes": 1
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} suffocates in a sealed container as the air grows stale.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is trampled in the panic when the lights go out.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null,
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} drowns in meltwater pooling on the bottom shelf.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into a rising pool of condensation.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} and {1} fight over the last cool spot. Neither wins.",
+                    "tributes": 2,
+                    "killed": [
+                        0,
+                        1
+                    ],
+                    "killer": null,
+                    "weight": 0.5
+                },
+                {
+                    "msg": "{0} seals {1} in a container as the temperature rises.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                }
+            ]
         },
         {
             "title": "The Great Cleaning",
@@ -1145,15 +2200,87 @@
             "color": "#90ee90",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the great cleaning.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} hides successfully as containers are shuffled around them.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} rides a jar to a new location and finds better supplies.",
+                    "tributes": 1,
+                    "weight": 0.8
+                },
+                {
+                    "msg": "{0} and {1} cling to each other as their shelf is moved.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} plays dead among the crumbs being wiped away.",
                     "tributes": 1
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is thrown out with the expired yogurt.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is crushed between two containers being rearranged.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} falls from a shelf being pulled out.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into the path of a moving jar.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} uses the chaos to eliminate {1} and blame the human.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0}, {1}, and {2} are all wiped away with a sponge.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                }
+            ]
         },
         {
             "title": "Freezer Expedition",
@@ -1161,8 +2288,18 @@
             "color": "#a8d8ea",
             "nonfatal": [
                 {
+                    "msg": "{0} survives the freezer expedition.",
+                    "tributes": 1,
+                    "hidden": true
+                },
+                {
                     "msg": "{0} finds frozen treasures buried in the ice.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0} and {1} huddle together for warmth in the frozen wasteland.",
+                    "tributes": 2,
+                    "weight": 0.8
                 },
                 {
                     "msg": "{0} discovers ice caves carved into the frozen vegetables.",
@@ -1171,9 +2308,97 @@
                 {
                     "msg": "{0} makes it back to the fridge section just in time.",
                     "tributes": 1
+                },
+                {
+                    "msg": "{0}, {1}, and {2} form an expedition party and return with supplies.",
+                    "tributes": 3,
+                    "weight": 0.6
                 }
             ],
-            "fatal": []
+            "fatal": [
+                {
+                    "msg": "{0} is flash-frozen solid within seconds.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is crushed by falling frozen goods.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} gets lost in the frost and is never seen again.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} succumbs to frostbite before reaching shelter.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} is buried under an ice cube avalanche.",
+                    "tributes": 1,
+                    "killed": [
+                        0
+                    ],
+                    "killer": null
+                },
+                {
+                    "msg": "{0} pushes {1} into a sub-zero zone.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ]
+                },
+                {
+                    "msg": "{0} leaves {1} behind to freeze while they escape.",
+                    "tributes": 2,
+                    "killed": [
+                        1
+                    ],
+                    "killer": [
+                        0
+                    ],
+                    "weight": 0.7
+                },
+                {
+                    "msg": "{0} and {1} both refuse to turn back. The cold claims them.",
+                    "tributes": 2,
+                    "killed": [
+                        0,
+                        1
+                    ],
+                    "killer": null,
+                    "weight": 0.5
+                },
+                {
+                    "msg": "{0}, {1}, and {2} venture too deep. None return.",
+                    "tributes": 3,
+                    "killed": [
+                        0,
+                        1,
+                        2
+                    ],
+                    "killer": null,
+                    "weight": 0.3
+                }
+            ]
         }
     ],
     "generic": {
