@@ -12,7 +12,11 @@
 		"honey",
 		"maple syrup",
 		"coconut milk",
-		"almond milk"
+		"almond milk",
+		"fresh milk",
+		"watermelon juice",
+		"chamomile tea",
+		"electrolyte water"
 	],
 	"liquid_bad": [
 		"spoiled milk",
@@ -26,7 +30,11 @@
 		"battery acid",
 		"antifreeze drip",
 		"septic sludge",
-		"the juice from the thing in the back"
+		"the juice from the thing in the back",
+		"curdled cream",
+		"decomposed vegetable juice",
+		"rust-contaminated water",
+		"the drippings from under the meat drawer"
 	],
 	"liquid_neutral": [
 		"pickle brine",
@@ -40,7 +48,11 @@
 		"olive brine",
 		"tomato juice",
 		"beef broth",
-		"wine vinegar"
+		"wine vinegar",
+		"worcestershire sauce",
+		"fish sauce",
+		"tahini drippings",
+		"cream cheese runoff"
 	],
 	"food_good": [
 		"fresh fruit bits",
@@ -55,7 +67,11 @@
 		"dried fruit",
 		"chocolate shavings",
 		"granola bits",
-		"yogurt drops"
+		"yogurt drops",
+		"honey drops",
+		"cream cheese bits",
+		"smoked salmon flakes",
+		"fresh berry pieces"
 	],
 	"food_bad": [
 		"moldy bread",
@@ -69,7 +85,11 @@
 		"slimy vegetables",
 		"bloated hot dog",
 		"rotten egg residue",
-		"expired yogurt"
+		"expired yogurt",
+		"festering fruit",
+		"putrid potato",
+		"black-spotted banana",
+		"crystallized ancient jam"
 	],
 	"food_neutral": [
 		"stale crackers",
@@ -83,7 +103,11 @@
 		"congealed gravy",
 		"wilted lettuce",
 		"overripe banana",
-		"soggy cereal"
+		"soggy cereal",
+		"rubbery cheese",
+		"lukewarm jello",
+		"canned corn kernels",
+		"freezer-burned ice cream"
 	],
 	"hazard_cold": [
 		"freezer burn mist",
@@ -97,7 +121,11 @@
 		"glacial runoff",
 		"frozen metal surfaces",
 		"arctic drafts",
-		"deep freeze zones"
+		"deep freeze zones",
+		"refrigerant leak clouds",
+		"flash-freeze vents",
+		"supercooled water traps",
+		"cryogenic coil exposure"
 	],
 	"hazard_slippery": [
 		"grease puddles",
@@ -111,6 +139,10 @@
 		"juice puddles",
 		"sauce splatters",
 		"rendered fat pools",
-		"syrup drips"
+		"syrup drips",
+		"egg white puddles",
+		"mayonnaise smears",
+		"hummus slicks",
+		"leaked jam patches"
 	]
 }

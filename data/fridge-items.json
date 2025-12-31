@@ -51,6 +51,22 @@
 		{
 			"name": "a sugar cube",
 			"max_kills": 1
+		},
+		{
+			"name": "a hardened gummy bear",
+			"max_kills": 1
+		},
+		{
+			"name": "a frozen corn kernel",
+			"max_kills": 1
+		},
+		{
+			"name": "a compacted rice ball",
+			"max_kills": 2
+		},
+		{
+			"name": "a solidified butter cube",
+			"max_kills": 1
 		}
 	],
 	"weapon_cutting": [
@@ -100,6 +116,22 @@
 		},
 		{
 			"name": "a sharp cheese rind",
+			"max_kills": 1
+		},
+		{
+			"name": "a broken glass jar shard",
+			"max_kills": 2
+		},
+		{
+			"name": "a serrated bottle cap edge",
+			"max_kills": 1
+		},
+		{
+			"name": "a split almond shell",
+			"max_kills": 1
+		},
+		{
+			"name": "a celery string garrote",
 			"max_kills": 1
 		}
 	],
@@ -155,6 +187,22 @@
 		{
 			"name": "a metal twist-tie point",
 			"max_kills": 1
+		},
+		{
+			"name": "a crab leg tip",
+			"max_kills": 1
+		},
+		{
+			"name": "a dried rosemary sprig",
+			"max_kills": 1
+		},
+		{
+			"name": "a broken thermometer probe",
+			"max_kills": 2
+		},
+		{
+			"name": "a shattered candy cane point",
+			"max_kills": 1
 		}
 	],
 	"weapon_projectile": [
@@ -204,6 +252,22 @@
 		},
 		{
 			"name": "a toothpick crossbow",
+			"max_kills": 2
+		},
+		{
+			"name": "a lint ball launcher",
+			"max_kills": 1
+		},
+		{
+			"name": "a frozen pea mortar",
+			"max_kills": 2
+		},
+		{
+			"name": "a cherry pit sling",
+			"max_kills": 1
+		},
+		{
+			"name": "a compressed air can",
 			"max_kills": 2
 		}
 	],
@@ -255,6 +319,22 @@
 		{
 			"name": "a tiny magnifying glass",
 			"max_kills": 2
+		},
+		{
+			"name": "a habanero extract needle",
+			"max_kills": 2
+		},
+		{
+			"name": "a black pepper bomb",
+			"max_kills": 1
+		},
+		{
+			"name": "a ginger burn paste",
+			"max_kills": 1
+		},
+		{
+			"name": "a fermented kimchi grenade",
+			"max_kills": 2
 		}
 	],
 	"weapon_cold": [
@@ -304,6 +384,18 @@
 		},
 		{
 			"name": "a sub-zero metal touch",
+			"max_kills": 1
+		},
+		{
+			"name": "a frozen butter knife",
+			"max_kills": 2
+		},
+		{
+			"name": "a dry ice shard",
+			"max_kills": 2
+		},
+		{
+			"name": "a cryo-crystallized water drop",
 			"max_kills": 1
 		}
 	],
@@ -355,6 +447,22 @@
 		{
 			"name": "an expired medicine capsule",
 			"max_kills": 1
+		},
+		{
+			"name": "a pickle juice spritzer",
+			"max_kills": 1
+		},
+		{
+			"name": "a blue cheese spore bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "an oxidized apple grenade",
+			"max_kills": 2
+		},
+		{
+			"name": "a concentrated lime acid",
+			"max_kills": 1
 		}
 	],
 	"weapon_explosive": [
@@ -405,6 +513,22 @@
 		{
 			"name": "a pressure cooker burst",
 			"max_kills": 5
+		},
+		{
+			"name": "a shaken beer can mine",
+			"max_kills": 3
+		},
+		{
+			"name": "an expanding foam canister",
+			"max_kills": 2
+		},
+		{
+			"name": "a compressed whipped cream bomb",
+			"max_kills": 2
+		},
+		{
+			"name": "a bloated can of beans",
+			"max_kills": 4
 		}
 	]
 }
