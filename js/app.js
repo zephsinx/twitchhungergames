@@ -350,6 +350,9 @@ function initializeData() {
       localStorage.getItem("useTwitchAvatars") === "true";
     useTwitchAvatarsToggle.addEventListener("change", (e) => {
       localStorage.setItem("useTwitchAvatars", e.target.checked);
+      if (typeof window.updateAllAvatars === "function") {
+        window.updateAllAvatars(e.target.checked);
+      }
     });
   }
 
@@ -539,11 +542,209 @@ function updateHeaderForGameState() {
     btnDebugEl.style.display = isGameStarted ? "none" : "inline-block";
   }
   if (useTwitchAvatarsLabel) {
-    useTwitchAvatarsLabel.style.display = isGameStarted ? "none" : "flex";
+    useTwitchAvatarsLabel.style.display = "flex";
   }
 }
 
 window.updateHeaderForGameState = updateHeaderForGameState;
+
+function refreshPlayersGrid() {
+  const playersGrid = document.getElementById("playersGrid");
+  if (!playersGrid) return;
+
+  const playerElements = playersGrid.querySelectorAll("[data-username]");
+  const useTwitchAvatars =
+    document.getElementById("useTwitchAvatars")?.checked || false;
+
+  if (typeof window.updatePlayerAvatar !== "function") return;
+
+  playerElements.forEach((playerEl) => {
+    const username = playerEl.dataset.username;
+    const imgEl = playerEl.querySelector("img");
+    if (!imgEl || !username) return;
+
+    window.updatePlayerAvatar(username, useTwitchAvatars).then((avatarUrl) => {
+      imgEl.src = avatarUrl;
+    });
+  });
+}
+
+function refreshWinnerScreen() {
+  const winnerScreen = document.getElementById("winnerScreen");
+  if (!winnerScreen || winnerScreen.style.display === "none") return;
+
+  if (typeof window.showWinner === "function") {
+    window.showWinner();
+  }
+}
+
+function refreshFallenDisplay() {
+  const eventLog = document.getElementById("eventLog");
+  if (!eventLog) return;
+
+  const fallenDisplay = eventLog.querySelector(".avatars");
+  if (!fallenDisplay) return;
+
+  const currentDay = window.currentDay || 1;
+  if (typeof window.showFallen === "function") {
+    window.showFallen(currentDay);
+  }
+}
+
+function refreshEventLog() {
+  const eventLog = document.getElementById("eventLog");
+  if (!eventLog) return;
+
+  const avatarWraps = eventLog.querySelectorAll(".avatarWrap img");
+  const useTwitchAvatars =
+    document.getElementById("useTwitchAvatars")?.checked || false;
+  const participants = window.participants || [];
+
+  if (typeof window.updatePlayerAvatar !== "function") return;
+
+  avatarWraps.forEach((imgEl) => {
+    const avatarWrap = imgEl.closest(".avatarWrap");
+    if (!avatarWrap) return;
+
+    const tooltipBox = avatarWrap.querySelector(".tooltip-box");
+    if (!tooltipBox) return;
+
+    const tooltipText = tooltipBox.textContent;
+    const usernameMatch = tooltipText.match(/^([^\n]+)/);
+    if (!usernameMatch) return;
+
+    const displayName = usernameMatch[1];
+    const participant = participants.find((p) => {
+      const eventHandlersLoaded = window.eventHandlersLoaded || false;
+      const polymorphedPlayers = window.polymorphedPlayers || new Map();
+      if (
+        eventHandlersLoaded &&
+        window.eventHandlers &&
+        window.eventHandlers.polymorph &&
+        polymorphedPlayers.has(p.username)
+      ) {
+        return (
+          window.eventHandlers.polymorph.getDisplayName(p.username, {
+            polymorphedPlayers,
+          }) === displayName
+        );
+      }
+      return p.username === displayName;
+    });
+
+    if (participant) {
+      window
+        .updatePlayerAvatar(participant.username, useTwitchAvatars)
+        .then((avatarUrl) => {
+          imgEl.src = avatarUrl;
+        });
+    }
+  });
+}
+
+async function updateAllAvatars(useTwitch) {
+  if (!window.getCachedAvatar || !window.fetchTwitchAvatarsBatch) return;
+
+  const playersGrid = document.getElementById("playersGrid");
+  const participants = window.participants || [];
+
+  const usernameToElements = new Map();
+  const uniqueUsernames = new Set();
+
+  if (playersGrid && playersGrid.style.display !== "none") {
+    const playerElements = playersGrid.querySelectorAll("[data-username]");
+    playerElements.forEach((playerEl) => {
+      const username = playerEl.dataset.username;
+      const imgEl = playerEl.querySelector("img");
+      if (!imgEl || !username) return;
+
+      uniqueUsernames.add(username);
+      if (!usernameToElements.has(username)) {
+        usernameToElements.set(username, []);
+      }
+      usernameToElements.get(username).push({ type: "img", element: imgEl });
+    });
+  }
+
+  participants.forEach((participant) => {
+    uniqueUsernames.add(participant.username);
+    if (!usernameToElements.has(participant.username)) {
+      usernameToElements.set(participant.username, []);
+    }
+    usernameToElements.get(participant.username).push({
+      type: "participant",
+      participant: participant,
+    });
+  });
+
+  const cachedAvatars = new Map();
+  const uncachedUsernames = [];
+
+  for (const username of uniqueUsernames) {
+    const cached = window.getCachedAvatar(username, useTwitch);
+    if (cached !== null) {
+      cachedAvatars.set(username, cached);
+    } else {
+      uncachedUsernames.push(username);
+    }
+  }
+
+  for (const [username, avatarUrl] of cachedAvatars) {
+    const elements = usernameToElements.get(username) || [];
+    elements.forEach((item) => {
+      if (item.type === "img") {
+        item.element.src = avatarUrl;
+      } else if (item.type === "participant") {
+        item.participant.avatar = avatarUrl;
+      }
+    });
+  }
+
+  if (uncachedUsernames.length > 0) {
+    if (useTwitch) {
+      const fetchedAvatars = await window.fetchTwitchAvatarsBatch(
+        uncachedUsernames
+      );
+      for (const [username, avatarUrl] of fetchedAvatars) {
+        const elements = usernameToElements.get(username) || [];
+        elements.forEach((item) => {
+          if (item.type === "img") {
+            item.element.src = avatarUrl;
+          } else if (item.type === "participant") {
+            item.participant.avatar = avatarUrl;
+          }
+        });
+      }
+    } else {
+      for (const username of uncachedUsernames) {
+        const fakeAvatar = window.assignFakeAvatar
+          ? window.assignFakeAvatar(username)
+          : (window.fakeAvatars || [])[0];
+
+        const elements = usernameToElements.get(username) || [];
+        elements.forEach((item) => {
+          if (item.type === "img") {
+            item.element.src = fakeAvatar;
+          } else if (item.type === "participant") {
+            item.participant.avatar = fakeAvatar;
+          }
+        });
+      }
+    }
+  }
+
+  if (participants.length > 0) {
+    refreshWinnerScreen();
+    refreshFallenDisplay();
+    refreshEventLog();
+  }
+}
+
+window.refreshPlayersGrid = refreshPlayersGrid;
+window.refreshWinnerScreen = refreshWinnerScreen;
+window.refreshFallenDisplay = refreshFallenDisplay;
+window.refreshEventLog = refreshEventLog;
+window.updateAllAvatars = updateAllAvatars;
 
 if (btnRestart) {
   btnRestart.addEventListener("click", () => {

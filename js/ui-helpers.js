@@ -521,18 +521,28 @@ function addPlayer(u, c) {
   const img = document.createElement("img");
   img.alt = `${u} avatar`;
   const useTwitchAvatars = document.getElementById("useTwitchAvatars")?.checked;
-  if (useTwitchAvatars) {
+
+  const cachedAvatar = window.getCachedAvatar
+    ? window.getCachedAvatar(u, useTwitchAvatars)
+    : null;
+
+  if (cachedAvatar !== null) {
+    img.src = cachedAvatar;
+  } else if (useTwitchAvatars) {
     img.src =
       "https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png";
-    fetch(`https://decapi.me/twitch/avatar/${u}`, { mode: "cors" })
-      .then((r) => r.text())
-      .then((url) => {
-        if (url.startsWith("http")) img.src = url;
+    if (window.updatePlayerAvatar) {
+      window.updatePlayerAvatar(u, true).then((avatarUrl) => {
+        img.src = avatarUrl;
       });
+    }
   } else {
-    img.src = window.getNextAvatar
+    const fakeAvatar = window.assignFakeAvatar
+      ? window.assignFakeAvatar(u)
+      : window.getNextAvatar
       ? window.getNextAvatar()
       : (window.fakeAvatars || [])[0];
+    img.src = fakeAvatar;
   }
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";
@@ -583,11 +593,13 @@ function addFakePlayer(u, c) {
     btnStart.disabled = players.size === 0;
   });
   const img = document.createElement("img");
-  const fakeAvatars = window.fakeAvatars || [];
-  img.src = window.getNextAvatar
-    ? window.getNextAvatar()
-    : fakeAvatars[0] || "";
   img.alt = `${u} avatar`;
+  const fakeAvatar = window.assignFakeAvatar
+    ? window.assignFakeAvatar(u)
+    : window.getNextAvatar
+    ? window.getNextAvatar()
+    : (window.fakeAvatars || [])[0] || "";
+  img.src = fakeAvatar;
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";
   const imgTooltipBox = document.createElement("div");
@@ -605,6 +617,153 @@ function addFakePlayer(u, c) {
   playersGrid.appendChild(cont);
 }
 
+const avatarCache = new Map();
+
+function isTwitchPlaceholder(url) {
+  if (!url || typeof url !== "string") return false;
+  return url.includes("user-default-pictures");
+}
+
+function getCachedAvatar(username, useTwitch) {
+  if (!username) return null;
+
+  const cacheKey = useTwitch ? `twitch:${username}` : `fake:${username}`;
+  if (!avatarCache.has(cacheKey)) return null;
+
+  const cachedUrl = avatarCache.get(cacheKey);
+
+  if (useTwitch && isTwitchPlaceholder(cachedUrl)) {
+    const fallbackAvatar = window.getNextAvatar
+      ? window.getNextAvatar()
+      : (window.fakeAvatars || [])[0];
+    avatarCache.set(cacheKey, fallbackAvatar);
+    return fallbackAvatar;
+  }
+
+  return cachedUrl;
+}
+
+async function fetchTwitchAvatarsBatch(usernames) {
+  const results = new Map();
+  const fetchPromises = [];
+
+  for (const username of usernames) {
+    const cacheKey = `twitch:${username}`;
+
+    if (avatarCache.has(cacheKey)) {
+      const cachedUrl = avatarCache.get(cacheKey);
+      if (isTwitchPlaceholder(cachedUrl)) {
+        const fallbackAvatar = window.getNextAvatar
+          ? window.getNextAvatar()
+          : (window.fakeAvatars || [])[0];
+        avatarCache.set(cacheKey, fallbackAvatar);
+        results.set(username, fallbackAvatar);
+      } else {
+        results.set(username, cachedUrl);
+      }
+      continue;
+    }
+
+    fetchPromises.push(
+      fetch(`https://decapi.me/twitch/avatar/${username}`, { mode: "cors" })
+        .then((r) => r.text())
+        .then((url) => {
+          if (url && url.startsWith("http")) {
+            if (isTwitchPlaceholder(url)) {
+              const fallbackAvatar = window.getNextAvatar
+                ? window.getNextAvatar()
+                : (window.fakeAvatars || [])[0];
+              avatarCache.set(cacheKey, fallbackAvatar);
+              results.set(username, fallbackAvatar);
+            } else {
+              avatarCache.set(cacheKey, url);
+              results.set(username, url);
+            }
+          } else {
+            const fallbackAvatar = window.getNextAvatar
+              ? window.getNextAvatar()
+              : (window.fakeAvatars || [])[0];
+            avatarCache.set(cacheKey, fallbackAvatar);
+            results.set(username, fallbackAvatar);
+          }
+        })
+        .catch(() => {
+          const fallbackAvatar = window.getNextAvatar
+            ? window.getNextAvatar()
+            : (window.fakeAvatars || [])[0];
+          avatarCache.set(cacheKey, fallbackAvatar);
+          results.set(username, fallbackAvatar);
+        })
+    );
+  }
+
+  await Promise.all(fetchPromises);
+  return results;
+}
+
+function updatePlayerAvatar(username, useTwitch) {
+  return new Promise((resolve) => {
+    if (useTwitch) {
+      const cacheKey = `twitch:${username}`;
+      if (avatarCache.has(cacheKey)) {
+        const cachedUrl = avatarCache.get(cacheKey);
+        if (isTwitchPlaceholder(cachedUrl)) {
+          const fallbackAvatar = window.getNextAvatar
+            ? window.getNextAvatar()
+            : (window.fakeAvatars || [])[0];
+          avatarCache.set(cacheKey, fallbackAvatar);
+          resolve(fallbackAvatar);
+          return;
+        }
+        resolve(cachedUrl);
+        return;
+      }
+
+      fetch(`https://decapi.me/twitch/avatar/${username}`, { mode: "cors" })
+        .then((r) => r.text())
+        .then((url) => {
+          if (url && url.startsWith("http")) {
+            if (isTwitchPlaceholder(url)) {
+              const fallbackAvatar = window.getNextAvatar
+                ? window.getNextAvatar()
+                : (window.fakeAvatars || [])[0];
+              avatarCache.set(cacheKey, fallbackAvatar);
+              resolve(fallbackAvatar);
+            } else {
+              avatarCache.set(cacheKey, url);
+              resolve(url);
+            }
+          } else {
+            const fallbackAvatar = window.getNextAvatar
+              ? window.getNextAvatar()
+              : (window.fakeAvatars || [])[0];
+            avatarCache.set(cacheKey, fallbackAvatar);
+            resolve(fallbackAvatar);
+          }
+        })
+        .catch(() => {
+          const fallbackAvatar = window.getNextAvatar
+            ? window.getNextAvatar()
+            : (window.fakeAvatars || [])[0];
+          avatarCache.set(cacheKey, fallbackAvatar);
+          resolve(fallbackAvatar);
+        });
+    } else {
+      const cacheKey = `fake:${username}`;
+      if (avatarCache.has(cacheKey)) {
+        resolve(avatarCache.get(cacheKey));
+        return;
+      }
+
+      const fakeAvatar = window.getNextAvatar
+        ? window.getNextAvatar()
+        : (window.fakeAvatars || [])[0];
+      avatarCache.set(cacheKey, fakeAvatar);
+      resolve(fakeAvatar);
+    }
+  });
+}
+
 window.escapeRegExp = escapeRegExp;
 window.escapeHtml = escapeHtml;
 window.validateColor = validateColor;
@@ -618,5 +777,21 @@ window.showWinner = showWinner;
 window.renderLeaderboard = renderLeaderboard;
 window.showLeaderboard = showLeaderboard;
 window.clearLeaderboard = clearLeaderboard;
+function assignFakeAvatar(username) {
+  const cacheKey = `fake:${username}`;
+  if (avatarCache.has(cacheKey)) {
+    return avatarCache.get(cacheKey);
+  }
+  const fakeAvatar = window.getNextAvatar
+    ? window.getNextAvatar()
+    : (window.fakeAvatars || [])[0];
+  avatarCache.set(cacheKey, fakeAvatar);
+  return fakeAvatar;
+}
+
 window.addPlayer = addPlayer;
 window.addFakePlayer = addFakePlayer;
+window.updatePlayerAvatar = updatePlayerAvatar;
+window.getCachedAvatar = getCachedAvatar;
+window.fetchTwitchAvatarsBatch = fetchTwitchAvatarsBatch;
+window.assignFakeAvatar = assignFakeAvatar;
