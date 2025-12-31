@@ -5,7 +5,14 @@ function sleep(ms) {
 }
 
 function getStepType(isDay) {
+  const currentDay = window.currentDay || 1;
   const daysSinceEvent = window.daysSinceEvent || 0;
+
+  // Prevent arena or feast on day 1 and night 1 to have a "normal" day after the bloodbath
+  if (currentDay === 1) {
+    window.daysSinceEvent = (window.daysSinceEvent || 0) + 1;
+    return isDay ? "day" : "night";
+  }
 
   if (isDay) {
     const feastChance = Math.min(8 + daysSinceEvent * 3, 30);
