@@ -322,6 +322,15 @@ function initializeData() {
     console.error("Initial data load failed:", err);
   });
 
+  const useTwitchAvatarsToggle = document.getElementById("useTwitchAvatars");
+  if (useTwitchAvatarsToggle) {
+    useTwitchAvatarsToggle.checked =
+      localStorage.getItem("useTwitchAvatars") === "true";
+    useTwitchAvatarsToggle.addEventListener("change", (e) => {
+      localStorage.setItem("useTwitchAvatars", e.target.checked);
+    });
+  }
+
   updateHeaderForGameState();
 }
 
@@ -454,6 +463,7 @@ function updateHeaderForGameState() {
   const chInputEl = document.getElementById("channelInput");
   const btnConnectEl = document.getElementById("connectButton");
   const btnRestartEl = document.getElementById("restartButton");
+  const useTwitchAvatarsLabel = document.getElementById("useTwitchAvatars")?.parentElement;
 
   if (themeSelectorEl) {
     themeSelectorEl.style.display = isGameStarted ? "none" : "block";
@@ -466,6 +476,9 @@ function updateHeaderForGameState() {
   }
   if (btnRestartEl) {
     btnRestartEl.style.display = isGameStarted ? "inline-block" : "none";
+  }
+  if (useTwitchAvatarsLabel) {
+    useTwitchAvatarsLabel.style.display = isGameStarted ? "none" : "flex";
   }
 }
 

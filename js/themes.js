@@ -139,6 +139,6 @@ const themes = {
   },
 };
 
-const defaultTheme = "noita";
+const defaultTheme = "fridge";
 
 export { themes, defaultTheme };

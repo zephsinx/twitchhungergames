@@ -411,6 +411,11 @@ function showWinner() {
     }
   });
   winnerScreen.style.display = "block";
+
+  const btnRestart = document.getElementById("restartButton");
+  if (btnRestart) {
+    btnRestart.style.display = "none";
+  }
 }
 
 function renderLeaderboard() {
@@ -493,14 +498,20 @@ function addPlayer(u, c) {
     btnStart.disabled = players.size === 0;
   });
   const img = document.createElement("img");
-  img.src =
-    "https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png";
   img.alt = `${u} avatar`;
-  fetch(`https://decapi.me/twitch/avatar/${u}`, { mode: "cors" })
-    .then((r) => r.text())
-    .then((url) => {
-      if (url.startsWith("http")) img.src = url;
-    });
+  const useTwitchAvatars = document.getElementById("useTwitchAvatars")?.checked;
+  if (useTwitchAvatars) {
+    img.src =
+      "https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png";
+    fetch(`https://decapi.me/twitch/avatar/${u}`, { mode: "cors" })
+      .then((r) => r.text())
+      .then((url) => {
+        if (url.startsWith("http")) img.src = url;
+      });
+  } else {
+    const fakeAvatars = window.fakeAvatars || [];
+    img.src = fakeAvatars[Math.floor(Math.random() * fakeAvatars.length)];
+  }
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";
   const imgTooltipBox = document.createElement("div");

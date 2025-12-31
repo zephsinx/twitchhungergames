@@ -72,6 +72,22 @@ body {
   margin-left: auto;
 }
 
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+}
+
 #status {
   font-weight: bold;
   margin-right: 1em;
