@@ -172,6 +172,7 @@ body {
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
+  background-color: #f5f5f5;
 }
 
 .player .name {
@@ -237,6 +238,7 @@ body {
   height: 60px;
   object-fit: cover;
   border-radius: 4px;
+  background-color: #f5f5f5;
 }
 
 .avatarWrap img.dead {
@@ -298,6 +300,7 @@ body {
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
+  background-color: #f5f5f5;
 }
 
 #winnerText {
@@ -351,6 +354,7 @@ body {
   object-fit: cover;
   border-radius: 8px;
   position: relative;
+  background-color: #f5f5f5;
 }
 
 .placement .rank {
@@ -408,7 +412,9 @@ body {
 
 .tooltip-container {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tooltip-box {
@@ -433,6 +439,28 @@ body {
 
 .tooltip-container:hover .tooltip-box {
   visibility: visible;
+}
+
+.tooltip-container.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--text-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  z-index: 5;
+  background: rgba(18, 18, 18, 0.7);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tooltip-container.loading img {
+  opacity: 0.3;
 }
 
 /* Leaderboard overlay */

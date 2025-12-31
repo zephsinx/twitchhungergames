@@ -157,6 +157,29 @@ function getDisplayName(username) {
   return username;
 }
 
+function setupImageLoading(img, container) {
+  container.classList.remove("loading");
+
+  const srcBeforeSetup = img.src;
+  container.classList.add("loading");
+
+  const handleLoad = () => {
+    container.classList.remove("loading");
+    img.classList.add("loaded");
+  };
+
+  const handleError = () => {
+    container.classList.remove("loading");
+  };
+
+  img.addEventListener("load", handleLoad, { once: true });
+  img.addEventListener("error", handleError, { once: true });
+
+  if (img.complete && img.naturalHeight !== 0 && img.src === srcBeforeSetup) {
+    container.classList.remove("loading");
+  }
+}
+
 function showFallen(day) {
   const eventLog = document.getElementById("eventLog");
   const dayDisplay = document.getElementById("dayDisplay");
@@ -188,7 +211,6 @@ function showFallen(day) {
     const wrap = document.createElement("div");
     wrap.className = "avatarWrap has-dead";
     const img = document.createElement("img");
-    img.src = p.avatar;
     img.alt = `${displayName} avatar`;
     img.className = "dead";
     const imgTooltipContainer = document.createElement("div");
@@ -198,6 +220,8 @@ function showFallen(day) {
     imgTooltipBox.textContent = getUserTooltipText(u, p.kills, day);
     imgTooltipContainer.appendChild(img);
     imgTooltipContainer.appendChild(imgTooltipBox);
+    setupImageLoading(img, imgTooltipContainer);
+    img.src = p.avatar;
     const nmC = document.createElement("div");
     nmC.className = "text";
     const sp = document.createElement("span");
@@ -310,7 +334,6 @@ function showWinner() {
   } else {
     title = window.themeConfig.messages.noSurvivors;
   }
-  winnerAvatar.src = avatar;
 
   if (
     !winnerAvatar.parentElement ||
@@ -348,6 +371,17 @@ function showWinner() {
     }
   }
 
+  if (avatar) {
+    const winnerTooltipContainer =
+      winnerAvatar.parentElement?.classList.contains("tooltip-container")
+        ? winnerAvatar.parentElement
+        : null;
+    if (winnerTooltipContainer) {
+      setupImageLoading(winnerAvatar, winnerTooltipContainer);
+    }
+    winnerAvatar.src = avatar;
+  }
+
   winnerText.textContent = title;
   placementsGrid.innerHTML = "";
 
@@ -363,7 +397,6 @@ function showWinner() {
     const wrap = document.createElement("div");
     wrap.className = "placement" + (p.alive ? "" : " dead");
     const img = document.createElement("img");
-    img.src = p.avatar;
     img.alt = `${displayName} avatar`;
     const imgTooltipContainer = document.createElement("div");
     imgTooltipContainer.className = "tooltip-container";
@@ -376,6 +409,8 @@ function showWinner() {
     );
     imgTooltipContainer.appendChild(img);
     imgTooltipContainer.appendChild(imgTooltipBox);
+    setupImageLoading(img, imgTooltipContainer);
+    img.src = p.avatar;
     const rank = document.createElement("div");
     rank.className = "rank";
     rank.textContent = `#${i + 1}`;
@@ -520,6 +555,14 @@ function addPlayer(u, c) {
   });
   const img = document.createElement("img");
   img.alt = `${u} avatar`;
+  const imgTooltipContainer = document.createElement("div");
+  imgTooltipContainer.className = "tooltip-container";
+  const imgTooltipBox = document.createElement("div");
+  imgTooltipBox.className = "tooltip-box";
+  imgTooltipBox.textContent = getUserTooltipText(u, 0, 0);
+  imgTooltipContainer.appendChild(img);
+  imgTooltipContainer.appendChild(imgTooltipBox);
+
   const useTwitchAvatars = document.getElementById("useTwitchAvatars")?.checked;
 
   const cachedAvatar = window.getCachedAvatar
@@ -527,12 +570,15 @@ function addPlayer(u, c) {
     : null;
 
   if (cachedAvatar !== null) {
+    setupImageLoading(img, imgTooltipContainer);
     img.src = cachedAvatar;
   } else if (useTwitchAvatars) {
     img.src =
       "https://static-cdn.jtvnw.net/jtv_user_pictures/xarth/default-user-profile_image-70x70.png";
+    setupImageLoading(img, imgTooltipContainer);
     if (window.updatePlayerAvatar) {
       window.updatePlayerAvatar(u, true).then((avatarUrl) => {
+        setupImageLoading(img, imgTooltipContainer);
         img.src = avatarUrl;
       });
     }
@@ -542,15 +588,9 @@ function addPlayer(u, c) {
       : window.getNextAvatar
       ? window.getNextAvatar()
       : (window.fakeAvatars || [])[0];
+    setupImageLoading(img, imgTooltipContainer);
     img.src = fakeAvatar;
   }
-  const imgTooltipContainer = document.createElement("div");
-  imgTooltipContainer.className = "tooltip-container";
-  const imgTooltipBox = document.createElement("div");
-  imgTooltipBox.className = "tooltip-box";
-  imgTooltipBox.textContent = getUserTooltipText(u, 0, 0);
-  imgTooltipContainer.appendChild(img);
-  imgTooltipContainer.appendChild(imgTooltipBox);
   const nmC = document.createElement("div");
   nmC.className = "name";
   const sp = document.createElement("span");
@@ -594,12 +634,6 @@ function addFakePlayer(u, c) {
   });
   const img = document.createElement("img");
   img.alt = `${u} avatar`;
-  const fakeAvatar = window.assignFakeAvatar
-    ? window.assignFakeAvatar(u)
-    : window.getNextAvatar
-    ? window.getNextAvatar()
-    : (window.fakeAvatars || [])[0] || "";
-  img.src = fakeAvatar;
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";
   const imgTooltipBox = document.createElement("div");
@@ -607,6 +641,13 @@ function addFakePlayer(u, c) {
   imgTooltipBox.textContent = getUserTooltipText(u, 0, 0);
   imgTooltipContainer.appendChild(img);
   imgTooltipContainer.appendChild(imgTooltipBox);
+  const fakeAvatar = window.assignFakeAvatar
+    ? window.assignFakeAvatar(u)
+    : window.getNextAvatar
+    ? window.getNextAvatar()
+    : (window.fakeAvatars || [])[0] || "";
+  setupImageLoading(img, imgTooltipContainer);
+  img.src = fakeAvatar;
   const nmC = document.createElement("div");
   nmC.className = "name";
   const sp = document.createElement("span");
@@ -795,3 +836,4 @@ window.updatePlayerAvatar = updatePlayerAvatar;
 window.getCachedAvatar = getCachedAvatar;
 window.fetchTwitchAvatarsBatch = fetchTwitchAvatarsBatch;
 window.assignFakeAvatar = assignFakeAvatar;
+window.setupImageLoading = setupImageLoading;

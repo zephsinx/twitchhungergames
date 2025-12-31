@@ -484,7 +484,6 @@ async function runEvents(evObj) {
           wrap.classList.add("has-dead");
         }
         const img = document.createElement("img");
-        img.src = p.avatar;
         img.alt = `${window.getDisplayName(p.username)} avatar`;
         if (!p.alive) {
           img.className = "dead";
@@ -501,6 +500,10 @@ async function runEvents(evObj) {
         imgTooltipContainer.appendChild(img);
         imgTooltipContainer.appendChild(imgTooltipBox);
         wrap.append(imgTooltipContainer);
+        if (window.setupImageLoading) {
+          window.setupImageLoading(img, imgTooltipContainer);
+        }
+        img.src = p.avatar;
         avs.appendChild(wrap);
       });
       const txtEl = document.createElement("div");

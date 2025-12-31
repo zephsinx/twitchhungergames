@@ -341,7 +341,7 @@ function initializeData() {
     localStorage.getItem("selectedTheme") ||
     (typeof window.defaultTheme !== "undefined"
       ? window.defaultTheme
-      : "noita");
+      : "fridge");
   loadGameData(currentTheme).catch((err) => {
     console.error("Initial data load failed:", err);
   });
@@ -410,7 +410,7 @@ if (themeSelector) {
     localStorage.getItem("selectedTheme") ||
     (typeof window.defaultTheme !== "undefined"
       ? window.defaultTheme
-      : "noita");
+      : "fridge");
   if (themeSelector.querySelector(`option[value="${currentTheme}"]`)) {
     themeSelector.value = currentTheme;
   }
@@ -758,6 +758,10 @@ function refreshEventLog() {
       window
         .updatePlayerAvatar(participant.username, useTwitchAvatars)
         .then((avatarUrl) => {
+          const container = imgEl.closest(".tooltip-container");
+          if (container && window.setupImageLoading) {
+            window.setupImageLoading(imgEl, container);
+          }
           imgEl.src = avatarUrl;
         });
     }
@@ -815,6 +819,10 @@ async function updateAllAvatars(useTwitch) {
     const elements = usernameToElements.get(username) || [];
     elements.forEach((item) => {
       if (item.type === "img") {
+        const container = item.element.closest(".tooltip-container");
+        if (container && window.setupImageLoading) {
+          window.setupImageLoading(item.element, container);
+        }
         item.element.src = avatarUrl;
       } else if (item.type === "participant") {
         item.participant.avatar = avatarUrl;
@@ -831,6 +839,10 @@ async function updateAllAvatars(useTwitch) {
         const elements = usernameToElements.get(username) || [];
         elements.forEach((item) => {
           if (item.type === "img") {
+            const container = item.element.closest(".tooltip-container");
+            if (container && window.setupImageLoading) {
+              window.setupImageLoading(item.element, container);
+            }
             item.element.src = avatarUrl;
           } else if (item.type === "participant") {
             item.participant.avatar = avatarUrl;
@@ -846,6 +858,10 @@ async function updateAllAvatars(useTwitch) {
         const elements = usernameToElements.get(username) || [];
         elements.forEach((item) => {
           if (item.type === "img") {
+            const container = item.element.closest(".tooltip-container");
+            if (container && window.setupImageLoading) {
+              window.setupImageLoading(item.element, container);
+            }
             item.element.src = fakeAvatar;
           } else if (item.type === "participant") {
             item.participant.avatar = fakeAvatar;
