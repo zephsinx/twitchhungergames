@@ -16,7 +16,7 @@ const themes = {
 
       messages: {
         startButtonText: "Start Noita Games",
-        debugButtonText: "Add Fake Witches",
+        debugButtonText: "Add Test Witches",
         minPlayersRequired: "Add at least one tribute.",
         winnerMessage: "{username} won the Noita Games!",
         noSurvivors: "No one survived the Noita Games!",
@@ -86,7 +86,7 @@ const themes = {
 
       messages: {
         startButtonText: "Open the Fridge",
-        debugButtonText: "Add Tiny Survivors",
+        debugButtonText: "Add Test Survivors",
         minPlayersRequired: "Add at least one tiny survivor.",
         winnerMessage: "{username} survived the fridge!",
         noSurvivors: "No one survived the fridge!",

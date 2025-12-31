@@ -463,7 +463,9 @@ function updateHeaderForGameState() {
   const chInputEl = document.getElementById("channelInput");
   const btnConnectEl = document.getElementById("connectButton");
   const btnRestartEl = document.getElementById("restartButton");
-  const useTwitchAvatarsLabel = document.getElementById("useTwitchAvatars")?.parentElement;
+  const btnDebugEl = document.getElementById("debugButton");
+  const useTwitchAvatarsLabel =
+    document.getElementById("useTwitchAvatars")?.parentElement;
 
   if (themeSelectorEl) {
     themeSelectorEl.style.display = isGameStarted ? "none" : "block";
@@ -476,6 +478,9 @@ function updateHeaderForGameState() {
   }
   if (btnRestartEl) {
     btnRestartEl.style.display = isGameStarted ? "inline-block" : "none";
+  }
+  if (btnDebugEl) {
+    btnDebugEl.style.display = isGameStarted ? "none" : "inline-block";
   }
   if (useTwitchAvatarsLabel) {
     useTwitchAvatarsLabel.style.display = isGameStarted ? "none" : "flex";
