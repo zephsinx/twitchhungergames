@@ -208,6 +208,7 @@ window.initGlobal = initGlobal;
 
 let client;
 let isConnected = false;
+let channelValidationTimeout = null;
 let players = new Set();
 let participants = [];
 let eventsData;
@@ -225,6 +226,7 @@ let currentPhaseType = null;
 let leaderboardSort = { key: null, asc: true };
 
 window.gameStarted = false;
+window.isConnected = isConnected;
 
 window.players = players;
 window.participants = participants;
@@ -452,53 +454,173 @@ function updateConnectButton() {
 }
 
 function disconnect() {
+  if (channelValidationTimeout) {
+    clearTimeout(channelValidationTimeout);
+    channelValidationTimeout = null;
+  }
   if (client) {
     client.disconnect();
   }
   isConnected = false;
+  window.isConnected = false;
   statusElement.textContent = "";
   statusElement.style.color = "";
+  joinPrompt.style.display = "none";
   updateConnectButton();
 }
 
 function connect(ch) {
   if (client) client.disconnect();
+
+  if (channelValidationTimeout) {
+    clearTimeout(channelValidationTimeout);
+    channelValidationTimeout = null;
+  }
+
   isConnected = false;
+  window.isConnected = false;
   players.clear();
   playersGrid.innerHTML = "";
   statusElement.textContent = "";
   gameStarted = false;
   window.gameStarted = false;
-  joinPrompt.style.display = "block";
+  joinPrompt.style.display = "none";
   updateConnectButton();
+
+  let channelValidated = false;
+  let isChannelNotFound = false;
+  const channelName = `#${ch}`;
 
   client = new tmi.Client({ channels: [ch] });
 
+  const removeSpinner = () => {
+    const spinner = statusElement.querySelector(".spinner");
+    if (spinner) {
+      spinner.remove();
+    }
+  };
+
+  const validateChannelJoin = () => {
+    if (channelValidated) return;
+    channelValidated = true;
+
+    if (channelValidationTimeout) {
+      clearTimeout(channelValidationTimeout);
+      channelValidationTimeout = null;
+    }
+
+    removeSpinner();
+    isConnected = true;
+    window.isConnected = true;
+    statusElement.textContent = "Connected";
+    statusElement.style.color =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--status-success")
+        .trim() || "#4caf50";
+    if (!gameStarted) {
+      joinPrompt.style.display = "block";
+    }
+    updateConnectButton();
+  };
+
+  client.on("join", (channel, username, self) => {
+    if (self && channel.toLowerCase() === channelName.toLowerCase()) {
+      validateChannelJoin();
+    }
+  });
+
+  client.on("roomstate", (channel) => {
+    if (channel.toLowerCase() === channelName.toLowerCase()) {
+      validateChannelJoin();
+    }
+  });
+
+  client.on("names", (channel) => {
+    if (channel.toLowerCase() === channelName.toLowerCase()) {
+      validateChannelJoin();
+    }
+  });
+
   client.on("disconnected", () => {
+    if (channelValidationTimeout) {
+      clearTimeout(channelValidationTimeout);
+      channelValidationTimeout = null;
+    }
+    removeSpinner();
     isConnected = false;
-    statusElement.textContent = "";
-    statusElement.style.color = "";
+    window.isConnected = false;
+    // Don't clear status if we're showing a channel-not-found error
+    if (!isChannelNotFound) {
+      statusElement.textContent = "";
+      statusElement.style.color = "";
+    }
+    joinPrompt.style.display = "none";
+    updateConnectButton();
+  });
+
+  client.on("error", (err) => {
+    console.error("TMI Error:", err);
+    if (channelValidationTimeout) {
+      clearTimeout(channelValidationTimeout);
+      channelValidationTimeout = null;
+    }
+    removeSpinner();
+    isConnected = false;
+    window.isConnected = false;
+    statusElement.textContent = "Connection Error";
+    statusElement.style.color =
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--status-error")
+        .trim() || "#f44336";
+    joinPrompt.style.display = "none";
     updateConnectButton();
   });
 
   client
     .connect()
     .then(() => {
-      isConnected = true;
-      statusElement.textContent = "Connected";
+      // Show connecting spinner
+      statusElement.innerHTML = '<span class="spinner"></span>Connecting...';
       statusElement.style.color =
         getComputedStyle(document.documentElement)
-          .getPropertyValue("--status-success")
-          .trim() || "#4caf50";
-      updateConnectButton();
+          .getPropertyValue("--status-info")
+          .trim() || "#2196f3";
+
+      channelValidationTimeout = setTimeout(() => {
+        if (!channelValidated) {
+          channelValidationTimeout = null;
+          isChannelNotFound = true;
+          removeSpinner();
+          isConnected = false;
+          window.isConnected = false;
+          statusElement.textContent = "Channel not found";
+          statusElement.style.color =
+            getComputedStyle(document.documentElement)
+              .getPropertyValue("--status-error")
+              .trim() || "#f44336";
+          joinPrompt.style.display = "none";
+          updateConnectButton();
+
+          if (client) {
+            client.disconnect();
+          }
+        }
+      }, 3000);
     })
     .catch(() => {
+      if (channelValidationTimeout) {
+        clearTimeout(channelValidationTimeout);
+        channelValidationTimeout = null;
+      }
+      removeSpinner();
       isConnected = false;
-      statusElement.textContent = "Error";
+      window.isConnected = false;
+      statusElement.textContent = "Connection Failed";
       statusElement.style.color =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--status-error")
           .trim() || "#f44336";
+      joinPrompt.style.display = "none";
       updateConnectButton();
     });
 

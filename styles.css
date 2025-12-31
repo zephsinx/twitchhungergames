@@ -108,6 +108,28 @@ body {
   font-weight: bold;
   margin-right: 1em;
   font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 #joinPrompt {
@@ -115,6 +137,7 @@ body {
   font-size: 8em;
   margin: 0.2em 0;
   font-family: var(--theme-font-decorative, cursive);
+  display: none;
 }
 
 #dayDisplay {

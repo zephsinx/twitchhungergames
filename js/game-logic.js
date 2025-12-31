@@ -647,7 +647,7 @@ function backToJoin(samePlayers) {
   eventLog.innerHTML = "";
   dayDisplay.textContent = "";
   phaseDesc.textContent = "";
-  joinPrompt.style.display = "block";
+  joinPrompt.style.display = window.isConnected ? "block" : "none";
   playersGrid.style.display = "grid";
   btnStart.style.display = "inline-block";
   btnDebug.style.display = "inline-block";
