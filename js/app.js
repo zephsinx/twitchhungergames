@@ -243,7 +243,7 @@ window.leaderboardSort = leaderboardSort;
 
 const chInput = document.getElementById("channelInput");
 const btnConnect = document.getElementById("connectButton");
-const status = document.getElementById("status");
+const statusElement = document.getElementById("status");
 const btnStart = document.getElementById("startButton");
 const btnDebug = document.getElementById("debugButton");
 const btnLeaderboard = document.getElementById("leaderboardButton");
@@ -279,9 +279,9 @@ window.polymorphedPlayers = polymorphedPlayers;
 
 function loadGameData(themeName) {
   btnStart.disabled = true;
-  if (status) {
-    status.textContent = "Loading data...";
-    status.style.color =
+  if (statusElement) {
+    statusElement.textContent = "Loading data...";
+    statusElement.style.color =
       getComputedStyle(document.documentElement)
         .getPropertyValue("--status-warning")
         .trim() || "#ff9800";
@@ -289,9 +289,9 @@ function loadGameData(themeName) {
 
   if (typeof window.loadThemeData === "undefined") {
     console.error("loadThemeData function not available");
-    if (status) {
-      status.textContent = "Error: Theme system not loaded";
-      status.style.color =
+    if (statusElement) {
+      statusElement.textContent = "Error: Theme system not loaded";
+      statusElement.style.color =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--status-error")
           .trim() || "#f44336";
@@ -309,17 +309,17 @@ function loadGameData(themeName) {
       window.itemsData = itemsData;
       window.materialsData = materialsData;
       btnStart.disabled = false;
-      if (status) {
-        status.textContent = "";
-        status.style.color = "";
+      if (statusElement) {
+        statusElement.textContent = "";
+        statusElement.style.color = "";
       }
     })
     .catch((err) => {
       console.error("Failed to load game data:", err);
       btnStart.disabled = true;
-      if (status) {
-        status.textContent = `Error: ${err.message}`;
-        status.style.color =
+      if (statusElement) {
+        statusElement.textContent = `Error: ${err.message}`;
+        statusElement.style.color =
           getComputedStyle(document.documentElement)
             .getPropertyValue("--status-error")
             .trim() || "#f44336";
@@ -453,8 +453,8 @@ function disconnect() {
     client.disconnect();
   }
   isConnected = false;
-  status.textContent = "";
-  status.style.color = "";
+  statusElement.textContent = "";
+  statusElement.style.color = "";
   updateConnectButton();
 }
 
@@ -463,7 +463,7 @@ function connect(ch) {
   isConnected = false;
   players.clear();
   playersGrid.innerHTML = "";
-  status.textContent = "";
+  statusElement.textContent = "";
   gameStarted = false;
   window.gameStarted = false;
   joinPrompt.style.display = "block";
@@ -473,8 +473,8 @@ function connect(ch) {
 
   client.on("disconnected", () => {
     isConnected = false;
-    status.textContent = "";
-    status.style.color = "";
+    statusElement.textContent = "";
+    statusElement.style.color = "";
     updateConnectButton();
   });
 
@@ -482,8 +482,8 @@ function connect(ch) {
     .connect()
     .then(() => {
       isConnected = true;
-      status.textContent = "Connected";
-      status.style.color =
+      statusElement.textContent = "Connected";
+      statusElement.style.color =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--status-success")
           .trim() || "#4caf50";
@@ -491,8 +491,8 @@ function connect(ch) {
     })
     .catch(() => {
       isConnected = false;
-      status.textContent = "Error";
-      status.style.color =
+      statusElement.textContent = "Error";
+      statusElement.style.color =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--status-error")
           .trim() || "#f44336";
