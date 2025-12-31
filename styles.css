@@ -484,3 +484,22 @@ body {
 #leaderboardTable th.sort-desc::after {
   content: " ▼";
 }
+
+#clearLeaderboardButton {
+  margin-top: 1.5em;
+  padding: 0.7em 1.2em;
+  background: var(--status-error, #f44336);
+  border: none;
+  color: var(--text-primary);
+  border-radius: 4px;
+  font-family: var(--theme-font-primary, sans-serif);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, filter 0.2s;
+  width: 100%;
+}
+
+#clearLeaderboardButton:hover {
+  background: var(--remove-btn-color, #ff6b6b);
+  filter: brightness(1.1);
+}

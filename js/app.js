@@ -236,6 +236,7 @@ const btnNewSame = document.getElementById("newGameSameButton");
 const btnNewAll = document.getElementById("newGameAllButton");
 const overlay = document.getElementById("leaderboardOverlay");
 const closeOverlay = document.getElementById("closeOverlay");
+const btnClearLeaderboard = document.getElementById("clearLeaderboardButton");
 const lbHeaders = document.querySelectorAll("#leaderboardTable th");
 
 let eventHandlersLoaded = false;
@@ -588,6 +589,13 @@ btnDebug.addEventListener("click", () => {
 btnProc.addEventListener("click", () => window.nextPhase());
 btnLeaderboard.addEventListener("click", window.showLeaderboard);
 closeOverlay.addEventListener("click", () => (overlay.style.display = "none"));
+if (btnClearLeaderboard) {
+  btnClearLeaderboard.addEventListener("click", () => {
+    if (typeof window.clearLeaderboard === "function") {
+      window.clearLeaderboard();
+    }
+  });
+}
 btnNewSame.addEventListener("click", () => window.backToJoin(true));
 btnNewAll.addEventListener("click", () => window.backToJoin(false));
 

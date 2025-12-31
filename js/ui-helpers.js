@@ -464,6 +464,27 @@ function showLeaderboard() {
   renderLeaderboard();
 }
 
+function clearLeaderboard() {
+  if (
+    !confirm(
+      "Are you sure you want to clear all leaderboard data and restart the game? This action cannot be undone."
+    )
+  ) {
+    return;
+  }
+  window.globalStats = {};
+  if (typeof window.saveGlobalStats === "function") {
+    window.saveGlobalStats();
+  }
+  const overlay = document.getElementById("leaderboardOverlay");
+  if (overlay) {
+    overlay.style.display = "none";
+  }
+  if (typeof window.backToJoin === "function") {
+    window.backToJoin(false);
+  }
+}
+
 function addPlayer(u, c) {
   const globalStats = window.globalStats || {};
   const globalColors = window.globalColors || {};
@@ -658,5 +679,6 @@ window.showFallen = showFallen;
 window.showWinner = showWinner;
 window.renderLeaderboard = renderLeaderboard;
 window.showLeaderboard = showLeaderboard;
+window.clearLeaderboard = clearLeaderboard;
 window.addPlayer = addPlayer;
 window.addFakePlayer = addFakePlayer;
