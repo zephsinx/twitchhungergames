@@ -530,8 +530,9 @@ function addPlayer(u, c) {
         if (url.startsWith("http")) img.src = url;
       });
   } else {
-    const fakeAvatars = window.fakeAvatars || [];
-    img.src = fakeAvatars[Math.floor(Math.random() * fakeAvatars.length)];
+    img.src = window.getNextAvatar
+      ? window.getNextAvatar()
+      : (window.fakeAvatars || [])[0];
   }
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";
@@ -555,72 +556,6 @@ function addFakePlayer(u, c) {
   const players = window.players;
   const playersGrid = document.getElementById("playersGrid");
   const btnStart = document.getElementById("startButton");
-  const fakeAvatars = window.fakeAvatars || [
-    "/images/00.png",
-    "/images/01.png",
-    "/images/02.png",
-    "/images/03.png",
-    "/images/04.png",
-    "/images/05.png",
-    "/images/06.png",
-    "/images/07.png",
-    "/images/10.png",
-    "/images/11.png",
-    "/images/12.png",
-    "/images/13.png",
-    "/images/14.png",
-    "/images/15.png",
-    "/images/16.png",
-    "/images/17.png",
-    "/images/20.png",
-    "/images/21.png",
-    "/images/22.png",
-    "/images/23.png",
-    "/images/24.png",
-    "/images/25.png",
-    "/images/26.png",
-    "/images/27.png",
-    "/images/30.png",
-    "/images/31.png",
-    "/images/32.png",
-    "/images/33.png",
-    "/images/34.png",
-    "/images/35.png",
-    "/images/36.png",
-    "/images/37.png",
-    "/images/40.png",
-    "/images/41.png",
-    "/images/42.png",
-    "/images/43.png",
-    "/images/44.png",
-    "/images/45.png",
-    "/images/46.png",
-    "/images/47.png",
-    "/images/50.png",
-    "/images/51.png",
-    "/images/52.png",
-    "/images/53.png",
-    "/images/54.png",
-    "/images/55.png",
-    "/images/56.png",
-    "/images/57.png",
-    "/images/60.png",
-    "/images/61.png",
-    "/images/62.png",
-    "/images/63.png",
-    "/images/64.png",
-    "/images/65.png",
-    "/images/66.png",
-    "/images/67.png",
-    "/images/70.png",
-    "/images/71.png",
-    "/images/72.png",
-    "/images/73.png",
-    "/images/74.png",
-    "/images/75.png",
-    "/images/76.png",
-    "/images/77.png",
-  ];
 
   if (typeof window.initGlobal === "function") {
     window.initGlobal(u);
@@ -648,7 +583,10 @@ function addFakePlayer(u, c) {
     btnStart.disabled = players.size === 0;
   });
   const img = document.createElement("img");
-  img.src = fakeAvatars[Math.floor(Math.random() * fakeAvatars.length)];
+  const fakeAvatars = window.fakeAvatars || [];
+  img.src = window.getNextAvatar
+    ? window.getNextAvatar()
+    : fakeAvatars[0] || "";
   img.alt = `${u} avatar`;
   const imgTooltipContainer = document.createElement("div");
   imgTooltipContainer.className = "tooltip-container";

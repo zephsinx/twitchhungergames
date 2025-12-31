@@ -76,6 +76,28 @@ const fakeAvatars = [
   "/images/76.png",
   "/images/77.png",
 ];
+
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+let shuffledAvatars = shuffleArray(fakeAvatars);
+let avatarIndex = 0;
+
+function getNextAvatar() {
+  const avatar = shuffledAvatars[avatarIndex];
+  avatarIndex = (avatarIndex + 1) % shuffledAvatars.length;
+  return avatar;
+}
+
+window.fakeAvatars = fakeAvatars;
+window.getNextAvatar = getNextAvatar;
+
 const adjectives = [
   "Iron",
   "Silver",
@@ -148,8 +170,6 @@ function randomName() {
     Math.floor(Math.random() * 100)
   );
 }
-
-window.fakeAvatars = fakeAvatars;
 
 const STORAGE_PREFIX =
   (window.themeConfig && window.themeConfig.storagePrefix) || "game";
