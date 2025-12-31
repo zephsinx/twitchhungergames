@@ -207,6 +207,7 @@ window.saveGlobalColors = saveGlobalColors;
 window.initGlobal = initGlobal;
 
 let client;
+let isConnected = false;
 let players = new Set();
 let participants = [];
 let eventsData;
@@ -362,10 +363,14 @@ if (document.readyState === "loading") {
 }
 
 btnConnect.addEventListener("click", () => {
-  const ch = chInput.value.trim().toLowerCase();
-  if (!ch) return;
-  localStorage.setItem("twitchChannel", ch);
-  connect(ch);
+  if (isConnected) {
+    disconnect();
+  } else {
+    const ch = chInput.value.trim().toLowerCase();
+    if (!ch) return;
+    localStorage.setItem("twitchChannel", ch);
+    connect(ch);
+  }
 });
 
 const themeSelector = document.getElementById("themeSelector");
@@ -437,31 +442,61 @@ if (themeSelector) {
   });
 }
 
+function updateConnectButton() {
+  if (btnConnect) {
+    btnConnect.textContent = isConnected ? "Disconnect" : "Connect";
+  }
+}
+
+function disconnect() {
+  if (client) {
+    client.disconnect();
+  }
+  isConnected = false;
+  status.textContent = "";
+  status.style.color = "";
+  updateConnectButton();
+}
+
 function connect(ch) {
   if (client) client.disconnect();
+  isConnected = false;
   players.clear();
   playersGrid.innerHTML = "";
   status.textContent = "";
   gameStarted = false;
   window.gameStarted = false;
   joinPrompt.style.display = "block";
+  updateConnectButton();
 
   client = new tmi.Client({ channels: [ch] });
+
+  client.on("disconnected", () => {
+    isConnected = false;
+    status.textContent = "";
+    status.style.color = "";
+    updateConnectButton();
+  });
+
   client
     .connect()
     .then(() => {
+      isConnected = true;
       status.textContent = "Connected";
       status.style.color =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--status-success")
           .trim() || "#4caf50";
+      updateConnectButton();
     })
     .catch(() => {
+      isConnected = false;
       status.textContent = "Error";
       status.style.color =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--status-error")
           .trim() || "#f44336";
+      updateConnectButton();
     });
 
   client.on("message", (_, tags, msg) => {
