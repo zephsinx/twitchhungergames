@@ -1,5 +1,4 @@
 :root {
-  /* Accessible color variables */
   --bg-primary: #121212;
   --bg-secondary: #1e1e1e;
   --bg-button: #2a2a2a;
@@ -526,11 +525,8 @@ select:focus:not(:focus-visible) {
 
 .tooltip-box {
   visibility: hidden;
-  position: absolute;
-  z-index: var(--z-sticky);
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(4px);
+  position: fixed;
+  z-index: var(--z-overlay);
   background: var(--bg-overlay);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
@@ -542,9 +538,10 @@ select:focus:not(:focus-visible) {
   text-align: left;
   width: max-content;
   max-width: none;
+  pointer-events: none;
 }
 
-.tooltip-container:hover .tooltip-box {
+.tooltip-box.visible {
   visibility: visible;
 }
 
@@ -570,7 +567,6 @@ select:focus:not(:focus-visible) {
   opacity: var(--opacity-subtle);
 }
 
-/* Leaderboard overlay */
 #leaderboardOverlay {
   position: fixed;
   top: 0;
@@ -662,7 +658,6 @@ select:focus:not(:focus-visible) {
   filter: brightness(1.1);
 }
 
-/* Scoreboard overlay */
 #scoreboardOverlay {
   position: fixed;
   top: 0;

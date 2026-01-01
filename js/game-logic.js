@@ -224,7 +224,10 @@ async function runEvents(evObj) {
     const currentPhaseNumber = window.currentPhaseNumber || 0;
     pool.forEach((action) => {
       let baseWeight = action.weight !== undefined ? action.weight : 1;
-      if (phasePoolSet.has(action) && (isArenaEvent || isFeastEvent || isBloodbathEvent)) {
+      if (
+        phasePoolSet.has(action) &&
+        (isArenaEvent || isFeastEvent || isBloodbathEvent)
+      ) {
         baseWeight *= PHASE_EVENT_WEIGHT_MULTIPLIER;
       }
       const decayedWeight = getDecayedWeight(
