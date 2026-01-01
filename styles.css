@@ -197,7 +197,7 @@ select:focus:not(:focus-visible) {
 
 #joinPrompt {
   text-align: center;
-  font-size: 8em;
+  font-size: 3em;
   margin: 0.2em 0;
   font-family: var(--theme-font-decorative, cursive);
   display: none;
@@ -748,7 +748,7 @@ select:focus:not(:focus-visible) {
   }
 
   #joinPrompt {
-    font-size: clamp(2rem, 8vw, 8em);
+    font-size: clamp(1.5rem, 4vw, 3em);
   }
 
   #dayDisplay {

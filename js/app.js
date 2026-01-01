@@ -363,6 +363,19 @@ function initializeData() {
     });
   }
 
+  const allowCustomUsernamesToggle = document.getElementById(
+    "allowCustomUsernames"
+  );
+  if (allowCustomUsernamesToggle) {
+    allowCustomUsernamesToggle.checked =
+      localStorage.getItem("allowCustomUsernames") === "true";
+    allowCustomUsernamesToggle.addEventListener("change", (e) => {
+      localStorage.setItem("allowCustomUsernames", e.target.checked);
+      updateJoinPrompt();
+    });
+    updateJoinPrompt();
+  }
+
   updateHeaderForGameState();
 }
 
@@ -631,18 +644,45 @@ function connect(ch) {
 
   client.on("message", (_, tags, msg) => {
     if (gameStarted) return;
-    const trimmedMsg = msg.trim();
-    const lowerMsg = trimmedMsg.toLowerCase();
-    if (lowerMsg.startsWith("!play")) {
-      const usernameParam = trimmedMsg.substring(5).trim();
-      const u = usernameParam || tags.username;
-      if (!players.has(u)) {
-        players.add(u);
-        window.addPlayer(u, tags.color);
-        btnStart.disabled = players.size === 0;
+    const allowCustomUsernames =
+      document.getElementById("allowCustomUsernames")?.checked || false;
+
+    if (allowCustomUsernames) {
+      const trimmedMsg = msg.trim();
+      const lowerMsg = trimmedMsg.toLowerCase();
+      if (lowerMsg.startsWith("!play")) {
+        const usernameParam = trimmedMsg.substring(5).trim();
+        const u = usernameParam || tags.username;
+        if (!players.has(u)) {
+          players.add(u);
+          window.addPlayer(u, tags.color);
+          btnStart.disabled = players.size === 0;
+        }
+      }
+    } else {
+      if (msg.trim().toLowerCase() === "!play") {
+        const u = tags.username;
+        if (!players.has(u)) {
+          players.add(u);
+          window.addPlayer(u, tags.color);
+          btnStart.disabled = players.size === 0;
+        }
       }
     }
   });
+}
+
+function updateJoinPrompt() {
+  const joinPrompt = document.getElementById("joinPrompt");
+  const allowCustomUsernames =
+    document.getElementById("allowCustomUsernames")?.checked || false;
+  if (joinPrompt) {
+    if (allowCustomUsernames) {
+      joinPrompt.textContent = "!play or !play [username] to join";
+    } else {
+      joinPrompt.textContent = "!play to join";
+    }
+  }
 }
 
 function updateHeaderForGameState() {
@@ -656,6 +696,9 @@ function updateHeaderForGameState() {
   const btnScoreboardEl = document.getElementById("scoreboardButton");
   const useTwitchAvatarsLabel =
     document.getElementById("useTwitchAvatars")?.parentElement;
+  const allowCustomUsernamesLabel = document.getElementById(
+    "allowCustomUsernames"
+  )?.parentElement;
 
   if (themeSelectorEl) {
     themeSelectorEl.style.display = isGameStarted ? "none" : "block";
@@ -677,6 +720,9 @@ function updateHeaderForGameState() {
   }
   if (useTwitchAvatarsLabel) {
     useTwitchAvatarsLabel.style.display = "flex";
+  }
+  if (allowCustomUsernamesLabel) {
+    allowCustomUsernamesLabel.style.display = isGameStarted ? "none" : "flex";
   }
 }
 
