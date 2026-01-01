@@ -144,7 +144,7 @@ async function runEvents(evObj) {
   const eventLog = document.getElementById("eventLog");
 
   const aliveSet = new Set(participants.filter((p) => p.alive));
-  const base = Math.floor(Math.random() * 3) + 1;
+  const base = Math.floor(Math.random() * 3) + 2;
   const factor = base + consecutiveNoDeaths + (stage === 0 ? 1 : 0);
   const msgs = [];
 

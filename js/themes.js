@@ -11,7 +11,7 @@ const themes = {
         playerSingular: "survivor",
         playerPlural: "survivors",
         fallenPlayers: "Fallen Survivors",
-        deathSound: "pop",
+        deathSound: "crack",
       },
 
       messages: {
