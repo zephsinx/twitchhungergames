@@ -1,7 +1,58 @@
 const RENDER_DELAY = 10;
 
+if (window.currentPhaseNumber === undefined) {
+  window.currentPhaseNumber = 0;
+}
+if (window.eventsUsedThisPhase === undefined) {
+  window.eventsUsedThisPhase = new Set();
+}
+if (window.recentEventUsage === undefined) {
+  window.recentEventUsage = {};
+}
+
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+function normalizeEventMessage(msg) {
+  if (!msg) return "";
+  return msg.replace(/\{[^}]+\}/g, "{*}");
+}
+
+function getDecayedWeight(event, baseWeight, currentPhaseNumber) {
+  if (!event || !event.msg) {
+    return baseWeight;
+  }
+
+  const normalizedMsg = normalizeEventMessage(event.msg);
+  const currentPhaseSet = window.eventsUsedThisPhase || new Set();
+  const recentUsage = window.recentEventUsage || {};
+
+  if (currentPhaseSet.has(normalizedMsg)) {
+    return 0;
+  }
+
+  const usagePhases = recentUsage[normalizedMsg];
+  if (!usagePhases || usagePhases.length === 0) {
+    return baseWeight;
+  }
+
+  const mostRecentPhase = Math.max(...usagePhases);
+  const phasesSinceLastUse = currentPhaseNumber - mostRecentPhase;
+
+  const decayFactor = Math.min(1.0, 0.1 + phasesSinceLastUse * 0.3);
+
+  if (usagePhases.length > 0) {
+    const cutoffPhase = currentPhaseNumber - 10;
+    recentUsage[normalizedMsg] = usagePhases.filter(
+      (phase) => phase > cutoffPhase
+    );
+    if (recentUsage[normalizedMsg].length === 0) {
+      delete recentUsage[normalizedMsg];
+    }
+  }
+
+  return baseWeight * decayFactor;
 }
 
 function getStepType(isDay) {
@@ -39,6 +90,9 @@ async function runPhase(type) {
   const eventsData = window.eventsData;
   const currentDay = window.currentDay || 1;
 
+  window.currentPhaseNumber = (window.currentPhaseNumber || 0) + 1;
+  window.eventsUsedThisPhase = new Set();
+
   eventLog.innerHTML = "";
   let step = type;
   if (type === "day" || type === "night") {
@@ -59,7 +113,6 @@ async function runPhase(type) {
       .filter((idx) => !window.usedFeastIndices.includes(idx));
 
     if (availableFeastIndices.length === 0) {
-      // All feasts used, reset tracking
       window.usedFeastIndices = [];
       availableFeastIndices = feastEvents.map((_, idx) => idx);
     }
@@ -86,7 +139,6 @@ async function runPhase(type) {
       .filter((idx) => !window.usedArenaIndices.includes(idx));
 
     if (availableArenaIndices.length === 0) {
-      // All arenas used, reset tracking
       window.usedArenaIndices = [];
       availableArenaIndices = eventsData.arena.map((_, idx) => idx);
     }
@@ -179,12 +231,18 @@ async function runEvents(evObj) {
     if (!pool.length) break;
 
     let totalWeight = 0;
+    const currentPhaseNumber = window.currentPhaseNumber || 0;
     pool.forEach((action) => {
-      const weight = action.weight !== undefined ? action.weight : 1;
-      if (weight <= 0) {
-        action._effectiveWeight = 1;
+      const baseWeight = action.weight !== undefined ? action.weight : 1;
+      const decayedWeight = getDecayedWeight(
+        action,
+        baseWeight,
+        currentPhaseNumber
+      );
+      if (decayedWeight <= 0) {
+        action._effectiveWeight = 0;
       } else {
-        action._effectiveWeight = weight;
+        action._effectiveWeight = decayedWeight;
       }
       totalWeight += action._effectiveWeight;
     });
@@ -208,6 +266,28 @@ async function runEvents(evObj) {
 
     if (!action) {
       action = pool[0];
+    }
+
+    if (action && action.msg) {
+      const normalizedMsg = normalizeEventMessage(action.msg);
+      const currentPhaseNumber = window.currentPhaseNumber || 0;
+
+      if (!window.eventsUsedThisPhase) {
+        window.eventsUsedThisPhase = new Set();
+      }
+      window.eventsUsedThisPhase.add(normalizedMsg);
+
+      if (!window.recentEventUsage) {
+        window.recentEventUsage = {};
+      }
+      if (!window.recentEventUsage[normalizedMsg]) {
+        window.recentEventUsage[normalizedMsg] = [];
+      }
+      if (
+        !window.recentEventUsage[normalizedMsg].includes(currentPhaseNumber)
+      ) {
+        window.recentEventUsage[normalizedMsg].push(currentPhaseNumber);
+      }
     }
 
     pool.forEach((a) => {
@@ -250,7 +330,6 @@ async function runEvents(evObj) {
       (window.themeConfig && window.themeConfig.itemCategories) ||
       Object.keys(itemsData).concat(Object.keys(materialsData));
 
-    // Dynamically generate _any categories from theme categories
     const prefixGroups = new Map();
     types.forEach((cat) => {
       const underscoreIndex = cat.indexOf("_");
@@ -600,7 +679,6 @@ async function runEvents(evObj) {
       }
       evEl.append(avs, txtEl);
 
-      // Add click handler to reveal masked events
       evEl.addEventListener("click", (e) => {
         if (!evEl.classList.contains("revealed")) {
           evEl.classList.add("revealed");
@@ -696,6 +774,9 @@ function backToJoin(samePlayers) {
   window.currentPhaseType = null;
   window.usedFeastIndices = [];
   window.usedArenaIndices = [];
+  window.currentPhaseNumber = 0;
+  window.eventsUsedThisPhase = new Set();
+  window.recentEventUsage = {};
   polymorphedPlayers.clear();
 
   if (typeof window.updateHeaderForGameState === "function") {
