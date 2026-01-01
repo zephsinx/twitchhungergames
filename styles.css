@@ -72,6 +72,22 @@ body {
   margin-left: auto;
 }
 
+#header #startButton {
+  background: var(--status-success, #4caf50);
+  font-weight: bold;
+}
+
+#header #startButton:hover:not(:disabled) {
+  background: #5cbf60;
+  filter: brightness(1.1);
+}
+
+#header #startButton:disabled {
+  background: var(--status-success, #4caf50);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 #debugButton {
   font-size: 0.85rem;
   padding: 0.5em 0.7em;
