@@ -520,6 +520,76 @@ function clearLeaderboard() {
   }
 }
 
+function renderScoreboard(showOverlay = false) {
+  const participants = window.participants || [];
+  const overlay = document.getElementById("scoreboardOverlay");
+  const aliveList = document.getElementById("aliveList");
+  const deadList = document.getElementById("deadList");
+  const aliveCountEl = document.getElementById("aliveCount");
+  const deadCountEl = document.getElementById("deadCount");
+
+  if (!overlay || !aliveList || !deadList || !aliveCountEl || !deadCountEl) {
+    return;
+  }
+
+  const alive = participants.filter((p) => p.alive);
+  const dead = participants.filter((p) => !p.alive);
+
+  aliveCountEl.textContent = alive.length;
+  deadCountEl.textContent = dead.length;
+
+  aliveList.innerHTML = "";
+  if (alive.length === 0) {
+    const emptyEl = document.createElement("div");
+    emptyEl.className = "player-list-item empty";
+    emptyEl.textContent = "No players alive";
+    aliveList.appendChild(emptyEl);
+  } else {
+    alive.forEach((p) => {
+      const item = document.createElement("div");
+      item.className = "player-list-item";
+      const displayName = getDisplayName(p.username);
+      let playerColor = window.validateColor(p.color);
+      if (window.ensureContrast) {
+        playerColor = window.ensureContrast(playerColor, "#1e1e1e", 4.5);
+      }
+      item.style.color = playerColor;
+      item.textContent = displayName;
+      aliveList.appendChild(item);
+    });
+  }
+
+  deadList.innerHTML = "";
+  if (dead.length === 0) {
+    const emptyEl = document.createElement("div");
+    emptyEl.className = "player-list-item empty";
+    emptyEl.textContent = "No players dead";
+    deadList.appendChild(emptyEl);
+  } else {
+    dead.forEach((p) => {
+      const item = document.createElement("div");
+      item.className = "player-list-item";
+      const displayName = getDisplayName(p.username);
+      let playerColor = window.validateColor(p.color);
+      if (window.ensureContrast) {
+        playerColor = window.ensureContrast(playerColor, "#1e1e1e", 4.5);
+      }
+      item.style.color = playerColor;
+      item.style.opacity = "0.7";
+      item.textContent = displayName;
+      deadList.appendChild(item);
+    });
+  }
+
+  if (showOverlay) {
+    overlay.style.display = "flex";
+  }
+}
+
+function showScoreboard() {
+  renderScoreboard(true);
+}
+
 function addPlayer(u, c) {
   const globalStats = window.globalStats || {};
   const globalColors = window.globalColors || {};
@@ -818,6 +888,8 @@ window.showWinner = showWinner;
 window.renderLeaderboard = renderLeaderboard;
 window.showLeaderboard = showLeaderboard;
 window.clearLeaderboard = clearLeaderboard;
+window.renderScoreboard = renderScoreboard;
+window.showScoreboard = showScoreboard;
 function assignFakeAvatar(username) {
   const cacheKey = `fake:${username}`;
   if (avatarCache.has(cacheKey)) {

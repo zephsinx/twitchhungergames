@@ -249,6 +249,7 @@ const statusElement = document.getElementById("status");
 const btnStart = document.getElementById("startButton");
 const btnDebug = document.getElementById("debugButton");
 const btnLeaderboard = document.getElementById("leaderboardButton");
+const btnScoreboard = document.getElementById("scoreboardButton");
 const btnRestart = document.getElementById("restartButton");
 const joinPrompt = document.getElementById("joinPrompt");
 const procCont = document.getElementById("proceedContainer");
@@ -259,6 +260,10 @@ const btnNewSame = document.getElementById("newGameSameButton");
 const btnNewAll = document.getElementById("newGameAllButton");
 const overlay = document.getElementById("leaderboardOverlay");
 const closeOverlay = document.getElementById("closeOverlay");
+const scoreboardOverlay = document.getElementById("scoreboardOverlay");
+const closeScoreboardOverlay = document.getElementById(
+  "closeScoreboardOverlay"
+);
 const btnClearLeaderboard = document.getElementById("clearLeaderboardButton");
 const lbHeaders = document.querySelectorAll("#leaderboardTable th");
 
@@ -648,6 +653,7 @@ function updateHeaderForGameState() {
   const btnConnectEl = document.getElementById("connectButton");
   const btnRestartEl = document.getElementById("restartButton");
   const btnDebugEl = document.getElementById("debugButton");
+  const btnScoreboardEl = document.getElementById("scoreboardButton");
   const useTwitchAvatarsLabel =
     document.getElementById("useTwitchAvatars")?.parentElement;
 
@@ -665,6 +671,9 @@ function updateHeaderForGameState() {
   }
   if (btnDebugEl) {
     btnDebugEl.style.display = isGameStarted ? "none" : "inline-block";
+  }
+  if (btnScoreboardEl) {
+    btnScoreboardEl.style.display = isGameStarted ? "inline-block" : "none";
   }
   if (useTwitchAvatarsLabel) {
     useTwitchAvatarsLabel.style.display = "flex";
@@ -983,9 +992,22 @@ btnDebug.addEventListener("click", () => {
   }
 });
 
-btnProc.addEventListener("click", () => window.nextPhase());
+btnProc.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.nextPhase();
+});
 btnLeaderboard.addEventListener("click", window.showLeaderboard);
+if (btnScoreboard) {
+  btnScoreboard.addEventListener("click", window.showScoreboard);
+}
 closeOverlay.addEventListener("click", () => (overlay.style.display = "none"));
+if (closeScoreboardOverlay) {
+  closeScoreboardOverlay.addEventListener("click", () => {
+    if (scoreboardOverlay) {
+      scoreboardOverlay.style.display = "none";
+    }
+  });
+}
 if (btnClearLeaderboard) {
   btnClearLeaderboard.addEventListener("click", () => {
     if (typeof window.clearLeaderboard === "function") {

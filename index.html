@@ -26,6 +26,7 @@
       <span>Use Twitch Avatars</span>
     </label>
     <button id="leaderboardButton">Leaderboard</button>
+    <button id="scoreboardButton">Scoreboard</button>
     <button id="restartButton">Restart</button>
     <button id="debugButton">Add Fake Players</button>
     <select id="themeSelector" aria-label="Select theme">
@@ -75,6 +76,29 @@
           <tbody></tbody>
         </table>
         <button id="clearLeaderboardButton">Clear Leaderboard</button>
+      </div>
+    </div>
+
+    <div id="scoreboardOverlay">
+      <div class="overlayContent">
+        <button id="closeScoreboardOverlay">x</button>
+        <h2>Scoreboard</h2>
+        <div id="scoreboardContent">
+          <div class="scoreboard-section">
+            <div class="scoreboard-header">
+              <h3>Alive</h3>
+              <span id="aliveCount" class="count">0</span>
+            </div>
+            <div id="aliveList" class="player-list"></div>
+          </div>
+          <div class="scoreboard-section">
+            <div class="scoreboard-header">
+              <h3>Dead</h3>
+              <span id="deadCount" class="count">0</span>
+            </div>
+            <div id="deadList" class="player-list"></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>

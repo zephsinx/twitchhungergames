@@ -144,7 +144,7 @@ async function runEvents(evObj) {
   const eventLog = document.getElementById("eventLog");
 
   const aliveSet = new Set(participants.filter((p) => p.alive));
-  const base = Math.floor(Math.random() * 3) + 2;
+  const base = Math.floor(Math.random() * 3) + 1.5;
   const factor = base + consecutiveNoDeaths + (stage === 0 ? 1 : 0);
   const msgs = [];
 
@@ -392,6 +392,12 @@ async function runEvents(evObj) {
       });
       if (typeof window.saveGlobalStats === "function") {
         window.saveGlobalStats();
+      }
+      if (typeof window.renderScoreboard === "function") {
+        const scoreboardOverlay = document.getElementById("scoreboardOverlay");
+        if (scoreboardOverlay && scoreboardOverlay.style.display === "flex") {
+          window.renderScoreboard(false);
+        }
       }
     }
     if (m.killed.length && !m.hidden) {
@@ -649,11 +655,15 @@ function backToJoin(samePlayers) {
   const playersGrid = document.getElementById("playersGrid");
   const btnStart = document.getElementById("startButton");
   const btnDebug = document.getElementById("debugButton");
+  const scoreboardOverlay = document.getElementById("scoreboardOverlay");
   const players = window.players;
   const polymorphedPlayers = window.polymorphedPlayers || new Map();
 
   winnerScreen.style.display = "none";
   procCont.style.display = "none";
+  if (scoreboardOverlay) {
+    scoreboardOverlay.style.display = "none";
+  }
   eventLog.innerHTML = "";
   dayDisplay.textContent = "";
   phaseDesc.textContent = "";
