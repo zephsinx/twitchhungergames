@@ -626,8 +626,11 @@ function connect(ch) {
 
   client.on("message", (_, tags, msg) => {
     if (gameStarted) return;
-    if (msg.trim().toLowerCase() === "!play") {
-      const u = tags.username;
+    const trimmedMsg = msg.trim();
+    const lowerMsg = trimmedMsg.toLowerCase();
+    if (lowerMsg.startsWith("!play")) {
+      const usernameParam = trimmedMsg.substring(5).trim();
+      const u = usernameParam || tags.username;
       if (!players.has(u)) {
         players.add(u);
         window.addPlayer(u, tags.color);
