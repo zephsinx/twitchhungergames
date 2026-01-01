@@ -205,6 +205,7 @@ async function runEvents(evObj) {
   const isArenaEvent = currentPhaseType === "arena";
   const isFeastEvent = currentPhaseType === "feast";
   const isBloodbathEvent = currentPhaseType === "bloodbath";
+  const PHASE_EVENT_WEIGHT_MULTIPLIER = 3.0;
 
   while (aliveSet.size > 0) {
     const roll = Math.floor(Math.random() * 11);
@@ -214,26 +215,18 @@ async function runEvents(evObj) {
     const genericPool =
       (useFatal ? genericEvents.fatal : genericEvents.nonfatal) || [];
 
-    let pool;
-    if (isArenaEvent || isFeastEvent || isBloodbathEvent) {
-      const multiplier =
-        phasePool.length > 0 && genericPool.length > 0
-          ? Math.ceil((3 * genericPool.length) / phasePool.length)
-          : 1;
-      const weightedPhasePool = Array(multiplier)
-        .fill(null)
-        .flatMap(() => phasePool);
-      pool = [...weightedPhasePool, ...genericPool];
-    } else {
-      pool = [...phasePool, ...genericPool];
-    }
+    const phasePoolSet = new Set(phasePool);
+    let pool = [...phasePool, ...genericPool];
     pool = pool.filter((a) => a.tributes <= aliveSet.size);
     if (!pool.length) break;
 
     let totalWeight = 0;
     const currentPhaseNumber = window.currentPhaseNumber || 0;
     pool.forEach((action) => {
-      const baseWeight = action.weight !== undefined ? action.weight : 1;
+      let baseWeight = action.weight !== undefined ? action.weight : 1;
+      if (phasePoolSet.has(action) && (isArenaEvent || isFeastEvent || isBloodbathEvent)) {
+        baseWeight *= PHASE_EVENT_WEIGHT_MULTIPLIER;
+      }
       const decayedWeight = getDecayedWeight(
         action,
         baseWeight,
