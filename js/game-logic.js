@@ -144,7 +144,7 @@ async function runEvents(evObj) {
   const eventLog = document.getElementById("eventLog");
 
   const aliveSet = new Set(participants.filter((p) => p.alive));
-  const base = Math.floor(Math.random() * 3) + 1.5;
+  const base = Math.floor(Math.random() * 3) + 1.25;
   const factor = base + consecutiveNoDeaths + (stage === 0 ? 1 : 0);
   const msgs = [];
 
@@ -599,6 +599,15 @@ async function runEvents(evObj) {
         txtEl.appendChild(textNode);
       }
       evEl.append(avs, txtEl);
+
+      // Add click handler to reveal masked events
+      evEl.addEventListener("click", (e) => {
+        if (!evEl.classList.contains("revealed")) {
+          evEl.classList.add("revealed");
+          e.stopPropagation();
+        }
+      });
+
       eventLog.appendChild(evEl);
       await sleep(RENDER_DELAY);
     }

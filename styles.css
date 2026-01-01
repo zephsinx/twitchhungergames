@@ -279,6 +279,44 @@ select:focus:not(:focus-visible) {
   flex-direction: column;
   align-items: center;
   margin-bottom: 1em;
+  position: relative;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.event:not(.revealed) {
+  filter: blur(8px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.event:not(.revealed)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.event:not(.revealed):hover {
+  filter: blur(6px);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.event:not(.revealed):hover::before {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.event.revealed {
+  filter: blur(0);
+}
+
+.event.revealed::before {
+  display: none;
 }
 
 .avatars {
