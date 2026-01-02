@@ -258,6 +258,7 @@ const btnRestart = document.getElementById("restartButton");
 const joinPrompt = document.getElementById("joinPrompt");
 const procCont = document.getElementById("proceedContainer");
 const btnProc = document.getElementById("proceedButton");
+
 const playersGrid = document.getElementById("playersGrid");
 const deathEventsHeader = document.getElementById("deathEventsHeader");
 const btnNewSame = document.getElementById("newGameSameButton");
@@ -357,12 +358,14 @@ function initializeData() {
 
   const useTwitchAvatarsToggle = document.getElementById("useTwitchAvatars");
   if (useTwitchAvatarsToggle) {
+    const storedValue = localStorage.getItem("useTwitchAvatars");
     useTwitchAvatarsToggle.checked =
-      localStorage.getItem("useTwitchAvatars") === "true";
+      storedValue === null ? true : storedValue === "true";
     useTwitchAvatarsToggle.addEventListener("change", (e) => {
       localStorage.setItem("useTwitchAvatars", e.target.checked);
+      let updatePromise = Promise.resolve();
       if (typeof window.updateAllAvatars === "function") {
-        window.updateAllAvatars(e.target.checked);
+        updatePromise = window.updateAllAvatars(e.target.checked);
       }
     });
   }
@@ -755,7 +758,9 @@ function refreshPlayersGrid() {
 
 function refreshWinnerScreen() {
   const winnerScreen = document.getElementById("winnerScreen");
-  if (!winnerScreen || winnerScreen.style.display === "none") return;
+  if (!winnerScreen || winnerScreen.style.display !== "block") {
+    return;
+  }
 
   if (typeof window.showWinner === "function") {
     window.showWinner();
@@ -764,10 +769,19 @@ function refreshWinnerScreen() {
 
 function refreshFallenDisplay() {
   const eventLog = document.getElementById("eventLog");
-  if (!eventLog) return;
+  if (!eventLog) {
+    return;
+  }
+
+  const stage = window.stage || 0;
+  if (stage !== 2) {
+    return;
+  }
 
   const fallenDisplay = eventLog.querySelector(".avatars");
-  if (!fallenDisplay) return;
+  if (!fallenDisplay) {
+    return;
+  }
 
   const currentDay = window.currentDay || 1;
   if (typeof window.showFallen === "function") {
@@ -777,9 +791,12 @@ function refreshFallenDisplay() {
 
 function refreshEventLog() {
   const eventLog = document.getElementById("eventLog");
-  if (!eventLog) return;
+  if (!eventLog) {
+    return;
+  }
 
   const avatarWraps = eventLog.querySelectorAll(".avatarWrap img");
+
   const useTwitchAvatars =
     document.getElementById("useTwitchAvatars")?.checked || false;
   const participants = window.participants || [];
@@ -831,7 +848,9 @@ function refreshEventLog() {
 }
 
 async function updateAllAvatars(useTwitch) {
-  if (!window.getCachedAvatar || !window.fetchTwitchAvatarsBatch) return;
+  if (!window.getCachedAvatar || !window.fetchTwitchAvatarsBatch) {
+    return;
+  }
 
   const playersGrid = document.getElementById("playersGrid");
   const participants = window.participants || [];

@@ -83,6 +83,31 @@ function getStepType(isDay) {
   return isDay ? "day" : "night";
 }
 
+function revealAllUnrevealedEvents() {
+  const eventLog = document.getElementById("eventLog");
+  if (!eventLog) return;
+
+  const unrevealedEvents = eventLog.querySelectorAll(".event:not(.revealed)");
+
+  unrevealedEvents.forEach((evEl) => {
+    const killed = JSON.parse(evEl.dataset.killedUsernames || "[]");
+    const participants = JSON.parse(evEl.dataset.participantUsernames || "[]");
+
+    if (window.revealedDeaths) {
+      killed.forEach((username) => window.revealedDeaths.add(username));
+    }
+
+    if (window.revealedAlive) {
+      const aliveParticipants = participants.filter((u) => !killed.includes(u));
+      aliveParticipants.forEach((username) =>
+        window.revealedAlive.add(username)
+      );
+    }
+
+    evEl.classList.add("revealed");
+  });
+}
+
 async function runPhase(type) {
   const eventLog = document.getElementById("eventLog");
   const phaseDesc = document.getElementById("phaseDesc");
@@ -93,6 +118,7 @@ async function runPhase(type) {
   window.currentPhaseNumber = (window.currentPhaseNumber || 0) + 1;
   window.eventsUsedThisPhase = new Set();
 
+  revealAllUnrevealedEvents();
   eventLog.innerHTML = "";
   let step = type;
   if (type === "day" || type === "night") {
