@@ -675,9 +675,44 @@ async function runEvents(evObj) {
       }
       evEl.append(avs, txtEl);
 
+      const killedUsernames = m.killed
+        .map((idx) => m.picks[idx]?.username)
+        .filter(Boolean);
+      evEl.dataset.killedUsernames = JSON.stringify(killedUsernames);
+
+      const participantUsernames = m.picks
+        .map((p) => p?.username)
+        .filter(Boolean);
+      evEl.dataset.participantUsernames = JSON.stringify(participantUsernames);
+
       evEl.addEventListener("click", (e) => {
         if (!evEl.classList.contains("revealed")) {
           evEl.classList.add("revealed");
+          const killed = JSON.parse(evEl.dataset.killedUsernames || "[]");
+          const participants = JSON.parse(
+            evEl.dataset.participantUsernames || "[]"
+          );
+          if (window.revealedDeaths) {
+            killed.forEach((username) => window.revealedDeaths.add(username));
+          }
+          if (window.revealedAlive) {
+            const aliveParticipants = participants.filter(
+              (u) => !killed.includes(u)
+            );
+            aliveParticipants.forEach((username) =>
+              window.revealedAlive.add(username)
+            );
+          }
+          if (typeof window.renderScoreboard === "function") {
+            const scoreboardOverlay =
+              document.getElementById("scoreboardOverlay");
+            if (
+              scoreboardOverlay &&
+              scoreboardOverlay.style.display === "flex"
+            ) {
+              window.renderScoreboard(false);
+            }
+          }
           e.stopPropagation();
         }
       });
@@ -767,6 +802,8 @@ function backToJoin(samePlayers) {
   window.consecutiveNoDeaths = 0;
   window.killedThisDay = [];
   window.deathEventsLog = [];
+  window.revealedDeaths = new Set();
+  window.revealedAlive = new Set();
   window.currentPhaseType = null;
   window.usedFeastIndices = [];
   window.usedArenaIndices = [];

@@ -532,8 +532,12 @@ function renderScoreboard(showOverlay = false) {
     return;
   }
 
-  const alive = participants.filter((p) => p.alive);
-  const dead = participants.filter((p) => !p.alive);
+  const alive = participants.filter(
+    (p) => p.alive && window.revealedAlive?.has(p.username)
+  );
+  const dead = participants.filter(
+    (p) => !p.alive && window.revealedDeaths?.has(p.username)
+  );
 
   aliveCountEl.textContent = alive.length;
   deadCountEl.textContent = dead.length;
