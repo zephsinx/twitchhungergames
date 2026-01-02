@@ -8,6 +8,7 @@ docs/
 scripts/
 templates/
 dist/
+dist-v2/
 node_modules/
 
 requirements.txt

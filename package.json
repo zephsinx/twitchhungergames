@@ -5,10 +5,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:v2": "vite --config vite.config.v2.js",
+    "build:v2": "vite build --config vite.config.v2.js",
+    "preview:v2": "vite preview --config vite.config.v2.js --outDir dist-v2"
   },
   "devDependencies": {
     "vite": "^7.3.0",
-    "vite-plugin-static-copy": "^3.1.2"
+    "vite-plugin-static-copy": "^3.1.2",
+    "typescript": "^5.9.3"
   }
 }
