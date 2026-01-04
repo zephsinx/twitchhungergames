@@ -340,6 +340,19 @@ function loadGameData(themeName) {
     });
 }
 
+function getLethalityLabel(value) {
+  const labels = {
+    "-3": "Very Low",
+    "-2": "Low",
+    "-1": "Slightly Low",
+    0: "Normal",
+    1: "Slightly High",
+    2: "High",
+    3: "Very High",
+  };
+  return labels[String(value)] || "Normal";
+}
+
 function initializeData() {
   const saved = localStorage.getItem("twitchChannel");
   if (saved) {
@@ -381,6 +394,23 @@ function initializeData() {
       updateJoinPrompt();
     });
     updateJoinPrompt();
+  }
+
+  const lethalitySlider = document.getElementById("lethalitySlider");
+  const lethalityLabel = document.getElementById("lethalityLabel");
+  if (lethalitySlider && lethalityLabel) {
+    const storedValue = localStorage.getItem("gameLethality") || "0";
+    const numericValue = parseInt(storedValue, 10);
+    lethalitySlider.value = storedValue;
+    lethalityLabel.textContent = getLethalityLabel(numericValue);
+    window.lethalityModifier = numericValue;
+
+    lethalitySlider.addEventListener("input", (e) => {
+      const value = parseInt(e.target.value, 10);
+      localStorage.setItem("gameLethality", String(value));
+      lethalityLabel.textContent = getLethalityLabel(value);
+      window.lethalityModifier = value;
+    });
   }
 
   updateHeaderForGameState();
@@ -706,9 +736,13 @@ function updateHeaderForGameState() {
   const allowCustomUsernamesLabel = document.getElementById(
     "allowCustomUsernames"
   )?.parentElement;
+  const lethalityControlEl = document.getElementById("lethalityControl");
 
   if (themeSelectorEl) {
     themeSelectorEl.style.display = isGameStarted ? "none" : "block";
+  }
+  if (lethalityControlEl) {
+    lethalityControlEl.style.display = isGameStarted ? "none" : "flex";
   }
   if (chInputEl) {
     chInputEl.style.display = isGameStarted ? "none" : "inline-block";
@@ -981,6 +1015,13 @@ btnStart.addEventListener("click", () => {
   if (players.size < 1) {
     alert(window.themeConfig.messages.minPlayersRequired);
     return;
+  }
+  const lethalitySlider = document.getElementById("lethalitySlider");
+  if (lethalitySlider) {
+    window.lethalityModifier = parseInt(lethalitySlider.value, 10) || 0;
+  } else {
+    const storedValue = localStorage.getItem("gameLethality") || "0";
+    window.lethalityModifier = parseInt(storedValue, 10) || 0;
   }
   gameStarted = true;
   window.gameStarted = true;

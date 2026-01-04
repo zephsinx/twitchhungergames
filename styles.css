@@ -166,6 +166,68 @@ select:focus:not(:focus-visible) {
   cursor: pointer;
 }
 
+.lethality-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-right: 0.5em;
+}
+
+.lethality-label {
+  font-size: 1rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+#lethalitySlider {
+  width: 120px;
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+#lethalitySlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--bg-button);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#lethalitySlider::-webkit-slider-thumb:hover {
+  background: var(--bg-button-hover);
+  border-color: var(--border-color-light);
+}
+
+#lethalitySlider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--bg-button);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#lethalitySlider::-moz-range-thumb:hover {
+  background: var(--bg-button-hover);
+  border-color: var(--border-color-light);
+}
+
+#lethalitySlider::-moz-range-track {
+  background: var(--bg-secondary);
+  height: 6px;
+  border-radius: 3px;
+}
+
 #status {
   font-weight: bold;
   margin-right: 1em;

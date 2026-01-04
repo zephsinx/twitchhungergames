@@ -223,7 +223,11 @@ async function runEvents(evObj) {
 
   const aliveSet = new Set(participants.filter((p) => p.alive));
   const base = Math.floor(Math.random() * 3) + 1.25;
-  const factor = base + consecutiveNoDeaths + (stage === 0 ? 1 : 0);
+  const factor =
+    base +
+    consecutiveNoDeaths +
+    (stage === 0 ? 1 : 0) +
+    (window.lethalityModifier || 0);
   const msgs = [];
 
   const genericEvents = eventsData.generic || { nonfatal: [], fatal: [] };
