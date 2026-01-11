@@ -40,6 +40,35 @@
       <label for="lethalitySlider" class="lethality-label">Lethality: <span id="lethalityLabel">Normal</span></label>
       <input type="range" id="lethalitySlider" min="-3" max="3" value="0" step="1" aria-label="Lethality">
     </div>
+    <script>
+      (function () {
+        try {
+          const storedValue = localStorage.getItem("gameLethality");
+          const numericValue = storedValue !== null ? parseInt(storedValue, 10) : 0;
+          let validValue = !isNaN(numericValue) && numericValue >= -3 && numericValue <= 3 ? numericValue : 0;
+          if (storedValue !== null && validValue !== numericValue) {
+            localStorage.setItem("gameLethality", String(validValue));
+          }
+          const labels = {
+            "-3": "Very Low",
+            "-2": "Low",
+            "-1": "Slightly Low",
+            "0": "Normal",
+            "1": "Slightly High",
+            "2": "High",
+            "3": "Very High"
+          };
+          const slider = document.getElementById("lethalitySlider");
+          const label = document.getElementById("lethalityLabel");
+          if (slider && label) {
+            slider.value = String(validValue);
+            label.textContent = labels[String(validValue)] || "Normal";
+          }
+        } catch (e) {
+          console.error("Error initializing lethality slider:", e);
+        }
+      })();
+    </script>
   </div>
 
   <main>

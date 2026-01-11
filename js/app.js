@@ -400,8 +400,12 @@ function initializeData() {
   const lethalityLabel = document.getElementById("lethalityLabel");
   if (lethalitySlider && lethalityLabel) {
     const storedValue = localStorage.getItem("gameLethality") || "0";
-    const numericValue = parseInt(storedValue, 10);
-    lethalitySlider.value = storedValue;
+    let numericValue = parseInt(storedValue, 10);
+    if (isNaN(numericValue) || numericValue < -3 || numericValue > 3) {
+      numericValue = 0;
+      localStorage.setItem("gameLethality", "0");
+    }
+    lethalitySlider.value = String(numericValue);
     lethalityLabel.textContent = getLethalityLabel(numericValue);
     window.lethalityModifier = numericValue;
 
