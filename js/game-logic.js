@@ -501,7 +501,8 @@ async function runEvents(evObj) {
         window.saveGlobalStats();
       }
       if (typeof window.renderLeaderboard === "function") {
-        const leaderboardOverlay = document.getElementById("leaderboardOverlay");
+        const leaderboardOverlay =
+          document.getElementById("leaderboardOverlay");
         if (leaderboardOverlay && leaderboardOverlay.style.display === "flex") {
           window.renderLeaderboard();
         }

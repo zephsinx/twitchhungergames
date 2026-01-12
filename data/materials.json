@@ -1,27 +1,10 @@
 {
-  "sand_bad": [
-    "gunpowder",
-    "monstrous powder"
-  ],
-  "sand_good": [
-    "meat",
-    "weird fungus"
-  ],
-  "sand_neutral": [
-    "meat",
-    "sand",
-    "coal"
-  ],
-  "food_good": [
-    "meat",
-    "healthy porridge"
-  ],
-  "food_neutral": [
-    "weird fungus"
-  ],
-  "food_bad": [
-    "spoiled meat"
-  ],
+  "sand_bad": ["gunpowder", "monstrous powder"],
+  "sand_good": ["meat", "weird fungus"],
+  "sand_neutral": ["meat", "sand", "coal"],
+  "food_good": ["meat", "healthy porridge"],
+  "food_neutral": ["weird fungus"],
+  "food_bad": ["spoiled meat"],
   "liquid_bad": [
     "toxic sludge",
     "poison",
@@ -49,11 +32,7 @@
     "whiskey",
     "milk"
   ],
-  "liquid_water": [
-    "swamp",
-    "water",
-    "sludge"
-  ],
+  "liquid_water": ["swamp", "water", "sludge"],
   "liquid_poison": [
     "toxic sludge",
     "poison",

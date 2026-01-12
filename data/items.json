@@ -1,326 +1,326 @@
 {
-	"weapon_blunt": [
-		{
-			"name": "an emerald tablet",
-			"max_kills": 1
-		},
-		{
-			"name": "a rock",
-			"max_kills": 1
-		},
-		{
-			"name": "a statue",
-			"max_kills": 1
-		},
-		{
-			"name": "an empty flask",
-			"max_kills": 1
-		},
-		{
-			"name": "a propane tank",
-			"max_kills": 1
-		}
-	],
-	"weapon_cutting": [
-		{
-			"name": "a chainsaw wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a digging wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a digging blast",
-			"max_kills": 1
-		},
-		{
-			"name": "a digging bolt",
-			"max_kills": 1
-		},
-		{
-			"name": "a luminous drill",
-			"max_kills": 1
-		},
-		{
-			"name": "a disc projectile",
-			"max_kills": 1
-		},
-		{
-			"name": "a giga disc projectile",
-			"max_kills": 2
-		},
-		{
-			"name": "an omega sawblade",
-			"max_kills": 3
-		}
-	],
-	"weapon_piercing": [
-		{
-			"name": "a glowing lance",
-			"max_kills": 1
-		},
-		{
-			"name": "a holy lance",
-			"max_kills": 1
-		},
-		{
-			"name": "a magic arrow",
-			"max_kills": 1
-		},
-		{
-			"name": "a triplicate bolt",
-			"max_kills": 3
-		},
-		{
-			"name": "a disc projectile",
-			"max_kills": 1
-		},
-		{
-			"name": "an arrow",
-			"max_kills": 1
-		}
-	],
-	"weapon_projectile": [
-		{
-			"name": "a chain bolt",
-			"max_kills": 4
-		},
-		{
-			"name": "a bubble spark wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a death cross",
-			"max_kills": 1
-		},
-		{
-			"name": "an energy orb",
-			"max_kills": 2
-		},
-		{
-			"name": "a concentrated light wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a magic arrow",
-			"max_kills": 1
-		},
-		{
-			"name": "a magic bolt",
-			"max_kills": 1
-		},
-		{
-			"name": "a magic missile",
-			"max_kills": 1
-		},
-		{
-			"name": "a triplicate bolt",
-			"max_kills": 3
-		},
-		{
-			"name": "a pollen wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a pinpoint of light",
-			"max_kills": 1
-		},
-		{
-			"name": "a spark bolt",
-			"max_kills": 1
-		},
-		{
-			"name": "a bouncing burst wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a energy sphere",
-			"max_kills": 1
-		},
-		{
-			"name": "a spitter bolt",
-			"max_kills": 1
-		}
-	],
-	"weapon_fire": [
-		{
-			"name": "a dynamite",
-			"max_kills": 2
-		},
-		{
-			"name": "a dropper bolt",
-			"max_kills": 1
-		},
-		{
-			"name": "a fireball wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a firebolt",
-			"max_kills": 1
-		},
-		{
-			"name": "a odd firebolt",
-			"max_kills": 1
-		},
-		{
-			"name": "a firebomb",
-			"max_kills": 1
-		},
-		{
-			"name": "a flamethrower wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a meteor wand",
-			"max_kills": 3
-		},
-		{
-			"name": "a liquid fire potion",
-			"max_kills": 1
-		},
-		{
-			"name": "kiuaskivi",
-			"max_kills": 1
-		}
-	],
-	"weapon_electricity": [
-		{
-			"name": "an electric arc triplicate bolt",
-			"max_kills": 3
-		},
-		{
-			"name": "a lightning bolt",
-			"max_kills": 2
-		},
-		{
-			"name": "a thunder charge",
-			"max_kills": 2
-		},
-		{
-			"name": "ball lightning",
-			"max_kills": 2
-		},
-		{
-			"name": "an ukkoskivi",
-			"max_kills": 2
-		},
-		{
-			"name": "an electric torch",
-			"max_kills": 1
-		},
-		{
-			"name": "an explosion of thunder",
-			"max_kills": 3
-		},
-		{
-			"name": "an electric charge wand",
-			"max_kills": 2
-		},
-		{
-			"name": "a lightning thrower wand",
-			"max_kills": 4
-		}
-	],
-	"weapon_explosive": [
-		{
-			"name": "dynamite",
-			"max_kills": 2
-		},
-		{
-			"name": "a bomb",
-			"max_kills": 3
-		},
-		{
-			"name": "a bomb wand",
-			"max_kills": 3
-		},
-		{
-			"name": "a holy bomb",
-			"max_kills": 5
-		},
-		{
-			"name": "a nuke wand",
-			"max_kills": 5
-		},
-		{
-			"name": "a nuke orbit wand",
-			"max_kills": 7
-		},
-		{
-			"name": "a magic missile",
-			"max_kills": 1
-		},
-		{
-			"name": "a large magic missile",
-			"max_kills": 2
-		},
-		{
-			"name": "a giant magic missile",
-			"max_kills": 3
-		},
-		{
-			"name": "a propane tank",
-			"max_kills": 3
-		},
-		{
-			"name": "an explosive crate",
-			"max_kills": 4
-		},
-		{
-			"name": "a firebolt",
-			"max_kills": 1
-		}
-	],
-	"weapon_wand": [
-		{
-			"name": "a wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a bubble spark wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a chainsaw wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a digging wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a fireball wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a flamethrower wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a lightning bolt wand",
-			"max_kills": 2
-		},
-		{
-			"name": "a magic arrow wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a magic bolt wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a magic missile wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a chainsaw wrapped triplicate bolt wand",
-			"max_kills": 1
-		},
-		{
-			"name": "a nuke orbit wand",
-			"max_kills": 5
-		}
-	]
+  "weapon_blunt": [
+    {
+      "name": "an emerald tablet",
+      "max_kills": 1
+    },
+    {
+      "name": "a rock",
+      "max_kills": 1
+    },
+    {
+      "name": "a statue",
+      "max_kills": 1
+    },
+    {
+      "name": "an empty flask",
+      "max_kills": 1
+    },
+    {
+      "name": "a propane tank",
+      "max_kills": 1
+    }
+  ],
+  "weapon_cutting": [
+    {
+      "name": "a chainsaw wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a digging wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a digging blast",
+      "max_kills": 1
+    },
+    {
+      "name": "a digging bolt",
+      "max_kills": 1
+    },
+    {
+      "name": "a luminous drill",
+      "max_kills": 1
+    },
+    {
+      "name": "a disc projectile",
+      "max_kills": 1
+    },
+    {
+      "name": "a giga disc projectile",
+      "max_kills": 2
+    },
+    {
+      "name": "an omega sawblade",
+      "max_kills": 3
+    }
+  ],
+  "weapon_piercing": [
+    {
+      "name": "a glowing lance",
+      "max_kills": 1
+    },
+    {
+      "name": "a holy lance",
+      "max_kills": 1
+    },
+    {
+      "name": "a magic arrow",
+      "max_kills": 1
+    },
+    {
+      "name": "a triplicate bolt",
+      "max_kills": 3
+    },
+    {
+      "name": "a disc projectile",
+      "max_kills": 1
+    },
+    {
+      "name": "an arrow",
+      "max_kills": 1
+    }
+  ],
+  "weapon_projectile": [
+    {
+      "name": "a chain bolt",
+      "max_kills": 4
+    },
+    {
+      "name": "a bubble spark wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a death cross",
+      "max_kills": 1
+    },
+    {
+      "name": "an energy orb",
+      "max_kills": 2
+    },
+    {
+      "name": "a concentrated light wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a magic arrow",
+      "max_kills": 1
+    },
+    {
+      "name": "a magic bolt",
+      "max_kills": 1
+    },
+    {
+      "name": "a magic missile",
+      "max_kills": 1
+    },
+    {
+      "name": "a triplicate bolt",
+      "max_kills": 3
+    },
+    {
+      "name": "a pollen wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a pinpoint of light",
+      "max_kills": 1
+    },
+    {
+      "name": "a spark bolt",
+      "max_kills": 1
+    },
+    {
+      "name": "a bouncing burst wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a energy sphere",
+      "max_kills": 1
+    },
+    {
+      "name": "a spitter bolt",
+      "max_kills": 1
+    }
+  ],
+  "weapon_fire": [
+    {
+      "name": "a dynamite",
+      "max_kills": 2
+    },
+    {
+      "name": "a dropper bolt",
+      "max_kills": 1
+    },
+    {
+      "name": "a fireball wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a firebolt",
+      "max_kills": 1
+    },
+    {
+      "name": "a odd firebolt",
+      "max_kills": 1
+    },
+    {
+      "name": "a firebomb",
+      "max_kills": 1
+    },
+    {
+      "name": "a flamethrower wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a meteor wand",
+      "max_kills": 3
+    },
+    {
+      "name": "a liquid fire potion",
+      "max_kills": 1
+    },
+    {
+      "name": "kiuaskivi",
+      "max_kills": 1
+    }
+  ],
+  "weapon_electricity": [
+    {
+      "name": "an electric arc triplicate bolt",
+      "max_kills": 3
+    },
+    {
+      "name": "a lightning bolt",
+      "max_kills": 2
+    },
+    {
+      "name": "a thunder charge",
+      "max_kills": 2
+    },
+    {
+      "name": "ball lightning",
+      "max_kills": 2
+    },
+    {
+      "name": "an ukkoskivi",
+      "max_kills": 2
+    },
+    {
+      "name": "an electric torch",
+      "max_kills": 1
+    },
+    {
+      "name": "an explosion of thunder",
+      "max_kills": 3
+    },
+    {
+      "name": "an electric charge wand",
+      "max_kills": 2
+    },
+    {
+      "name": "a lightning thrower wand",
+      "max_kills": 4
+    }
+  ],
+  "weapon_explosive": [
+    {
+      "name": "dynamite",
+      "max_kills": 2
+    },
+    {
+      "name": "a bomb",
+      "max_kills": 3
+    },
+    {
+      "name": "a bomb wand",
+      "max_kills": 3
+    },
+    {
+      "name": "a holy bomb",
+      "max_kills": 5
+    },
+    {
+      "name": "a nuke wand",
+      "max_kills": 5
+    },
+    {
+      "name": "a nuke orbit wand",
+      "max_kills": 7
+    },
+    {
+      "name": "a magic missile",
+      "max_kills": 1
+    },
+    {
+      "name": "a large magic missile",
+      "max_kills": 2
+    },
+    {
+      "name": "a giant magic missile",
+      "max_kills": 3
+    },
+    {
+      "name": "a propane tank",
+      "max_kills": 3
+    },
+    {
+      "name": "an explosive crate",
+      "max_kills": 4
+    },
+    {
+      "name": "a firebolt",
+      "max_kills": 1
+    }
+  ],
+  "weapon_wand": [
+    {
+      "name": "a wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a bubble spark wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a chainsaw wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a digging wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a fireball wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a flamethrower wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a lightning bolt wand",
+      "max_kills": 2
+    },
+    {
+      "name": "a magic arrow wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a magic bolt wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a magic missile wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a chainsaw wrapped triplicate bolt wand",
+      "max_kills": 1
+    },
+    {
+      "name": "a nuke orbit wand",
+      "max_kills": 5
+    }
+  ]
 }

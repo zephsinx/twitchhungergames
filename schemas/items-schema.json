@@ -14,10 +14,7 @@
   "$defs": {
     "itemObject": {
       "type": "object",
-      "required": [
-        "name",
-        "max_kills"
-      ],
+      "required": ["name", "max_kills"],
       "properties": {
         "name": {
           "type": "string",

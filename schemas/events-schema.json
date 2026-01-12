@@ -3,14 +3,7 @@
   "title": "Events JSON Schema",
   "description": "Schema for validating the events.json file structure for the Hunger Games Simulator",
   "type": "object",
-  "required": [
-    "bloodbath",
-    "day",
-    "night",
-    "feast",
-    "arena",
-    "generic"
-  ],
+  "required": ["bloodbath", "day", "night", "feast", "arena", "generic"],
   "properties": {
     "bloodbath": {
       "$ref": "#/$defs/phaseObject"
@@ -52,10 +45,7 @@
   "$defs": {
     "eventObject": {
       "type": "object",
-      "required": [
-        "msg",
-        "tributes"
-      ],
+      "required": ["msg", "tributes"],
       "properties": {
         "msg": {
           "type": "string",
@@ -113,13 +103,7 @@
     },
     "phaseObject": {
       "type": "object",
-      "required": [
-        "title",
-        "description",
-        "color",
-        "nonfatal",
-        "fatal"
-      ],
+      "required": ["title", "description", "color", "nonfatal", "fatal"],
       "properties": {
         "title": {
           "type": "string",
@@ -155,10 +139,7 @@
     },
     "genericEventsObject": {
       "type": "object",
-      "required": [
-        "nonfatal",
-        "fatal"
-      ],
+      "required": ["nonfatal", "fatal"],
       "properties": {
         "nonfatal": {
           "type": "array",

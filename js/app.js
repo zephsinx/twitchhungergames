@@ -1031,9 +1031,8 @@ async function updateAllAvatars(useTwitch) {
 
   if (uncachedUsernames.length > 0) {
     if (useTwitch) {
-      const fetchedAvatars = await window.fetchTwitchAvatarsBatch(
-        uncachedUsernames
-      );
+      const fetchedAvatars =
+        await window.fetchTwitchAvatarsBatch(uncachedUsernames);
       for (const [username, avatarUrl] of fetchedAvatars) {
         const elements = usernameToElements.get(username) || [];
         elements.forEach((item) => {

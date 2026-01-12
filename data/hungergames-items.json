@@ -1,626 +1,626 @@
 {
-	"weapon_blunt": [
-		{
-			"name": "a rock",
-			"max_kills": 1
-		},
-		{
-			"name": "a club",
-			"max_kills": 1
-		},
-		{
-			"name": "a tree branch",
-			"max_kills": 1
-		},
-		{
-			"name": "a heavy stick",
-			"max_kills": 1
-		},
-		{
-			"name": "a stone hammer",
-			"max_kills": 2
-		},
-		{
-			"name": "a wooden club",
-			"max_kills": 1
-		},
-		{
-			"name": "a bone club",
-			"max_kills": 2
-		},
-		{
-			"name": "a metal pipe",
-			"max_kills": 2
-		},
-		{
-			"name": "a log",
-			"max_kills": 1
-		},
-		{
-			"name": "a boulder",
-			"max_kills": 3
-		},
-		{
-			"name": "a mace",
-			"max_kills": 2
-		},
-		{
-			"name": "a war hammer",
-			"max_kills": 3
-		},
-		{
-			"name": "a cudgel",
-			"max_kills": 1
-		},
-		{
-			"name": "a staff",
-			"max_kills": 1
-		},
-		{
-			"name": "a baton",
-			"max_kills": 1
-		},
-		{
-			"name": "a mallet",
-			"max_kills": 2
-		},
-		{
-			"name": "a maul",
-			"max_kills": 3
-		},
-		{
-			"name": "a truncheon",
-			"max_kills": 1
-		},
-		{
-			"name": "a shillelagh",
-			"max_kills": 2
-		},
-		{
-			"name": "a quarterstaff",
-			"max_kills": 1
-		}
-	],
-	"weapon_cutting": [
-		{
-			"name": "a knife",
-			"max_kills": 1
-		},
-		{
-			"name": "a dagger",
-			"max_kills": 1
-		},
-		{
-			"name": "a sword",
-			"max_kills": 2
-		},
-		{
-			"name": "a machete",
-			"max_kills": 2
-		},
-		{
-			"name": "a hatchet",
-			"max_kills": 2
-		},
-		{
-			"name": "an axe",
-			"max_kills": 3
-		},
-		{
-			"name": "a sharpened stick",
-			"max_kills": 1
-		},
-		{
-			"name": "a broken bottle",
-			"max_kills": 1
-		},
-		{
-			"name": "a shard of metal",
-			"max_kills": 1
-		},
-		{
-			"name": "a razor blade",
-			"max_kills": 1
-		},
-		{
-			"name": "a cleaver",
-			"max_kills": 2
-		},
-		{
-			"name": "a scythe",
-			"max_kills": 3
-		},
-		{
-			"name": "a sickle",
-			"max_kills": 2
-		},
-		{
-			"name": "a spear blade",
-			"max_kills": 1
-		},
-		{
-			"name": "a sharpened rock",
-			"max_kills": 1
-		},
-		{
-			"name": "a glass shard",
-			"max_kills": 1
-		},
-		{
-			"name": "a serrated blade",
-			"max_kills": 2
-		},
-		{
-			"name": "a combat knife",
-			"max_kills": 2
-		},
-		{
-			"name": "a kukri",
-			"max_kills": 2
-		},
-		{
-			"name": "a tomahawk",
-			"max_kills": 2
-		}
-	],
-	"weapon_piercing": [
-		{
-			"name": "a spear",
-			"max_kills": 2
-		},
-		{
-			"name": "a javelin",
-			"max_kills": 2
-		},
-		{
-			"name": "a pike",
-			"max_kills": 2
-		},
-		{
-			"name": "a lance",
-			"max_kills": 3
-		},
-		{
-			"name": "a sharpened branch",
-			"max_kills": 1
-		},
-		{
-			"name": "a fishing spear",
-			"max_kills": 1
-		},
-		{
-			"name": "a trident",
-			"max_kills": 3
-		},
-		{
-			"name": "a harpoon",
-			"max_kills": 2
-		},
-		{
-			"name": "a spike",
-			"max_kills": 1
-		},
-		{
-			"name": "a stake",
-			"max_kills": 1
-		},
-		{
-			"name": "a sharpened bone",
-			"max_kills": 1
-		},
-		{
-			"name": "a needle",
-			"max_kills": 1
-		},
-		{
-			"name": "a nail",
-			"max_kills": 1
-		},
-		{
-			"name": "a shiv",
-			"max_kills": 1
-		},
-		{
-			"name": "a stiletto",
-			"max_kills": 1
-		},
-		{
-			"name": "a rapier",
-			"max_kills": 2
-		},
-		{
-			"name": "a bayonet",
-			"max_kills": 2
-		},
-		{
-			"name": "a pickaxe",
-			"max_kills": 2
-		},
-		{
-			"name": "a awl",
-			"max_kills": 1
-		},
-		{
-			"name": "a bodkin",
-			"max_kills": 1
-		}
-	],
-	"weapon_projectile": [
-		{
-			"name": "a bow",
-			"max_kills": 2
-		},
-		{
-			"name": "a crossbow",
-			"max_kills": 3
-		},
-		{
-			"name": "a slingshot",
-			"max_kills": 1
-		},
-		{
-			"name": "a throwing knife",
-			"max_kills": 1
-		},
-		{
-			"name": "a throwing axe",
-			"max_kills": 2
-		},
-		{
-			"name": "a boomerang",
-			"max_kills": 1
-		},
-		{
-			"name": "a throwing star",
-			"max_kills": 1
-		},
-		{
-			"name": "a blowgun",
-			"max_kills": 1
-		},
-		{
-			"name": "a catapult",
-			"max_kills": 2
-		},
-		{
-			"name": "a sling",
-			"max_kills": 1
-		},
-		{
-			"name": "a bola",
-			"max_kills": 1
-		},
-		{
-			"name": "a throwing spear",
-			"max_kills": 2
-		},
-		{
-			"name": "a dart",
-			"max_kills": 1
-		},
-		{
-			"name": "a stone",
-			"max_kills": 1
-		},
-		{
-			"name": "a composite bow",
-			"max_kills": 3
-		},
-		{
-			"name": "a longbow",
-			"max_kills": 3
-		},
-		{
-			"name": "a recurve bow",
-			"max_kills": 2
-		}
-	],
-	"weapon_fire": [
-		{
-			"name": "a torch",
-			"max_kills": 1
-		},
-		{
-			"name": "a flaming arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a fire bomb",
-			"max_kills": 3
-		},
-		{
-			"name": "a molotov cocktail",
-			"max_kills": 3
-		},
-		{
-			"name": "a burning branch",
-			"max_kills": 1
-		},
-		{
-			"name": "a firebrand",
-			"max_kills": 1
-		},
-		{
-			"name": "a flaming spear",
-			"max_kills": 2
-		},
-		{
-			"name": "a incendiary arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a fire pot",
-			"max_kills": 2
-		},
-		{
-			"name": "a burning torch",
-			"max_kills": 1
-		},
-		{
-			"name": "a flamethrower",
-			"max_kills": 3
-		},
-		{
-			"name": "a fire lance",
-			"max_kills": 2
-		},
-		{
-			"name": "a burning javelin",
-			"max_kills": 2
-		},
-		{
-			"name": "a fire arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a pyrotechnic device",
-			"max_kills": 3
-		},
-		{
-			"name": "a flaming sword",
-			"max_kills": 3
-		},
-		{
-			"name": "a fire trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a burning oil",
-			"max_kills": 2
-		},
-		{
-			"name": "a fire starter",
-			"max_kills": 1
-		}
-	],
-	"weapon_poison": [
-		{
-			"name": "a poisoned arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a poisoned dart",
-			"max_kills": 1
-		},
-		{
-			"name": "a poisoned blade",
-			"max_kills": 2
-		},
-		{
-			"name": "a toxic dart",
-			"max_kills": 1
-		},
-		{
-			"name": "a venomous arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a poisoned spear",
-			"max_kills": 2
-		},
-		{
-			"name": "a toxic blade",
-			"max_kills": 2
-		},
-		{
-			"name": "a venomous dart",
-			"max_kills": 1
-		},
-		{
-			"name": "a poison vial",
-			"max_kills": 2
-		},
-		{
-			"name": "a toxic potion",
-			"max_kills": 2
-		},
-		{
-			"name": "a venom sac",
-			"max_kills": 1
-		},
-		{
-			"name": "a poison dart",
-			"max_kills": 1
-		},
-		{
-			"name": "a toxic arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a poisoned javelin",
-			"max_kills": 2
-		},
-		{
-			"name": "a venomous spear",
-			"max_kills": 2
-		},
-		{
-			"name": "a poison-tipped arrow",
-			"max_kills": 2
-		},
-		{
-			"name": "a toxic throwing knife",
-			"max_kills": 1
-		},
-		{
-			"name": "a poisoned shiv",
-			"max_kills": 1
-		},
-		{
-			"name": "a venomous blade",
-			"max_kills": 2
-		},
-		{
-			"name": "a poison bomb",
-			"max_kills": 3
-		}
-	],
-	"weapon_trap": [
-		{
-			"name": "a snare trap",
-			"max_kills": 1
-		},
-		{
-			"name": "a pit trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a spike trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a deadfall trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a spring trap",
-			"max_kills": 1
-		},
-		{
-			"name": "a tripwire",
-			"max_kills": 1
-		},
-		{
-			"name": "a bear trap",
-			"max_kills": 3
-		},
-		{
-			"name": "a net trap",
-			"max_kills": 1
-		},
-		{
-			"name": "a cage trap",
-			"max_kills": 1
-		},
-		{
-			"name": "a pressure plate",
-			"max_kills": 2
-		},
-		{
-			"name": "a noose trap",
-			"max_kills": 1
-		},
-		{
-			"name": "a jaw trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a snare",
-			"max_kills": 1
-		},
-		{
-			"name": "a wire trap",
-			"max_kills": 1
-		},
-		{
-			"name": "a trigger trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a falling log trap",
-			"max_kills": 3
-		},
-		{
-			"name": "a swinging blade trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a poison trap",
-			"max_kills": 2
-		},
-		{
-			"name": "a spike pit",
-			"max_kills": 3
-		}
-	],
-	"weapon_explosive": [
-		{
-			"name": "a bomb",
-			"max_kills": 4
-		},
-		{
-			"name": "a grenade",
-			"max_kills": 4
-		},
-		{
-			"name": "a landmine",
-			"max_kills": 5
-		},
-		{
-			"name": "a dynamite stick",
-			"max_kills": 3
-		},
-		{
-			"name": "a explosive trap",
-			"max_kills": 4
-		},
-		{
-			"name": "a detonator",
-			"max_kills": 3
-		},
-		{
-			"name": "a explosive arrow",
-			"max_kills": 3
-		},
-		{
-			"name": "a pipe bomb",
-			"max_kills": 4
-		},
-		{
-			"name": "a satchel charge",
-			"max_kills": 5
-		},
-		{
-			"name": "a explosive device",
-			"max_kills": 4
-		},
-		{
-			"name": "a time bomb",
-			"max_kills": 4
-		},
-		{
-			"name": "a pressure mine",
-			"max_kills": 5
-		},
-		{
-			"name": "a tripwire mine",
-			"max_kills": 4
-		},
-		{
-			"name": "a remote detonator",
-			"max_kills": 4
-		},
-		{
-			"name": "a explosive barrel",
-			"max_kills": 6
-		},
-		{
-			"name": "a booby trap",
-			"max_kills": 3
-		},
-		{
-			"name": "a improvised explosive",
-			"max_kills": 3
-		}
-	]
+  "weapon_blunt": [
+    {
+      "name": "a rock",
+      "max_kills": 1
+    },
+    {
+      "name": "a club",
+      "max_kills": 1
+    },
+    {
+      "name": "a tree branch",
+      "max_kills": 1
+    },
+    {
+      "name": "a heavy stick",
+      "max_kills": 1
+    },
+    {
+      "name": "a stone hammer",
+      "max_kills": 2
+    },
+    {
+      "name": "a wooden club",
+      "max_kills": 1
+    },
+    {
+      "name": "a bone club",
+      "max_kills": 2
+    },
+    {
+      "name": "a metal pipe",
+      "max_kills": 2
+    },
+    {
+      "name": "a log",
+      "max_kills": 1
+    },
+    {
+      "name": "a boulder",
+      "max_kills": 3
+    },
+    {
+      "name": "a mace",
+      "max_kills": 2
+    },
+    {
+      "name": "a war hammer",
+      "max_kills": 3
+    },
+    {
+      "name": "a cudgel",
+      "max_kills": 1
+    },
+    {
+      "name": "a staff",
+      "max_kills": 1
+    },
+    {
+      "name": "a baton",
+      "max_kills": 1
+    },
+    {
+      "name": "a mallet",
+      "max_kills": 2
+    },
+    {
+      "name": "a maul",
+      "max_kills": 3
+    },
+    {
+      "name": "a truncheon",
+      "max_kills": 1
+    },
+    {
+      "name": "a shillelagh",
+      "max_kills": 2
+    },
+    {
+      "name": "a quarterstaff",
+      "max_kills": 1
+    }
+  ],
+  "weapon_cutting": [
+    {
+      "name": "a knife",
+      "max_kills": 1
+    },
+    {
+      "name": "a dagger",
+      "max_kills": 1
+    },
+    {
+      "name": "a sword",
+      "max_kills": 2
+    },
+    {
+      "name": "a machete",
+      "max_kills": 2
+    },
+    {
+      "name": "a hatchet",
+      "max_kills": 2
+    },
+    {
+      "name": "an axe",
+      "max_kills": 3
+    },
+    {
+      "name": "a sharpened stick",
+      "max_kills": 1
+    },
+    {
+      "name": "a broken bottle",
+      "max_kills": 1
+    },
+    {
+      "name": "a shard of metal",
+      "max_kills": 1
+    },
+    {
+      "name": "a razor blade",
+      "max_kills": 1
+    },
+    {
+      "name": "a cleaver",
+      "max_kills": 2
+    },
+    {
+      "name": "a scythe",
+      "max_kills": 3
+    },
+    {
+      "name": "a sickle",
+      "max_kills": 2
+    },
+    {
+      "name": "a spear blade",
+      "max_kills": 1
+    },
+    {
+      "name": "a sharpened rock",
+      "max_kills": 1
+    },
+    {
+      "name": "a glass shard",
+      "max_kills": 1
+    },
+    {
+      "name": "a serrated blade",
+      "max_kills": 2
+    },
+    {
+      "name": "a combat knife",
+      "max_kills": 2
+    },
+    {
+      "name": "a kukri",
+      "max_kills": 2
+    },
+    {
+      "name": "a tomahawk",
+      "max_kills": 2
+    }
+  ],
+  "weapon_piercing": [
+    {
+      "name": "a spear",
+      "max_kills": 2
+    },
+    {
+      "name": "a javelin",
+      "max_kills": 2
+    },
+    {
+      "name": "a pike",
+      "max_kills": 2
+    },
+    {
+      "name": "a lance",
+      "max_kills": 3
+    },
+    {
+      "name": "a sharpened branch",
+      "max_kills": 1
+    },
+    {
+      "name": "a fishing spear",
+      "max_kills": 1
+    },
+    {
+      "name": "a trident",
+      "max_kills": 3
+    },
+    {
+      "name": "a harpoon",
+      "max_kills": 2
+    },
+    {
+      "name": "a spike",
+      "max_kills": 1
+    },
+    {
+      "name": "a stake",
+      "max_kills": 1
+    },
+    {
+      "name": "a sharpened bone",
+      "max_kills": 1
+    },
+    {
+      "name": "a needle",
+      "max_kills": 1
+    },
+    {
+      "name": "a nail",
+      "max_kills": 1
+    },
+    {
+      "name": "a shiv",
+      "max_kills": 1
+    },
+    {
+      "name": "a stiletto",
+      "max_kills": 1
+    },
+    {
+      "name": "a rapier",
+      "max_kills": 2
+    },
+    {
+      "name": "a bayonet",
+      "max_kills": 2
+    },
+    {
+      "name": "a pickaxe",
+      "max_kills": 2
+    },
+    {
+      "name": "a awl",
+      "max_kills": 1
+    },
+    {
+      "name": "a bodkin",
+      "max_kills": 1
+    }
+  ],
+  "weapon_projectile": [
+    {
+      "name": "a bow",
+      "max_kills": 2
+    },
+    {
+      "name": "a crossbow",
+      "max_kills": 3
+    },
+    {
+      "name": "a slingshot",
+      "max_kills": 1
+    },
+    {
+      "name": "a throwing knife",
+      "max_kills": 1
+    },
+    {
+      "name": "a throwing axe",
+      "max_kills": 2
+    },
+    {
+      "name": "a boomerang",
+      "max_kills": 1
+    },
+    {
+      "name": "a throwing star",
+      "max_kills": 1
+    },
+    {
+      "name": "a blowgun",
+      "max_kills": 1
+    },
+    {
+      "name": "a catapult",
+      "max_kills": 2
+    },
+    {
+      "name": "a sling",
+      "max_kills": 1
+    },
+    {
+      "name": "a bola",
+      "max_kills": 1
+    },
+    {
+      "name": "a throwing spear",
+      "max_kills": 2
+    },
+    {
+      "name": "a dart",
+      "max_kills": 1
+    },
+    {
+      "name": "a stone",
+      "max_kills": 1
+    },
+    {
+      "name": "a composite bow",
+      "max_kills": 3
+    },
+    {
+      "name": "a longbow",
+      "max_kills": 3
+    },
+    {
+      "name": "a recurve bow",
+      "max_kills": 2
+    }
+  ],
+  "weapon_fire": [
+    {
+      "name": "a torch",
+      "max_kills": 1
+    },
+    {
+      "name": "a flaming arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a fire bomb",
+      "max_kills": 3
+    },
+    {
+      "name": "a molotov cocktail",
+      "max_kills": 3
+    },
+    {
+      "name": "a burning branch",
+      "max_kills": 1
+    },
+    {
+      "name": "a firebrand",
+      "max_kills": 1
+    },
+    {
+      "name": "a flaming spear",
+      "max_kills": 2
+    },
+    {
+      "name": "a incendiary arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a fire pot",
+      "max_kills": 2
+    },
+    {
+      "name": "a burning torch",
+      "max_kills": 1
+    },
+    {
+      "name": "a flamethrower",
+      "max_kills": 3
+    },
+    {
+      "name": "a fire lance",
+      "max_kills": 2
+    },
+    {
+      "name": "a burning javelin",
+      "max_kills": 2
+    },
+    {
+      "name": "a fire arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a pyrotechnic device",
+      "max_kills": 3
+    },
+    {
+      "name": "a flaming sword",
+      "max_kills": 3
+    },
+    {
+      "name": "a fire trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a burning oil",
+      "max_kills": 2
+    },
+    {
+      "name": "a fire starter",
+      "max_kills": 1
+    }
+  ],
+  "weapon_poison": [
+    {
+      "name": "a poisoned arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a poisoned dart",
+      "max_kills": 1
+    },
+    {
+      "name": "a poisoned blade",
+      "max_kills": 2
+    },
+    {
+      "name": "a toxic dart",
+      "max_kills": 1
+    },
+    {
+      "name": "a venomous arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a poisoned spear",
+      "max_kills": 2
+    },
+    {
+      "name": "a toxic blade",
+      "max_kills": 2
+    },
+    {
+      "name": "a venomous dart",
+      "max_kills": 1
+    },
+    {
+      "name": "a poison vial",
+      "max_kills": 2
+    },
+    {
+      "name": "a toxic potion",
+      "max_kills": 2
+    },
+    {
+      "name": "a venom sac",
+      "max_kills": 1
+    },
+    {
+      "name": "a poison dart",
+      "max_kills": 1
+    },
+    {
+      "name": "a toxic arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a poisoned javelin",
+      "max_kills": 2
+    },
+    {
+      "name": "a venomous spear",
+      "max_kills": 2
+    },
+    {
+      "name": "a poison-tipped arrow",
+      "max_kills": 2
+    },
+    {
+      "name": "a toxic throwing knife",
+      "max_kills": 1
+    },
+    {
+      "name": "a poisoned shiv",
+      "max_kills": 1
+    },
+    {
+      "name": "a venomous blade",
+      "max_kills": 2
+    },
+    {
+      "name": "a poison bomb",
+      "max_kills": 3
+    }
+  ],
+  "weapon_trap": [
+    {
+      "name": "a snare trap",
+      "max_kills": 1
+    },
+    {
+      "name": "a pit trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a spike trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a deadfall trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a spring trap",
+      "max_kills": 1
+    },
+    {
+      "name": "a tripwire",
+      "max_kills": 1
+    },
+    {
+      "name": "a bear trap",
+      "max_kills": 3
+    },
+    {
+      "name": "a net trap",
+      "max_kills": 1
+    },
+    {
+      "name": "a cage trap",
+      "max_kills": 1
+    },
+    {
+      "name": "a pressure plate",
+      "max_kills": 2
+    },
+    {
+      "name": "a noose trap",
+      "max_kills": 1
+    },
+    {
+      "name": "a jaw trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a snare",
+      "max_kills": 1
+    },
+    {
+      "name": "a wire trap",
+      "max_kills": 1
+    },
+    {
+      "name": "a trigger trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a falling log trap",
+      "max_kills": 3
+    },
+    {
+      "name": "a swinging blade trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a poison trap",
+      "max_kills": 2
+    },
+    {
+      "name": "a spike pit",
+      "max_kills": 3
+    }
+  ],
+  "weapon_explosive": [
+    {
+      "name": "a bomb",
+      "max_kills": 4
+    },
+    {
+      "name": "a grenade",
+      "max_kills": 4
+    },
+    {
+      "name": "a landmine",
+      "max_kills": 5
+    },
+    {
+      "name": "a dynamite stick",
+      "max_kills": 3
+    },
+    {
+      "name": "a explosive trap",
+      "max_kills": 4
+    },
+    {
+      "name": "a detonator",
+      "max_kills": 3
+    },
+    {
+      "name": "a explosive arrow",
+      "max_kills": 3
+    },
+    {
+      "name": "a pipe bomb",
+      "max_kills": 4
+    },
+    {
+      "name": "a satchel charge",
+      "max_kills": 5
+    },
+    {
+      "name": "a explosive device",
+      "max_kills": 4
+    },
+    {
+      "name": "a time bomb",
+      "max_kills": 4
+    },
+    {
+      "name": "a pressure mine",
+      "max_kills": 5
+    },
+    {
+      "name": "a tripwire mine",
+      "max_kills": 4
+    },
+    {
+      "name": "a remote detonator",
+      "max_kills": 4
+    },
+    {
+      "name": "a explosive barrel",
+      "max_kills": 6
+    },
+    {
+      "name": "a booby trap",
+      "max_kills": 3
+    },
+    {
+      "name": "a improvised explosive",
+      "max_kills": 3
+    }
+  ]
 }
