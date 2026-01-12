@@ -18,27 +18,34 @@
 <body>
   <div id="header">
     <button id="startButton" disabled>Start Games</button>
-    <input id="channelInput" placeholder="Enter Twitch channel" aria-label="Enter Twitch channel">
-    <button id="connectButton">Connect</button>
-    <span id="status"></span>
-    <label class="toggle-label">
-      <input type="checkbox" id="useTwitchAvatars">
-      <span>Use Twitch Avatars</span>
-    </label>
-    <label class="toggle-label">
-      <input type="checkbox" id="allowCustomUsernames">
-      <span>Allow Custom Usernames</span>
-    </label>
-    <button id="leaderboardButton">Leaderboard</button>
-    <button id="scoreboardButton">Scoreboard</button>
-    <button id="restartButton">Restart</button>
-    <button id="debugButton">Add Fake Players</button>
     <select id="themeSelector" aria-label="Select theme">
       <option value="fridge">Fridge Survival</option>
     </select>
-    <div id="lethalityControl" class="lethality-control">
-      <label for="lethalitySlider" class="lethality-label">Lethality: <span id="lethalityLabel">Normal</span></label>
-      <input type="range" id="lethalitySlider" min="-3" max="3" value="0" step="1" aria-label="Lethality">
+    <input id="channelInput" placeholder="Enter Twitch channel" aria-label="Enter Twitch channel">
+    <button id="connectButton">Connect</button>
+    <span id="status"></span>
+    <button id="scoreboardButton">Scoreboard</button>
+    <button id="leaderboardButton">Leaderboard</button>
+    <button id="settingsButton" aria-label="Settings" aria-expanded="false">
+      <span aria-hidden="true">⚙️</span>
+      <span class="settings-button-text">Settings</span>
+      <span class="settings-chevron" aria-hidden="true">▼</span>
+    </button>
+    <div id="settingsDropdown" class="settings-dropdown">
+      <div id="lethalityControl" class="lethality-control">
+        <label for="lethalitySlider" class="lethality-label">Lethality: <span id="lethalityLabel">Normal</span></label>
+        <input type="range" id="lethalitySlider" min="-3" max="3" value="0" step="1" aria-label="Lethality">
+      </div>
+      <label class="toggle-label">
+        <input type="checkbox" id="useTwitchAvatars" checked>
+        <span>Use Twitch Avatars</span>
+      </label>
+      <label class="toggle-label">
+        <input type="checkbox" id="allowCustomUsernames">
+        <span>Allow Custom Usernames</span>
+      </label>
+      <button id="debugButton">Add Fake Players</button>
+      <button id="restartButton">Restart</button>
     </div>
     <script>
       (function () {

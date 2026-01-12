@@ -5,9 +5,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "devDependencies": {
+    "eslint": "^9.39.2",
+    "prettier": "^3.7.4",
     "vite": "^7.3.0",
     "vite-plugin-static-copy": "^3.1.2"
   }
