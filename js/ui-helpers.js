@@ -187,11 +187,9 @@ function showFallen(day) {
   const killedThisDay = window.killedThisDay || [];
   const participants = window.participants || [];
 
-  // Auto-reveal all deaths from this day for leaderboard purposes
   if (window.revealedDeaths) {
     killedThisDay.forEach((username) => window.revealedDeaths.add(username));
   }
-  // Refresh leaderboard if it's open
   if (typeof window.renderLeaderboard === "function") {
     const leaderboardOverlay = document.getElementById("leaderboardOverlay");
     if (leaderboardOverlay && leaderboardOverlay.style.display === "flex") {
@@ -473,27 +471,22 @@ function renderLeaderboard() {
   const overlay = document.getElementById("leaderboardOverlay");
   const isGameActive = window.gameStarted === true;
 
-  // Update table headers based on game state
   updateLeaderboardHeaders(isGameActive);
 
   let list = [];
   let dataSource = [];
 
   if (isGameActive) {
-    // During active game: use participants with reveal logic
     const participants = window.participants || [];
     const currentPhaseNumber = window.currentPhaseNumber || 0;
     const currentDay = window.currentDay || 1;
 
-    // Filter participants using reveal logic
     const filteredParticipants = participants.filter((p) => {
       if (p.alive) {
-        // For alive players: check if they've been revealed in current phase
         const lastRevealedPhase = window.revealedAlive?.get(p.username);
         const isHidden = window.hiddenEventParticipants?.has(p.username);
         return lastRevealedPhase === currentPhaseNumber || isHidden;
       } else {
-        // For dead players: check if death has been revealed
         const deathPhase = p.deathPhaseNumber ?? 0;
         return (
           deathPhase < currentPhaseNumber ||
@@ -502,7 +495,6 @@ function renderLeaderboard() {
       }
     });
 
-    // Build data array with current game stats + global stats
     dataSource = filteredParticipants.map((p) => {
       const username = p.username;
       const globalStat = globalStats[username] || {
@@ -512,9 +504,7 @@ function renderLeaderboard() {
         totalDays: 0,
         maxDays: 0,
       };
-      const daysSurvived = p.alive
-        ? currentDay
-        : p.deathDay || currentDay - 1;
+      const daysSurvived = p.alive ? currentDay : p.deathDay || currentDay - 1;
 
       return {
         username,
@@ -530,7 +520,6 @@ function renderLeaderboard() {
 
     list = dataSource;
   } else {
-    // Between games: use global stats
     list = Object.entries(globalStats).map(([username, stats]) => ({
       username,
       wins: stats.wins,
@@ -541,7 +530,6 @@ function renderLeaderboard() {
     }));
   }
 
-  // Apply sorting
   const key = leaderboardSort.key;
   if (key) {
     list.sort((a, b) => {
@@ -552,7 +540,6 @@ function renderLeaderboard() {
         const comparison = va.localeCompare(vb);
         return leaderboardSort.asc ? comparison : -comparison;
       } else if (isGameActive) {
-        // Handle game-specific keys
         if (key === "status") {
           va = a.status === "Alive" ? 1 : 0;
           vb = b.status === "Alive" ? 1 : 0;
@@ -574,9 +561,7 @@ function renderLeaderboard() {
       return leaderboardSort.asc ? va - vb : vb - va;
     });
   } else {
-    // Default sorting
     if (isGameActive) {
-      // Sort by alive first, then by kills this game
       list.sort((a, b) => {
         if (a.isAlive !== b.isAlive) {
           return a.isAlive ? -1 : 1;
@@ -588,13 +573,11 @@ function renderLeaderboard() {
     }
   }
 
-  // Render rows
   lbTableBody.innerHTML = "";
   list.forEach((item) => {
     const tr = document.createElement("tr");
     const username = item.username;
 
-    // Name column
     const tdName = document.createElement("td");
     tdName.textContent = getDisplayName(username);
     let playerColor = globalColors[username] || "#fff";
@@ -605,39 +588,30 @@ function renderLeaderboard() {
     tr.appendChild(tdName);
 
     if (isGameActive) {
-      // Status column
       const tdStatus = document.createElement("td");
       tdStatus.textContent = item.status;
       if (item.status === "Dead") {
-        // Use #ef5350 (Material red-400) for better contrast (WCAG AA compliant)
-        // Contrast ratio: ~5.2:1 on #222222 background (exceeds 4.5:1 requirement)
-        // Still colorblind-friendly (red-orange spectrum)
         tdStatus.style.color = "#ef5350";
         tdStatus.style.fontWeight = "bold";
       }
       tr.appendChild(tdStatus);
 
-      // Kills column (shows kills this game during active game)
       const tdKills = document.createElement("td");
       tdKills.textContent = item.killsThisGame || 0;
       tr.appendChild(tdKills);
 
-      // Wins column
       const tdWins = document.createElement("td");
       tdWins.textContent = item.wins || 0;
       tr.appendChild(tdWins);
 
-      // Days Survived (This Game) column
       const tdDaysSurvived = document.createElement("td");
       tdDaysSurvived.textContent = `${item.daysSurvived || 0} days`;
       tr.appendChild(tdDaysSurvived);
 
-      // Apply opacity to dead players
       if (!item.isAlive) {
         tr.style.opacity = "0.7";
       }
     } else {
-      // Between games columns
       ["wins", "kills", "deaths", "maxDays", "totalDays"].forEach((k) => {
         const td = document.createElement("td");
         td.textContent = item[k] || 0;
@@ -648,7 +622,6 @@ function renderLeaderboard() {
     lbTableBody.appendChild(tr);
   });
 
-  // Hide "Clear Leaderboard" button during active game
   const clearButton = document.getElementById("clearLeaderboardButton");
   if (clearButton) {
     clearButton.style.display = isGameActive ? "none" : "inline-block";
@@ -664,7 +637,6 @@ function updateLeaderboardHeaders(isGameActive) {
   thead.innerHTML = "";
 
   if (isGameActive) {
-    // Active game headers
     const headers = [
       { key: "username", label: "Name" },
       { key: "status", label: "Status" },
@@ -679,7 +651,6 @@ function updateLeaderboardHeaders(isGameActive) {
       thead.appendChild(th);
     });
   } else {
-    // Between games headers
     const headers = [
       { key: "username", label: "Name" },
       { key: "wins", label: "Wins" },
@@ -696,7 +667,6 @@ function updateLeaderboardHeaders(isGameActive) {
     });
   }
 
-  // Re-attach click handlers for sorting (headers are recreated, so we need to re-attach)
   const leaderboardSort = window.leaderboardSort || { key: null, asc: true };
   const lbHeaders = document.querySelectorAll("#leaderboardTable th");
   lbHeaders.forEach((th) => {
@@ -712,7 +682,6 @@ function updateLeaderboardHeaders(isGameActive) {
       }
       window.leaderboardSort = leaderboardSort;
 
-      // Update visual indicators
       lbHeaders.forEach((h) => h.classList.remove("sort-asc", "sort-desc"));
       th.classList.add(leaderboardSort.asc ? "sort-asc" : "sort-desc");
 
@@ -722,9 +691,7 @@ function updateLeaderboardHeaders(isGameActive) {
 }
 
 function showLeaderboard() {
-  // Reset sort state
   window.leaderboardSort = { key: null, asc: true };
-  // renderLeaderboard will update headers and clear sort indicators
   renderLeaderboard();
 }
 
@@ -748,7 +715,6 @@ function clearLeaderboard() {
     window.backToJoin(false);
   }
 }
-
 
 function addPlayer(u, c) {
   const globalStats = window.globalStats || {};
@@ -816,8 +782,8 @@ function addPlayer(u, c) {
     const fakeAvatar = window.assignFakeAvatar
       ? window.assignFakeAvatar(u)
       : window.getNextAvatar
-      ? window.getNextAvatar()
-      : (window.fakeAvatars || [])[0];
+        ? window.getNextAvatar()
+        : (window.fakeAvatars || [])[0];
     setupImageLoading(img, imgTooltipContainer);
     img.src = fakeAvatar;
   }
@@ -874,8 +840,8 @@ function addFakePlayer(u, c) {
   const fakeAvatar = window.assignFakeAvatar
     ? window.assignFakeAvatar(u)
     : window.getNextAvatar
-    ? window.getNextAvatar()
-    : (window.fakeAvatars || [])[0] || "";
+      ? window.getNextAvatar()
+      : (window.fakeAvatars || [])[0] || "";
   setupImageLoading(img, imgTooltipContainer);
   img.src = fakeAvatar;
   const nmC = document.createElement("div");
