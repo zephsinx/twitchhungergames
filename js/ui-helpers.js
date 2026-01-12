@@ -187,6 +187,18 @@ function showFallen(day) {
   const killedThisDay = window.killedThisDay || [];
   const participants = window.participants || [];
 
+  // Auto-reveal all deaths from this day for scoreboard purposes
+  if (window.revealedDeaths) {
+    killedThisDay.forEach((username) => window.revealedDeaths.add(username));
+  }
+  // Refresh scoreboard if it's open
+  if (typeof window.renderScoreboard === "function") {
+    const scoreboardOverlay = document.getElementById("scoreboardOverlay");
+    if (scoreboardOverlay && scoreboardOverlay.style.display === "flex") {
+      window.renderScoreboard(false);
+    }
+  }
+
   eventLog.innerHTML = "";
   dayDisplay.textContent = window.formatMessage(
     window.themeConfig.messages.fallenPlayers,
@@ -532,12 +544,23 @@ function renderScoreboard(showOverlay = false) {
     return;
   }
 
-  const alive = participants.filter(
-    (p) => p.alive && window.revealedAlive?.has(p.username)
-  );
-  const dead = participants.filter(
-    (p) => !p.alive && window.revealedDeaths?.has(p.username)
-  );
+  const currentPhaseNumber = window.currentPhaseNumber || 0;
+  const alive = participants.filter((p) => {
+    if (!p.alive) return false;
+    const lastRevealedPhase = window.revealedAlive?.get(p.username);
+    const isHidden = window.hiddenEventParticipants?.has(p.username);
+    return lastRevealedPhase === currentPhaseNumber || isHidden;
+  });
+  const dead = participants.filter((p) => {
+    if (!p.alive) {
+      const deathPhase = p.deathPhaseNumber ?? 0;
+      return (
+        deathPhase < currentPhaseNumber ||
+        window.revealedDeaths?.has(p.username)
+      );
+    }
+    return false;
+  });
 
   aliveCountEl.textContent = alive.length;
   deadCountEl.textContent = dead.length;

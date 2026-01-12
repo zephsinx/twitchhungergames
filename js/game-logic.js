@@ -99,8 +99,9 @@ function revealAllUnrevealedEvents() {
 
     if (window.revealedAlive) {
       const aliveParticipants = participants.filter((u) => !killed.includes(u));
+      const currentPhaseNumber = window.currentPhaseNumber || 0;
       aliveParticipants.forEach((username) =>
-        window.revealedAlive.add(username)
+        window.revealedAlive.set(username, currentPhaseNumber)
       );
     }
 
@@ -478,6 +479,7 @@ async function runEvents(evObj) {
         if (v && v.alive) {
           v.alive = false;
           v.deathDay = currentDay;
+          v.deathPhaseNumber = window.currentPhaseNumber || 0;
           killedThisDay.push(v.username);
           eliminationOrder.push(v.username);
           if (typeof window.initGlobal === "function") {
@@ -503,6 +505,33 @@ async function runEvents(evObj) {
         if (scoreboardOverlay && scoreboardOverlay.style.display === "flex") {
           window.renderScoreboard(false);
         }
+      }
+    }
+    if (m.hidden) {
+      // Hidden events are automatically treated as revealed for scoreboard purposes
+      const killedUsernames = m.killed
+        .map((idx) => m.picks[idx]?.username)
+        .filter(Boolean);
+      const participantUsernames = m.picks
+        .map((p) => p?.username)
+        .filter(Boolean);
+
+      if (window.revealedDeaths) {
+        killedUsernames.forEach((username) =>
+          window.revealedDeaths.add(username)
+        );
+      }
+      if (window.revealedAlive) {
+        const aliveParticipants = participantUsernames.filter(
+          (u) => !killedUsernames.includes(u)
+        );
+        const currentPhaseNumber = window.currentPhaseNumber || 0;
+        aliveParticipants.forEach((username) => {
+          window.revealedAlive.set(username, currentPhaseNumber);
+          if (window.hiddenEventParticipants) {
+            window.hiddenEventParticipants.add(username);
+          }
+        });
       }
     }
     if (m.killed.length && !m.hidden) {
@@ -729,8 +758,9 @@ async function runEvents(evObj) {
             const aliveParticipants = participants.filter(
               (u) => !killed.includes(u)
             );
+            const currentPhaseNumber = window.currentPhaseNumber || 0;
             aliveParticipants.forEach((username) =>
-              window.revealedAlive.add(username)
+              window.revealedAlive.set(username, currentPhaseNumber)
             );
           }
           if (typeof window.renderScoreboard === "function") {
@@ -815,7 +845,10 @@ function backToJoin(samePlayers) {
   eventLog.innerHTML = "";
   dayDisplay.textContent = "";
   phaseDesc.textContent = "";
-  joinPrompt.style.display = window.isConnected ? "block" : "none";
+  if (typeof window.updateJoinPrompt === "function") {
+    window.updateJoinPrompt();
+  }
+  joinPrompt.style.display = "block";
   playersGrid.style.display = "grid";
   btnStart.style.display = "inline-block";
   btnDebug.style.display = "inline-block";
@@ -833,7 +866,8 @@ function backToJoin(samePlayers) {
   window.killedThisDay = [];
   window.deathEventsLog = [];
   window.revealedDeaths = new Set();
-  window.revealedAlive = new Set();
+  window.revealedAlive = new Map();
+  window.hiddenEventParticipants = new Set();
   window.currentPhaseType = null;
   window.usedFeastIndices = [];
   window.usedArenaIndices = [];

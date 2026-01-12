@@ -218,7 +218,8 @@ let eliminationOrder = [];
 let killedThisDay = [];
 let deathEventsLog = [];
 let revealedDeaths = new Set();
-let revealedAlive = new Set();
+let revealedAlive = new Map();
+let hiddenEventParticipants = new Set();
 let currentDay = 1;
 let stage = 0;
 let daysSinceEvent = 0;
@@ -240,6 +241,7 @@ window.killedThisDay = killedThisDay;
 window.deathEventsLog = deathEventsLog;
 window.revealedDeaths = revealedDeaths;
 window.revealedAlive = revealedAlive;
+window.hiddenEventParticipants = hiddenEventParticipants;
 window.currentDay = currentDay;
 window.stage = stage;
 window.daysSinceEvent = daysSinceEvent;
@@ -255,6 +257,8 @@ const btnDebug = document.getElementById("debugButton");
 const btnLeaderboard = document.getElementById("leaderboardButton");
 const btnScoreboard = document.getElementById("scoreboardButton");
 const btnRestart = document.getElementById("restartButton");
+const btnSettings = document.getElementById("settingsButton");
+const settingsDropdown = document.getElementById("settingsDropdown");
 const joinPrompt = document.getElementById("joinPrompt");
 const procCont = document.getElementById("proceedContainer");
 const btnProc = document.getElementById("proceedButton");
@@ -274,6 +278,26 @@ const lbHeaders = document.querySelectorAll("#leaderboardTable th");
 
 let eventHandlersLoaded = false;
 window.eventHandlersLoaded = eventHandlersLoaded;
+
+function toggleSettingsDropdown() {
+  if (!settingsDropdown || !btnSettings) return;
+  const isVisible = settingsDropdown.classList.contains("visible");
+  if (isVisible) {
+    closeSettingsDropdown();
+  } else {
+    settingsDropdown.classList.add("visible");
+    btnSettings.setAttribute("aria-expanded", "true");
+  }
+}
+
+function closeSettingsDropdown() {
+  if (!settingsDropdown || !btnSettings) return;
+  settingsDropdown.classList.remove("visible");
+  btnSettings.setAttribute("aria-expanded", "false");
+}
+
+window.toggleSettingsDropdown = toggleSettingsDropdown;
+window.closeSettingsDropdown = closeSettingsDropdown;
 
 const script = document.createElement("script");
 script.src = "/js/event-handlers.js";
@@ -418,6 +442,42 @@ function initializeData() {
   }
 
   updateHeaderForGameState();
+
+  // Show join prompt if not connected
+  updateJoinPrompt();
+  if (!window.isConnected && !window.gameStarted) {
+    joinPrompt.style.display = "block";
+  }
+
+  // Click outside to close settings dropdown
+  document.addEventListener("click", (e) => {
+    if (
+      settingsDropdown &&
+      btnSettings &&
+      settingsDropdown.classList.contains("visible")
+    ) {
+      if (
+        !settingsDropdown.contains(e.target) &&
+        !btnSettings.contains(e.target)
+      ) {
+        closeSettingsDropdown();
+      }
+    }
+  });
+
+  // ESC key to close settings dropdown
+  document.addEventListener("keydown", (e) => {
+    if (
+      e.key === "Escape" &&
+      settingsDropdown &&
+      settingsDropdown.classList.contains("visible")
+    ) {
+      closeSettingsDropdown();
+      if (btnSettings) {
+        btnSettings.focus();
+      }
+    }
+  });
 }
 
 if (document.readyState === "loading") {
@@ -524,8 +584,13 @@ function disconnect() {
   window.isConnected = false;
   statusElement.textContent = "";
   statusElement.style.color = "";
-  joinPrompt.style.display = "none";
+  localStorage.removeItem("twitchChannel");
+  chInput.value = "";
   updateConnectButton();
+  updateJoinPrompt();
+  if (!window.gameStarted) {
+    joinPrompt.style.display = "block";
+  }
 }
 
 function connect(ch) {
@@ -576,6 +641,7 @@ function connect(ch) {
       getComputedStyle(document.documentElement)
         .getPropertyValue("--status-success")
         .trim() || "#4caf50";
+    updateJoinPrompt();
     if (!gameStarted) {
       joinPrompt.style.display = "block";
     }
@@ -613,7 +679,10 @@ function connect(ch) {
       statusElement.textContent = "";
       statusElement.style.color = "";
     }
-    joinPrompt.style.display = "none";
+    updateJoinPrompt();
+    if (!window.gameStarted) {
+      joinPrompt.style.display = "block";
+    }
     updateConnectButton();
   });
 
@@ -715,16 +784,25 @@ function connect(ch) {
 
 function updateJoinPrompt() {
   const joinPrompt = document.getElementById("joinPrompt");
+  if (!joinPrompt) return;
+
+  const isConnected = window.isConnected === true;
   const allowCustomUsernames =
     document.getElementById("allowCustomUsernames")?.checked || false;
-  if (joinPrompt) {
+
+  if (isConnected) {
     if (allowCustomUsernames) {
       joinPrompt.textContent = "!play or !play [username] to join";
     } else {
       joinPrompt.textContent = "!play to join";
     }
+  } else {
+    joinPrompt.textContent =
+      "Connect to a channel, or add fake players via the settings";
   }
 }
+
+window.updateJoinPrompt = updateJoinPrompt;
 
 function updateHeaderForGameState() {
   const isGameStarted = window.gameStarted === true;
@@ -735,6 +813,7 @@ function updateHeaderForGameState() {
   const btnRestartEl = document.getElementById("restartButton");
   const btnDebugEl = document.getElementById("debugButton");
   const btnScoreboardEl = document.getElementById("scoreboardButton");
+  const btnSettingsEl = document.getElementById("settingsButton");
   const useTwitchAvatarsLabel =
     document.getElementById("useTwitchAvatars")?.parentElement;
   const allowCustomUsernamesLabel = document.getElementById(
@@ -742,32 +821,54 @@ function updateHeaderForGameState() {
   )?.parentElement;
   const lethalityControlEl = document.getElementById("lethalityControl");
 
-  if (themeSelectorEl) {
-    themeSelectorEl.style.display = isGameStarted ? "none" : "block";
+  // Close settings dropdown when game state changes
+  if (isGameStarted) {
+    closeSettingsDropdown();
   }
+
+  // Settings button is always visible
+  if (btnSettingsEl) {
+    btnSettingsEl.style.display = "inline-block";
+  }
+
+  // Theme selector in header (hidden during game)
+  if (themeSelectorEl) {
+    themeSelectorEl.style.display = isGameStarted ? "none" : "inline-block";
+  }
+
+  // Controls inside dropdown
   if (lethalityControlEl) {
     lethalityControlEl.style.display = isGameStarted ? "none" : "flex";
   }
+  if (btnDebugEl) {
+    btnDebugEl.style.display = isGameStarted ? "none" : "inline-block";
+  }
+  if (allowCustomUsernamesLabel) {
+    allowCustomUsernamesLabel.style.display = isGameStarted ? "none" : "flex";
+  }
+  // Use Twitch Avatars is always visible in dropdown
+  if (useTwitchAvatarsLabel) {
+    useTwitchAvatarsLabel.style.display = "flex";
+  }
+  // Restart button is only visible in-game (inside dropdown)
+  if (btnRestartEl) {
+    btnRestartEl.style.display = isGameStarted ? "inline-block" : "none";
+  }
+
+  // Controls outside dropdown
   if (chInputEl) {
     chInputEl.style.display = isGameStarted ? "none" : "inline-block";
   }
   if (btnConnectEl) {
     btnConnectEl.style.display = isGameStarted ? "none" : "inline-block";
   }
-  if (btnRestartEl) {
-    btnRestartEl.style.display = isGameStarted ? "inline-block" : "none";
-  }
-  if (btnDebugEl) {
-    btnDebugEl.style.display = isGameStarted ? "none" : "inline-block";
-  }
   if (btnScoreboardEl) {
     btnScoreboardEl.style.display = isGameStarted ? "inline-block" : "none";
   }
-  if (useTwitchAvatarsLabel) {
-    useTwitchAvatarsLabel.style.display = "flex";
-  }
-  if (allowCustomUsernamesLabel) {
-    allowCustomUsernamesLabel.style.display = isGameStarted ? "none" : "flex";
+
+  // Hide status element during gameplay, show it on landing page
+  if (statusElement) {
+    statusElement.style.display = isGameStarted ? "none" : "";
   }
 }
 
@@ -1066,7 +1167,8 @@ btnStart.addEventListener("click", () => {
   killedThisDay = [];
   deathEventsLog = [];
   revealedDeaths = new Set();
-  revealedAlive = new Set();
+  revealedAlive = new Map();
+  hiddenEventParticipants = new Set();
   currentPhaseType = null;
   const usedFeastIndices = [];
   const usedArenaIndices = [];
@@ -1081,6 +1183,7 @@ btnStart.addEventListener("click", () => {
   window.deathEventsLog = deathEventsLog;
   window.revealedDeaths = revealedDeaths;
   window.revealedAlive = revealedAlive;
+  window.hiddenEventParticipants = hiddenEventParticipants;
   window.currentPhaseType = currentPhaseType;
   window.usedFeastIndices = usedFeastIndices;
   window.usedArenaIndices = usedArenaIndices;
@@ -1115,6 +1218,12 @@ btnProc.addEventListener("click", () => {
   window.nextPhase();
 });
 btnLeaderboard.addEventListener("click", window.showLeaderboard);
+if (btnSettings) {
+  btnSettings.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleSettingsDropdown();
+  });
+}
 if (btnScoreboard) {
   btnScoreboard.addEventListener("click", window.showScoreboard);
 }
