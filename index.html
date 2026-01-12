@@ -24,7 +24,6 @@
     <input id="channelInput" placeholder="Enter Twitch channel" aria-label="Enter Twitch channel">
     <button id="connectButton">Connect</button>
     <span id="status"></span>
-    <button id="scoreboardButton">Scoreboard</button>
     <button id="leaderboardButton">Leaderboard</button>
     <button id="settingsButton" aria-label="Settings" aria-expanded="false">
       <span aria-hidden="true">⚙️</span>
@@ -123,28 +122,6 @@
       </div>
     </div>
 
-    <div id="scoreboardOverlay">
-      <div class="overlayContent">
-        <button id="closeScoreboardOverlay">x</button>
-        <h2>Scoreboard</h2>
-        <div id="scoreboardContent">
-          <div class="scoreboard-section">
-            <div class="scoreboard-header">
-              <h3>Alive</h3>
-              <span id="aliveCount" class="count">0</span>
-            </div>
-            <div id="aliveList" class="player-list"></div>
-          </div>
-          <div class="scoreboard-section">
-            <div class="scoreboard-header">
-              <h3>Dead</h3>
-              <span id="deadCount" class="count">0</span>
-            </div>
-            <div id="deadList" class="player-list"></div>
-          </div>
-        </div>
-      </div>
-    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/tmi.js@latest/dist/tmi.min.js"></script>

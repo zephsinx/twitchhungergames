@@ -500,15 +500,15 @@ async function runEvents(evObj) {
       if (typeof window.saveGlobalStats === "function") {
         window.saveGlobalStats();
       }
-      if (typeof window.renderScoreboard === "function") {
-        const scoreboardOverlay = document.getElementById("scoreboardOverlay");
-        if (scoreboardOverlay && scoreboardOverlay.style.display === "flex") {
-          window.renderScoreboard(false);
+      if (typeof window.renderLeaderboard === "function") {
+        const leaderboardOverlay = document.getElementById("leaderboardOverlay");
+        if (leaderboardOverlay && leaderboardOverlay.style.display === "flex") {
+          window.renderLeaderboard();
         }
       }
     }
     if (m.hidden) {
-      // Hidden events are automatically treated as revealed for scoreboard purposes
+      // Hidden events are automatically treated as revealed for leaderboard purposes
       const killedUsernames = m.killed
         .map((idx) => m.picks[idx]?.username)
         .filter(Boolean);
@@ -763,14 +763,14 @@ async function runEvents(evObj) {
               window.revealedAlive.set(username, currentPhaseNumber)
             );
           }
-          if (typeof window.renderScoreboard === "function") {
-            const scoreboardOverlay =
-              document.getElementById("scoreboardOverlay");
+          if (typeof window.renderLeaderboard === "function") {
+            const leaderboardOverlay =
+              document.getElementById("leaderboardOverlay");
             if (
-              scoreboardOverlay &&
-              scoreboardOverlay.style.display === "flex"
+              leaderboardOverlay &&
+              leaderboardOverlay.style.display === "flex"
             ) {
-              window.renderScoreboard(false);
+              window.renderLeaderboard();
             }
           }
           e.stopPropagation();
@@ -833,15 +833,11 @@ function backToJoin(samePlayers) {
   const playersGrid = document.getElementById("playersGrid");
   const btnStart = document.getElementById("startButton");
   const btnDebug = document.getElementById("debugButton");
-  const scoreboardOverlay = document.getElementById("scoreboardOverlay");
   const players = window.players;
   const polymorphedPlayers = window.polymorphedPlayers || new Map();
 
   winnerScreen.style.display = "none";
   procCont.style.display = "none";
-  if (scoreboardOverlay) {
-    scoreboardOverlay.style.display = "none";
-  }
   eventLog.innerHTML = "";
   dayDisplay.textContent = "";
   phaseDesc.textContent = "";
