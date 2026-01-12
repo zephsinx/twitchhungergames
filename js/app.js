@@ -255,7 +255,6 @@ const statusElement = document.getElementById("status");
 const btnStart = document.getElementById("startButton");
 const btnDebug = document.getElementById("debugButton");
 const btnLeaderboard = document.getElementById("leaderboardButton");
-const btnScoreboard = document.getElementById("scoreboardButton");
 const btnRestart = document.getElementById("restartButton");
 const btnSettings = document.getElementById("settingsButton");
 const settingsDropdown = document.getElementById("settingsDropdown");
@@ -269,10 +268,6 @@ const btnNewSame = document.getElementById("newGameSameButton");
 const btnNewAll = document.getElementById("newGameAllButton");
 const overlay = document.getElementById("leaderboardOverlay");
 const closeOverlay = document.getElementById("closeOverlay");
-const scoreboardOverlay = document.getElementById("scoreboardOverlay");
-const closeScoreboardOverlay = document.getElementById(
-  "closeScoreboardOverlay"
-);
 const btnClearLeaderboard = document.getElementById("clearLeaderboardButton");
 const lbHeaders = document.querySelectorAll("#leaderboardTable th");
 
@@ -443,13 +438,11 @@ function initializeData() {
 
   updateHeaderForGameState();
 
-  // Show join prompt if not connected
   updateJoinPrompt();
   if (!window.isConnected && !window.gameStarted) {
     joinPrompt.style.display = "block";
   }
 
-  // Click outside to close settings dropdown
   document.addEventListener("click", (e) => {
     if (
       settingsDropdown &&
@@ -465,7 +458,6 @@ function initializeData() {
     }
   });
 
-  // ESC key to close settings dropdown
   document.addEventListener("keydown", (e) => {
     if (
       e.key === "Escape" &&
@@ -707,7 +699,6 @@ function connect(ch) {
   client
     .connect()
     .then(() => {
-      // Show connecting spinner
       statusElement.innerHTML = '<span class="spinner"></span>Connecting...';
       statusElement.style.color =
         getComputedStyle(document.documentElement)
@@ -812,7 +803,6 @@ function updateHeaderForGameState() {
   const btnConnectEl = document.getElementById("connectButton");
   const btnRestartEl = document.getElementById("restartButton");
   const btnDebugEl = document.getElementById("debugButton");
-  const btnScoreboardEl = document.getElementById("scoreboardButton");
   const btnSettingsEl = document.getElementById("settingsButton");
   const useTwitchAvatarsLabel =
     document.getElementById("useTwitchAvatars")?.parentElement;
@@ -821,22 +811,18 @@ function updateHeaderForGameState() {
   )?.parentElement;
   const lethalityControlEl = document.getElementById("lethalityControl");
 
-  // Close settings dropdown when game state changes
   if (isGameStarted) {
     closeSettingsDropdown();
   }
 
-  // Settings button is always visible
   if (btnSettingsEl) {
     btnSettingsEl.style.display = "inline-block";
   }
 
-  // Theme selector in header (hidden during game)
   if (themeSelectorEl) {
     themeSelectorEl.style.display = isGameStarted ? "none" : "inline-block";
   }
 
-  // Controls inside dropdown
   if (lethalityControlEl) {
     lethalityControlEl.style.display = isGameStarted ? "none" : "flex";
   }
@@ -846,27 +832,20 @@ function updateHeaderForGameState() {
   if (allowCustomUsernamesLabel) {
     allowCustomUsernamesLabel.style.display = isGameStarted ? "none" : "flex";
   }
-  // Use Twitch Avatars is always visible in dropdown
   if (useTwitchAvatarsLabel) {
     useTwitchAvatarsLabel.style.display = "flex";
   }
-  // Restart button is only visible in-game (inside dropdown)
   if (btnRestartEl) {
     btnRestartEl.style.display = isGameStarted ? "inline-block" : "none";
   }
 
-  // Controls outside dropdown
   if (chInputEl) {
     chInputEl.style.display = isGameStarted ? "none" : "inline-block";
   }
   if (btnConnectEl) {
     btnConnectEl.style.display = isGameStarted ? "none" : "inline-block";
   }
-  if (btnScoreboardEl) {
-    btnScoreboardEl.style.display = isGameStarted ? "inline-block" : "none";
-  }
 
-  // Hide status element during gameplay, show it on landing page
   if (statusElement) {
     statusElement.style.display = isGameStarted ? "none" : "";
   }
@@ -1224,17 +1203,7 @@ if (btnSettings) {
     toggleSettingsDropdown();
   });
 }
-if (btnScoreboard) {
-  btnScoreboard.addEventListener("click", window.showScoreboard);
-}
 closeOverlay.addEventListener("click", () => (overlay.style.display = "none"));
-if (closeScoreboardOverlay) {
-  closeScoreboardOverlay.addEventListener("click", () => {
-    if (scoreboardOverlay) {
-      scoreboardOverlay.style.display = "none";
-    }
-  });
-}
 if (btnClearLeaderboard) {
   btnClearLeaderboard.addEventListener("click", () => {
     if (typeof window.clearLeaderboard === "function") {

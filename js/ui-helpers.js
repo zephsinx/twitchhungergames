@@ -187,15 +187,13 @@ function showFallen(day) {
   const killedThisDay = window.killedThisDay || [];
   const participants = window.participants || [];
 
-  // Auto-reveal all deaths from this day for scoreboard purposes
   if (window.revealedDeaths) {
     killedThisDay.forEach((username) => window.revealedDeaths.add(username));
   }
-  // Refresh scoreboard if it's open
-  if (typeof window.renderScoreboard === "function") {
-    const scoreboardOverlay = document.getElementById("scoreboardOverlay");
-    if (scoreboardOverlay && scoreboardOverlay.style.display === "flex") {
-      window.renderScoreboard(false);
+  if (typeof window.renderLeaderboard === "function") {
+    const leaderboardOverlay = document.getElementById("leaderboardOverlay");
+    if (leaderboardOverlay && leaderboardOverlay.style.display === "flex") {
+      window.renderLeaderboard();
     }
   }
 
@@ -471,42 +469,228 @@ function renderLeaderboard() {
   const leaderboardSort = window.leaderboardSort || { key: null, asc: true };
   const lbTableBody = document.querySelector("#leaderboardTable tbody");
   const overlay = document.getElementById("leaderboardOverlay");
+  const isGameActive = window.gameStarted === true;
 
-  const list = Object.entries(globalStats);
+  updateLeaderboardHeaders(isGameActive);
+
+  let list = [];
+  let dataSource = [];
+
+  if (isGameActive) {
+    const participants = window.participants || [];
+    const currentPhaseNumber = window.currentPhaseNumber || 0;
+    const currentDay = window.currentDay || 1;
+
+    const filteredParticipants = participants.filter((p) => {
+      if (p.alive) {
+        const lastRevealedPhase = window.revealedAlive?.get(p.username);
+        const isHidden = window.hiddenEventParticipants?.has(p.username);
+        return lastRevealedPhase === currentPhaseNumber || isHidden;
+      } else {
+        const deathPhase = p.deathPhaseNumber ?? 0;
+        return (
+          deathPhase < currentPhaseNumber ||
+          window.revealedDeaths?.has(p.username)
+        );
+      }
+    });
+
+    dataSource = filteredParticipants.map((p) => {
+      const username = p.username;
+      const globalStat = globalStats[username] || {
+        wins: 0,
+        kills: 0,
+        deaths: 0,
+        totalDays: 0,
+        maxDays: 0,
+      };
+      const daysSurvived = p.alive ? currentDay : p.deathDay || currentDay - 1;
+
+      return {
+        username,
+        status: p.alive ? "Alive" : "Dead",
+        killsThisGame: p.kills || 0,
+        killsAllTime: globalStat.kills,
+        wins: globalStat.wins,
+        daysSurvived,
+        isAlive: p.alive,
+        participant: p,
+      };
+    });
+
+    list = dataSource;
+  } else {
+    list = Object.entries(globalStats).map(([username, stats]) => ({
+      username,
+      wins: stats.wins,
+      kills: stats.kills,
+      deaths: stats.deaths,
+      maxDays: stats.maxDays,
+      totalDays: stats.totalDays,
+    }));
+  }
+
   const key = leaderboardSort.key;
   if (key) {
     list.sort((a, b) => {
-      const va =
-        key === "username" ? a[0].localeCompare(b[0]) : a[1][key] - b[1][key];
-      return leaderboardSort.asc ? va : -va;
+      let va, vb;
+      if (key === "username") {
+        va = a.username;
+        vb = b.username;
+        const comparison = va.localeCompare(vb);
+        return leaderboardSort.asc ? comparison : -comparison;
+      } else if (isGameActive) {
+        if (key === "status") {
+          va = a.status === "Alive" ? 1 : 0;
+          vb = b.status === "Alive" ? 1 : 0;
+        } else if (key === "kills") {
+          // During active game, "kills" means kills this game
+          va = a.killsThisGame || 0;
+          vb = b.killsThisGame || 0;
+        } else if (key === "daysSurvived") {
+          va = a.daysSurvived || 0;
+          vb = b.daysSurvived || 0;
+        } else {
+          va = a[key] || 0;
+          vb = b[key] || 0;
+        }
+      } else {
+        va = a[key] || 0;
+        vb = b[key] || 0;
+      }
+      return leaderboardSort.asc ? va - vb : vb - va;
     });
   } else {
-    list.sort((a, b) => b[1].wins - a[1].wins || b[1].kills - a[1].kills);
+    if (isGameActive) {
+      list.sort((a, b) => {
+        if (a.isAlive !== b.isAlive) {
+          return a.isAlive ? -1 : 1;
+        }
+        return (b.killsThisGame || 0) - (a.killsThisGame || 0);
+      });
+    } else {
+      list.sort((a, b) => b.wins - a.wins || b.kills - a.kills);
+    }
   }
+
   lbTableBody.innerHTML = "";
-  list.forEach(([u, st]) => {
+  list.forEach((item) => {
     const tr = document.createElement("tr");
+    const username = item.username;
+
     const tdName = document.createElement("td");
-    tdName.textContent = u;
-    let playerColor = globalColors[u] || "#fff";
+    tdName.textContent = getDisplayName(username);
+    let playerColor = globalColors[username] || "#fff";
     if (window.ensureContrast) {
       playerColor = window.ensureContrast(playerColor, "#222222", 4.5);
     }
     tdName.style.color = playerColor;
     tr.appendChild(tdName);
-    ["wins", "kills", "deaths", "maxDays", "totalDays"].forEach((k) => {
-      const td = document.createElement("td");
-      td.textContent = st[k];
-      tr.appendChild(td);
-    });
+
+    if (isGameActive) {
+      const tdStatus = document.createElement("td");
+      tdStatus.textContent = item.status;
+      if (item.status === "Dead") {
+        tdStatus.style.color = "#ef5350";
+        tdStatus.style.fontWeight = "bold";
+      }
+      tr.appendChild(tdStatus);
+
+      const tdKills = document.createElement("td");
+      tdKills.textContent = item.killsThisGame || 0;
+      tr.appendChild(tdKills);
+
+      const tdWins = document.createElement("td");
+      tdWins.textContent = item.wins || 0;
+      tr.appendChild(tdWins);
+
+      const tdDaysSurvived = document.createElement("td");
+      tdDaysSurvived.textContent = `${item.daysSurvived || 0} days`;
+      tr.appendChild(tdDaysSurvived);
+
+      if (!item.isAlive) {
+        tr.style.opacity = "0.7";
+      }
+    } else {
+      ["wins", "kills", "deaths", "maxDays", "totalDays"].forEach((k) => {
+        const td = document.createElement("td");
+        td.textContent = item[k] || 0;
+        tr.appendChild(td);
+      });
+    }
+
     lbTableBody.appendChild(tr);
   });
+
+  const clearButton = document.getElementById("clearLeaderboardButton");
+  if (clearButton) {
+    clearButton.style.display = isGameActive ? "none" : "inline-block";
+  }
+
   overlay.style.display = "flex";
 }
 
-function showLeaderboard() {
+function updateLeaderboardHeaders(isGameActive) {
+  const thead = document.querySelector("#leaderboardTable thead tr");
+  if (!thead) return;
+
+  thead.innerHTML = "";
+
+  if (isGameActive) {
+    const headers = [
+      { key: "username", label: "Name" },
+      { key: "status", label: "Status" },
+      { key: "kills", label: "Kills" },
+      { key: "wins", label: "Wins" },
+      { key: "daysSurvived", label: "Days Survived" },
+    ];
+    headers.forEach(({ key, label }) => {
+      const th = document.createElement("th");
+      th.textContent = label;
+      th.setAttribute("data-key", key);
+      thead.appendChild(th);
+    });
+  } else {
+    const headers = [
+      { key: "username", label: "Name" },
+      { key: "wins", label: "Wins" },
+      { key: "kills", label: "Kills" },
+      { key: "deaths", label: "Deaths" },
+      { key: "maxDays", label: "Max Days" },
+      { key: "totalDays", label: "Total Days" },
+    ];
+    headers.forEach(({ key, label }) => {
+      const th = document.createElement("th");
+      th.textContent = label;
+      th.setAttribute("data-key", key);
+      thead.appendChild(th);
+    });
+  }
+
+  const leaderboardSort = window.leaderboardSort || { key: null, asc: true };
   const lbHeaders = document.querySelectorAll("#leaderboardTable th");
-  lbHeaders.forEach((h) => h.classList.remove("sort-asc", "sort-desc"));
+  lbHeaders.forEach((th) => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-key");
+      if (!key) return;
+
+      if (leaderboardSort.key === key) {
+        leaderboardSort.asc = !leaderboardSort.asc;
+      } else {
+        leaderboardSort.key = key;
+        leaderboardSort.asc = key === "username" || key === "status";
+      }
+      window.leaderboardSort = leaderboardSort;
+
+      lbHeaders.forEach((h) => h.classList.remove("sort-asc", "sort-desc"));
+      th.classList.add(leaderboardSort.asc ? "sort-asc" : "sort-desc");
+
+      renderLeaderboard();
+    });
+  });
+}
+
+function showLeaderboard() {
   window.leaderboardSort = { key: null, asc: true };
   renderLeaderboard();
 }
@@ -530,91 +714,6 @@ function clearLeaderboard() {
   if (typeof window.backToJoin === "function") {
     window.backToJoin(false);
   }
-}
-
-function renderScoreboard(showOverlay = false) {
-  const participants = window.participants || [];
-  const overlay = document.getElementById("scoreboardOverlay");
-  const aliveList = document.getElementById("aliveList");
-  const deadList = document.getElementById("deadList");
-  const aliveCountEl = document.getElementById("aliveCount");
-  const deadCountEl = document.getElementById("deadCount");
-
-  if (!overlay || !aliveList || !deadList || !aliveCountEl || !deadCountEl) {
-    return;
-  }
-
-  const currentPhaseNumber = window.currentPhaseNumber || 0;
-  const alive = participants.filter((p) => {
-    if (!p.alive) return false;
-    const lastRevealedPhase = window.revealedAlive?.get(p.username);
-    const isHidden = window.hiddenEventParticipants?.has(p.username);
-    return lastRevealedPhase === currentPhaseNumber || isHidden;
-  });
-  const dead = participants.filter((p) => {
-    if (!p.alive) {
-      const deathPhase = p.deathPhaseNumber ?? 0;
-      return (
-        deathPhase < currentPhaseNumber ||
-        window.revealedDeaths?.has(p.username)
-      );
-    }
-    return false;
-  });
-
-  aliveCountEl.textContent = alive.length;
-  deadCountEl.textContent = dead.length;
-
-  aliveList.innerHTML = "";
-  if (alive.length === 0) {
-    const emptyEl = document.createElement("div");
-    emptyEl.className = "player-list-item empty";
-    emptyEl.textContent = "No players alive";
-    aliveList.appendChild(emptyEl);
-  } else {
-    alive.forEach((p) => {
-      const item = document.createElement("div");
-      item.className = "player-list-item";
-      const displayName = getDisplayName(p.username);
-      let playerColor = window.validateColor(p.color);
-      if (window.ensureContrast) {
-        playerColor = window.ensureContrast(playerColor, "#1e1e1e", 4.5);
-      }
-      item.style.color = playerColor;
-      item.textContent = displayName;
-      aliveList.appendChild(item);
-    });
-  }
-
-  deadList.innerHTML = "";
-  if (dead.length === 0) {
-    const emptyEl = document.createElement("div");
-    emptyEl.className = "player-list-item empty";
-    emptyEl.textContent = "No players dead";
-    deadList.appendChild(emptyEl);
-  } else {
-    dead.forEach((p) => {
-      const item = document.createElement("div");
-      item.className = "player-list-item";
-      const displayName = getDisplayName(p.username);
-      let playerColor = window.validateColor(p.color);
-      if (window.ensureContrast) {
-        playerColor = window.ensureContrast(playerColor, "#1e1e1e", 4.5);
-      }
-      item.style.color = playerColor;
-      item.style.opacity = "0.7";
-      item.textContent = displayName;
-      deadList.appendChild(item);
-    });
-  }
-
-  if (showOverlay) {
-    overlay.style.display = "flex";
-  }
-}
-
-function showScoreboard() {
-  renderScoreboard(true);
 }
 
 function addPlayer(u, c) {
@@ -683,8 +782,8 @@ function addPlayer(u, c) {
     const fakeAvatar = window.assignFakeAvatar
       ? window.assignFakeAvatar(u)
       : window.getNextAvatar
-      ? window.getNextAvatar()
-      : (window.fakeAvatars || [])[0];
+        ? window.getNextAvatar()
+        : (window.fakeAvatars || [])[0];
     setupImageLoading(img, imgTooltipContainer);
     img.src = fakeAvatar;
   }
@@ -741,8 +840,8 @@ function addFakePlayer(u, c) {
   const fakeAvatar = window.assignFakeAvatar
     ? window.assignFakeAvatar(u)
     : window.getNextAvatar
-    ? window.getNextAvatar()
-    : (window.fakeAvatars || [])[0] || "";
+      ? window.getNextAvatar()
+      : (window.fakeAvatars || [])[0] || "";
   setupImageLoading(img, imgTooltipContainer);
   img.src = fakeAvatar;
   const nmC = document.createElement("div");
@@ -915,8 +1014,6 @@ window.showWinner = showWinner;
 window.renderLeaderboard = renderLeaderboard;
 window.showLeaderboard = showLeaderboard;
 window.clearLeaderboard = clearLeaderboard;
-window.renderScoreboard = renderScoreboard;
-window.showScoreboard = showScoreboard;
 function assignFakeAvatar(username) {
   const cacheKey = `fake:${username}`;
   if (avatarCache.has(cacheKey)) {
