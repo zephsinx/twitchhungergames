@@ -19,7 +19,12 @@ function normalizeEventMessage(msg) {
   return msg.replace(/\{[^}]+\}/g, "{*}");
 }
 
-function getDecayedWeight(event, baseWeight, currentPhaseNumber) {
+function getDecayedWeight(
+  event,
+  baseWeight,
+  currentPhaseNumber,
+  allowSamePhaseReuse = false
+) {
   if (!event || !event.msg) {
     return baseWeight;
   }
@@ -28,7 +33,7 @@ function getDecayedWeight(event, baseWeight, currentPhaseNumber) {
   const currentPhaseSet = window.eventsUsedThisPhase || new Set();
   const recentUsage = window.recentEventUsage || {};
 
-  if (currentPhaseSet.has(normalizedMsg)) {
+  if (!allowSamePhaseReuse && currentPhaseSet.has(normalizedMsg)) {
     return 0;
   }
 
@@ -233,10 +238,10 @@ async function runEvents(evObj) {
 
   const genericEvents = eventsData.generic || { nonfatal: [], fatal: [] };
   const currentPhaseType = window.currentPhaseType || "";
-  const isArenaEvent = currentPhaseType === "arena";
-  const isFeastEvent = currentPhaseType === "feast";
   const isBloodbathEvent = currentPhaseType === "bloodbath";
-  const PHASE_EVENT_WEIGHT_MULTIPLIER = 3.0;
+  const isExclusiveSpecial =
+    currentPhaseType === "arena" || currentPhaseType === "feast";
+  const BLOODBATH_PHASE_WEIGHT_MULTIPLIER = 5.25;
 
   while (aliveSet.size > 0) {
     const roll = Math.floor(Math.random() * 11);
@@ -247,32 +252,47 @@ async function runEvents(evObj) {
       (useFatal ? genericEvents.fatal : genericEvents.nonfatal) || [];
 
     const phasePoolSet = new Set(phasePool);
-    let pool = [...phasePool, ...genericPool];
-    pool = pool.filter((a) => a.tributes <= aliveSet.size);
+    let usingPhaseOnly = false;
+    let pool;
+    if (isExclusiveSpecial) {
+      pool = phasePool.filter((a) => a.tributes <= aliveSet.size);
+      if (pool.length) {
+        usingPhaseOnly = true;
+      } else {
+        pool = genericPool.filter((a) => a.tributes <= aliveSet.size);
+      }
+    } else {
+      pool = [...phasePool, ...genericPool].filter(
+        (a) => a.tributes <= aliveSet.size
+      );
+    }
     if (!pool.length) break;
 
-    let totalWeight = 0;
     const currentPhaseNumber = window.currentPhaseNumber || 0;
-    pool.forEach((action) => {
-      let baseWeight = action.weight !== undefined ? action.weight : 1;
-      if (
-        phasePoolSet.has(action) &&
-        (isArenaEvent || isFeastEvent || isBloodbathEvent)
-      ) {
-        baseWeight *= PHASE_EVENT_WEIGHT_MULTIPLIER;
-      }
-      const decayedWeight = getDecayedWeight(
-        action,
-        baseWeight,
-        currentPhaseNumber
-      );
-      if (decayedWeight <= 0) {
-        action._effectiveWeight = 0;
-      } else {
-        action._effectiveWeight = decayedWeight;
-      }
-      totalWeight += action._effectiveWeight;
-    });
+
+    const applyWeights = (allowSamePhaseReuse) => {
+      let total = 0;
+      pool.forEach((action) => {
+        let baseWeight = action.weight !== undefined ? action.weight : 1;
+        if (phasePoolSet.has(action) && isBloodbathEvent) {
+          baseWeight *= BLOODBATH_PHASE_WEIGHT_MULTIPLIER;
+        }
+        const decayedWeight = getDecayedWeight(
+          action,
+          baseWeight,
+          currentPhaseNumber,
+          allowSamePhaseReuse
+        );
+        action._effectiveWeight = decayedWeight <= 0 ? 0 : decayedWeight;
+        total += action._effectiveWeight;
+      });
+      return total;
+    };
+
+    let totalWeight = applyWeights(false);
+    if (totalWeight <= 0 && usingPhaseOnly) {
+      totalWeight = applyWeights(true);
+    }
 
     if (totalWeight <= 0) {
       console.error("All events have zero or negative weight");
