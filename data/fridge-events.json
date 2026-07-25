@@ -269,7 +269,7 @@
         "tributes": 2
       },
       {
-        "msg": "{0} hunts for other survivors among the leftovers.",
+        "msg": "{0} marks a safe route with sesame seeds.",
         "tributes": 1
       },
       {
@@ -301,7 +301,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} practices combat with {weapon_any}.",
+        "msg": "{0} plants a toothpick flag on the yogurt lid.",
         "tributes": 1
       },
       {
@@ -353,7 +353,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} investigates the door shelves and finds {weapon_any}.",
+        "msg": "{0} rappels down the milk jug on a dental floss line.",
         "tributes": 1
       },
       {
@@ -491,7 +491,7 @@
     "color": "#1a1a4e",
     "nonfatal": [
       {
-        "msg": "{0} tries to sleep but the compressor is too loud.",
+        "msg": "{0} wakes when the compressor coughs like a giant.",
         "tributes": 1
       },
       {
@@ -507,8 +507,8 @@
         "tributes": 2
       },
       {
-        "msg": "{0} and {1} discuss strategy for tomorrow.",
-        "tributes": 2
+        "msg": "{0} watches their breath fog and counts the clouds.",
+        "tributes": 1
       },
       {
         "msg": "{0} dreams of being full-sized again.",
@@ -531,7 +531,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} hears something moving in the crisper drawer.",
+        "msg": "{0} listens to something drag itself across the crisper lid.",
         "tributes": 1
       },
       {
@@ -681,7 +681,7 @@
       "color": "#ff4444",
       "nonfatal": [
         {
-          "msg": "{0} grabs supplies from the warm leftovers.",
+          "msg": "{0} basks in the steam rising off the lasagna.",
           "tributes": 1
         },
         {
@@ -689,7 +689,7 @@
           "tributes": 2
         },
         {
-          "msg": "{0} takes what they need and retreats.",
+          "msg": "{0} claims a noodle as a rope. It snaps immediately.",
           "tributes": 1
         },
         {
@@ -701,7 +701,7 @@
           "tributes": 1
         },
         {
-          "msg": "{0} and {1} compete to see who can grab the most leftovers from the feast.",
+          "msg": "{0} and {1} race up opposite sides of the meatloaf.",
           "tributes": 2
         },
         {
@@ -725,7 +725,7 @@
           "tributes": 2
         },
         {
-          "msg": "{0} slips away unnoticed with the best scraps.",
+          "msg": "{0} hides inside a bread roll and refuses to leave.",
           "tributes": 1
         },
         {
@@ -751,10 +751,10 @@
       ],
       "fatal": [
         {
-          "msg": "{0} is killed at the feast by {1} using {weapon_any}.",
-          "tributes": 2,
+          "msg": "{0} sinks into hot gravy before anyone can reach them.",
+          "tributes": 1,
           "killed": [0],
-          "killer": [1]
+          "killer": null
         },
         {
           "msg": "{0} eliminates {1} at the feast with a chopstick through the heart.",
@@ -763,7 +763,7 @@
           "killer": [0]
         },
         {
-          "msg": "{0}, {1}, and {2} ambush {3} at the feast.",
+          "msg": "{0}, {1}, and {2} corner {3} inside the pasta container.",
           "tributes": 4,
           "killed": [3],
           "killer": [0, 1, 2]
@@ -840,8 +840,8 @@
           "tributes": 2
         },
         {
-          "msg": "{0} and {1} race to claim a fresh strawberry. {1} gets there first.",
-          "tributes": 2
+          "msg": "{0} rides a rolling lime until it hits the wall.",
+          "tributes": 1
         },
         {
           "msg": "{0} hides inside a new egg carton before it's placed in the fridge.",
@@ -860,7 +860,7 @@
           "tributes": 1
         },
         {
-          "msg": "{0} takes shelter inside a new yogurt container.",
+          "msg": "{0} hides under a lettuce leaf and calls it a bunker.",
           "tributes": 1
         },
         {
@@ -872,7 +872,7 @@
           "tributes": 1
         },
         {
-          "msg": "{0} rides a rolling orange to a new hiding spot.",
+          "msg": "{0} shelters in a paper bag as cans thud down around them.",
           "tributes": 1
         },
         {
@@ -894,13 +894,13 @@
       ],
       "fatal": [
         {
-          "msg": "{0} is crushed by a falling can of beans.",
+          "msg": "{0} is flattened by a falling yogurt cup.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} is knocked off the shelf by incoming groceries.",
+          "msg": "{0} looks up to see what's blotting out the light. A can of beans.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -937,7 +937,7 @@
           "killer": [0]
         },
         {
-          "msg": "{0} is trapped and suffocates in a sealed bag of spinach.",
+          "msg": "{0} explores a fresh spinach bag as it reseals behind them.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -970,11 +970,11 @@
           "tributes": 2
         },
         {
-          "msg": "{0} freezes perfectly still and avoids detection.",
+          "msg": "{0} freezes under the light and passes for a crumb.",
           "tributes": 1
         },
         {
-          "msg": "{0} uses the distraction to relocate to a better position.",
+          "msg": "{0} sprints across the shelf between finger shadows.",
           "tributes": 1
         },
         {
@@ -994,7 +994,7 @@
           "tributes": 1
         },
         {
-          "msg": "{0} discovers a new hiding spot revealed by the reorganization.",
+          "msg": "{0} clings to a jar as it leaves the shelf, then rides it back.",
           "tributes": 1
         },
         {
@@ -1030,13 +1030,13 @@
           "killer": null
         },
         {
-          "msg": "{0} is crushed when a container is carelessly replaced.",
+          "msg": "{0} is brushed off the shelf with the crumbs.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} falls from a disturbed shelf to their death.",
+          "msg": "{0} hides in the snack the human came for.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1107,7 +1107,7 @@
           "tributes": 2
         },
         {
-          "msg": "{0} builds a fort from mashed potato containers.",
+          "msg": "{0} builds a bunker in the mashed potatoes.",
           "tributes": 1
         },
         {
@@ -1119,8 +1119,8 @@
           "tributes": 2
         },
         {
-          "msg": "{0} and {1} compete fiercely over the last piece of pie, nearly coming to blows.",
-          "tributes": 2
+          "msg": "{0} wears a cranberry skin like armor.",
+          "tributes": 1
         },
         {
           "msg": "{0} rolls around in the gravy boat, coating themselves for warmth.",
@@ -1139,7 +1139,7 @@
           "tributes": 1
         },
         {
-          "msg": "{0} hides inside a carved pumpkin decoration.",
+          "msg": "{0} digs a den into the stuffing and calls it home.",
           "tributes": 1
         },
         {
@@ -1167,13 +1167,13 @@
           "killer": null
         },
         {
-          "msg": "{0} is buried under an avalanche of leftovers.",
+          "msg": "{0} is buried when the stuffing shifts.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} throws {1} into the cranberry sauce during the holiday chaos. They never resurface.",
+          "msg": "{0} throws {1} into the cranberry sauce. They never resurface.",
           "tributes": 2,
           "killed": [1],
           "killer": [0]
@@ -1198,7 +1198,7 @@
           "weight": 0.6
         },
         {
-          "msg": "{0} eliminates {1} with {weapon_any} during the holiday chaos.",
+          "msg": "{0} seals {1} inside the fruitcake. Nothing escapes the fruitcake.",
           "tributes": 2,
           "killed": [1],
           "killer": [0]
@@ -1259,8 +1259,8 @@
           "tributes": 1
         },
         {
-          "msg": "{0} and {1} paddle to safety on a defrosting waffle.",
-          "tributes": 2
+          "msg": "{0} paddles across the meltwater on a waffle shard.",
+          "tributes": 1
         },
         {
           "msg": "{0} discovers an air pocket under a bag of frozen peas.",
@@ -1285,19 +1285,19 @@
       ],
       "fatal": [
         {
-          "msg": "{0} attempts to cross a cracking ice bridge and plunges into the freezing depths below.",
+          "msg": "{0} crosses an ice bridge as it cracks.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} tries to swim through the meltwater but is dragged under by the current and frozen solid.",
+          "msg": "{0} is dragged under by the meltwater current.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} seeks shelter under an ice overhang just as it collapses, crushing them instantly.",
+          "msg": "{0} shelters under an ice overhang. It doesn't hold.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1322,7 +1322,7 @@
           "weight": 0.8
         },
         {
-          "msg": "{0} gets trapped between two thawing ice blocks.",
+          "msg": "{0} slips between two thawing peas and vanishes.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1380,7 +1380,7 @@
           "tributes": 2
         },
         {
-          "msg": "{0} uses a bread crust as a raft.",
+          "msg": "{0} surfs the ketchup wave on a cracker.",
           "tributes": 1
         },
         {
@@ -1418,19 +1418,19 @@
       ],
       "fatal": [
         {
-          "msg": "{0} tries to outrun the ketchup tsunami but slips on the viscous red tide and is swept away.",
+          "msg": "{0} outruns the ketchup until they hit {hazard_slippery}.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} attempts to swim through the condiment flood but the thick mixture clogs their airways.",
+          "msg": "{0} gets sealed under a skin of drying mustard.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} seeks refuge behind a jar, but the relish avalanche buries them completely.",
+          "msg": "{0} hides behind a jar. The relish finds them anyway.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1546,7 +1546,7 @@
           "tributes": 3
         },
         {
-          "msg": "{0} breathes through a coffee filter and survives.",
+          "msg": "{0} wears a coffee filter like a gas mask.",
           "tributes": 1
         },
         {
@@ -1556,7 +1556,7 @@
       ],
       "fatal": [
         {
-          "msg": "{0} inhales the spores and collapses.",
+          "msg": "{0} breathes once near the fuzzy strawberry.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1568,7 +1568,7 @@
           "killer": null
         },
         {
-          "msg": "{0} trips {1} into the spore cloud, then runs away as they choke on the toxic spores.",
+          "msg": "{0} trips {1} into the spore cloud and doesn't look back.",
           "tributes": 2,
           "killed": [1],
           "killer": [0]
@@ -1587,13 +1587,13 @@
           "weight": 0.8
         },
         {
-          "msg": "{0} tries to outrun the spore cloud but trips and inhales a massive dose of toxic mold.",
+          "msg": "{0} outruns the spore cloud right up until they trip.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} watches in horror as the fungal growth spreads up their legs, consuming them from the feet up.",
+          "msg": "{0} notices the fuzz on their boots too late.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1661,7 +1661,7 @@
           "tributes": 1
         },
         {
-          "msg": "{0} prays to be overlooked and is spared.",
+          "msg": "{0} hides in a fingerprint smudge on the shelf glass.",
           "tributes": 1
         },
         {
@@ -1729,19 +1729,19 @@
           "killer": [0]
         },
         {
-          "msg": "{0} tries to squeeze between two fingers to escape, but gets pinched and crushed.",
+          "msg": "{0} squeezes between two fingers. The fingers close.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} attempts to jump to safety but the hand's movement sends them flying off the shelf.",
+          "msg": "{0} is mistaken for pepper and wiped away.",
           "tributes": 1,
           "killed": [0],
           "killer": null
         },
         {
-          "msg": "{0} desperately waves for help, but the hand mistakes their signal for food and grabs them.",
+          "msg": "{0} waves for help. The hand accepts.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1777,6 +1777,13 @@
           "killed": [0, 1, 2],
           "killer": null,
           "weight": 0.6
+        },
+        {
+          "msg": "The hand sweeps {0} and {1} off the shelf together.",
+          "tributes": 2,
+          "killed": [0, 1],
+          "killer": null,
+          "weight": 0.8
         }
       ]
     },
@@ -1786,7 +1793,7 @@
       "color": "#4a0080",
       "nonfatal": [
         {
-          "msg": "{0} runs away before getting a good look at it.",
+          "msg": "{0} sees the leftovers blink first and runs.",
           "tributes": 1
         },
         {
@@ -1834,7 +1841,7 @@
           "killer": null
         },
         {
-          "msg": "{0} is consumed by whatever was in the Tupperware.",
+          "msg": "{0} is folded into the lasagna layer.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1878,7 +1885,7 @@
           "killer": null
         },
         {
-          "msg": "{0} is found by the horror and absorbed into the mass.",
+          "msg": "{0} hears their name in the container's hum and answers.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1928,7 +1935,7 @@
           "hidden": true
         },
         {
-          "msg": "{0} finds a warm spot and enjoys the temporary comfort.",
+          "msg": "{0} uses the blackout to move camps.",
           "tributes": 1
         },
         {
@@ -1974,7 +1981,7 @@
       ],
       "fatal": [
         {
-          "msg": "{0} suffocates in a sealed container as the air grows stale.",
+          "msg": "{0} gets trapped in a warm jar with no air.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -1992,7 +1999,7 @@
           "killer": null
         },
         {
-          "msg": "{0} lures {1} into a rising pool of condensation by promising safety, then watches them drown.",
+          "msg": "{0} promises {1} a safe spot. It's underwater.",
           "tributes": 2,
           "killed": [1],
           "killer": [0]
@@ -2068,7 +2075,7 @@
       "color": "#90ee90",
       "nonfatal": [
         {
-          "msg": "{0} hides successfully as containers are shuffled around them.",
+          "msg": "{0} plays dead until the sponge passes.",
           "tributes": 1
         },
         {
@@ -2080,7 +2087,7 @@
           "tributes": 2
         },
         {
-          "msg": "{0} plays dead among the crumbs being wiped away.",
+          "msg": "{0} outruns the paper towel by half a step.",
           "tributes": 1
         },
         {
@@ -2114,7 +2121,7 @@
       ],
       "fatal": [
         {
-          "msg": "{0} is thrown out with the {food_bad}.",
+          "msg": "{0} is wiped into the trash with the crumbs.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -2227,7 +2234,7 @@
           "tributes": 2
         },
         {
-          "msg": "{0} discovers ice caves carved into the frozen vegetables.",
+          "msg": "{0} finds a cave under the frozen peas.",
           "tributes": 1
         },
         {
@@ -2269,7 +2276,7 @@
       ],
       "fatal": [
         {
-          "msg": "{0} is flash-frozen solid within seconds.",
+          "msg": "{0} touches the freezer wall and stays there.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -2281,7 +2288,7 @@
           "killer": null
         },
         {
-          "msg": "{0} gets lost in the frost and is never seen again.",
+          "msg": "{0} follows footprints in the frost. They're their own.",
           "tributes": 1,
           "killed": [0],
           "killer": null
@@ -2380,11 +2387,11 @@
   "generic": {
     "nonfatal": [
       {
-        "msg": "{0} grabs {weapon_any}.",
+        "msg": "{0} builds a toll bridge over a condensation puddle.",
         "tributes": 1
       },
       {
-        "msg": "{0} eats some {food_any}.",
+        "msg": "{0} negotiates with a fruit fly. The fruit fly demands crumbs.",
         "tributes": 1
       },
       {
@@ -2400,7 +2407,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} discovers a new hiding spot.",
+        "msg": "{0} maps the mold line and refuses to cross it.",
         "tributes": 1
       },
       {
@@ -2484,11 +2491,11 @@
         "tributes": 1
       },
       {
-        "msg": "{0} discovers a stash of {food_good} in an empty container.",
+        "msg": "{0} paves a road of breadcrumbs between camps.",
         "tributes": 1
       },
       {
-        "msg": "{0} scavenges {weapon_any} from the bottom shelf.",
+        "msg": "{0} charts the condensation drip schedule.",
         "tributes": 1
       },
       {
@@ -2540,7 +2547,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} discovers a forgotten {food_good} container.",
+        "msg": "{0} rigs a drawbridge from a popsicle stick.",
         "tributes": 1
       },
       {
@@ -2552,7 +2559,7 @@
         "tributes": 2
       },
       {
-        "msg": "{0} discovers {liquid_good} in an unexpected location.",
+        "msg": "{0} claims the butter dish as sovereign territory.",
         "tributes": 1
       },
       {
@@ -2564,7 +2571,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} and {1} form a temporary alliance to survive.",
+        "msg": "{0} and {1} sign a treaty scratched into a butter pat.",
         "tributes": 2
       },
       {
@@ -2572,7 +2579,7 @@
         "tributes": 2
       },
       {
-        "msg": "{0} and {1} have a heated argument about territory.",
+        "msg": "{0} and {1} dispute the border between shelf two and shelf three.",
         "tributes": 2
       },
       {
@@ -2600,11 +2607,11 @@
         "tributes": 2
       },
       {
-        "msg": "{0} tries to convince {1} to join their side.",
-        "tributes": 2
+        "msg": "{0} spreads rumors about what lives behind the crisper.",
+        "tributes": 1
       },
       {
-        "msg": "{0} and {1} have a philosophical debate about their situation.",
+        "msg": "{0} and {1} debate whether the freezer is a myth.",
         "tributes": 2
       },
       {
@@ -2712,7 +2719,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} creates a storage system from empty containers.",
+        "msg": "{0} digs a canal to redirect a syrup drip.",
         "tributes": 1
       },
       {
@@ -2732,7 +2739,7 @@
         "tributes": 1
       },
       {
-        "msg": "{0} improvises a compass using a magnetized paperclip.",
+        "msg": "{0} sees themselves in a jar lid and loses the argument.",
         "tributes": 1
       },
       {
@@ -2952,7 +2959,7 @@
         "killer": null
       },
       {
-        "msg": "{0} accidentally kills themselves with {weapon_any}.",
+        "msg": "{0} crawls into a bottle cap shelter. It flips.",
         "tributes": 1,
         "killed": [0],
         "killer": null
@@ -3026,7 +3033,7 @@
         "killer": [1]
       },
       {
-        "msg": "{0} engages {1} in combat with {weapon_any}. {0} emerges victorious.",
+        "msg": "{0} steals {1}'s crumb ladder and leaves them stranded.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
@@ -3200,13 +3207,13 @@
         "killer": [0]
       },
       {
-        "msg": "{0} uses the fridge's cold to their advantage, freezing {1} solid by pushing them into {hazard_cold}.",
+        "msg": "{0} shoves {1} into {hazard_cold} and waits for the crackle.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
       },
       {
-        "msg": "{0} uses {1}'s fear against them, causing them to panic and fall off the shelf.",
+        "msg": "{0} whispers \"it's behind you\" to {1}. It works too well.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
@@ -3267,19 +3274,19 @@
         "killer": [0]
       },
       {
-        "msg": "{0} outmaneuvers {1} and strikes them down with {weapon_cutting}.",
+        "msg": "{0} duels {1} on the rim of the pickle jar. {1} falls in.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
       },
       {
-        "msg": "{0} overwhelms {1} in close combat using {weapon_blunt}.",
+        "msg": "{0} bowls a frozen grape into {1}.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
       },
       {
-        "msg": "{0} uses {weapon_any} to create a distraction, then strikes {1} from behind.",
+        "msg": "{0} drops a sugar cube on {1} from the top shelf.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
@@ -3291,13 +3298,13 @@
         "killer": [0]
       },
       {
-        "msg": "{0} uses {1}'s momentum against them and strikes them down with {weapon_blunt}.",
+        "msg": "{0} rolls an olive downhill at {1}. Strike.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
       },
       {
-        "msg": "{0} and {1} engage in a desperate struggle. {0} gains the upper hand and eliminates {1}.",
+        "msg": "{0} and {1} engage in a desperate struggle. {0} gains the upper hand.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
@@ -3309,7 +3316,7 @@
         "killer": [0]
       },
       {
-        "msg": "{0} uses psychological warfare, convincing {1} to surrender their weapon, then turns it against them.",
+        "msg": "{0} convinces {1} to surrender their weapon, then uses it.",
         "tributes": 2,
         "killed": [1],
         "killer": [0]
