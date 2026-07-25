@@ -1238,9 +1238,8 @@
       "color": "#87ceeb",
       "nonfatal": [
         {
-          "msg": "{0} survives the defrost by climbing onto a floating ice cube.",
-          "tributes": 1,
-          "hidden": true
+          "msg": "{0} rides a slab of {food_neutral} through the meltwater.",
+          "tributes": 1
         },
         {
           "msg": "{0} surfs a wave of meltwater to safety.",
@@ -1367,9 +1366,8 @@
       "color": "#cc0000",
       "nonfatal": [
         {
-          "msg": "{0} survives the condiment flood.",
-          "tributes": 1,
-          "hidden": true
+          "msg": "{0} climbs a jar lid just as a wave of {liquid_neutral} rolls past.",
+          "tributes": 1
         },
         {
           "msg": "{0} climbs to higher ground just in time.",
@@ -1505,9 +1503,8 @@
       "color": "#556b2f",
       "nonfatal": [
         {
-          "msg": "{0} survives the mold outbreak by holding their breath and sealing themselves in a jar.",
-          "tributes": 1,
-          "hidden": true
+          "msg": "{0} packs {food_neutral} against their face as a filter and keeps moving.",
+          "tributes": 1
         },
         {
           "msg": "{0} holds their breath and escapes the spore cloud.",
@@ -1644,9 +1641,8 @@
       "color": "#ffcc99",
       "nonfatal": [
         {
-          "msg": "{0} survives the giant hand.",
-          "tributes": 1,
-          "hidden": true
+          "msg": "{0} freezes beside a pile of {food_neutral} until the fingers move on.",
+          "tributes": 1
         },
         {
           "msg": "{0} hides behind a jar as the hand passes by.",
@@ -1930,9 +1926,8 @@
       "color": "#333333",
       "nonfatal": [
         {
-          "msg": "{0} survives the power outage.",
-          "tributes": 1,
-          "hidden": true
+          "msg": "{0} waits out the blackout chewing softened {food_any}.",
+          "tributes": 1
         },
         {
           "msg": "{0} uses the blackout to move camps.",
@@ -2221,9 +2216,8 @@
       "color": "#a8d8ea",
       "nonfatal": [
         {
-          "msg": "{0} survives the freezer expedition by finding ice caves carved into frozen vegetables.",
-          "tributes": 1,
-          "hidden": true
+          "msg": "{0} wedges {weapon_cold} under a frozen pizza and claims the warm pocket beneath.",
+          "tributes": 1
         },
         {
           "msg": "{0} finds frozen treasures buried in the ice.",
