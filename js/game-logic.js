@@ -228,6 +228,7 @@ async function runEvents(evObj) {
   const eventLog = document.getElementById("eventLog");
 
   const aliveSet = new Set(participants.filter((p) => p.alive));
+  let projectedAlive = aliveSet.size;
   const base = Math.floor(Math.random() * 3) + 1.25;
   const factor =
     base +
@@ -243,28 +244,35 @@ async function runEvents(evObj) {
     currentPhaseType === "arena" || currentPhaseType === "feast";
   const BLOODBATH_PHASE_WEIGHT_MULTIPLIER = 5.25;
 
-  while (aliveSet.size > 0) {
-    const roll = Math.floor(Math.random() * 11);
-    const useFatal =
-      roll < factor && participants.filter((p) => p.alive).length > 1;
-    const phasePool = (useFatal ? evObj.fatal : evObj.nonfatal) || [];
+  const buildPool = (fatal) => {
+    const phasePool = (fatal ? evObj.fatal : evObj.nonfatal) || [];
     const genericPool =
-      (useFatal ? genericEvents.fatal : genericEvents.nonfatal) || [];
-
+      (fatal ? genericEvents.fatal : genericEvents.nonfatal) || [];
     const phasePoolSet = new Set(phasePool);
+    const fits = (a) =>
+      a.tributes <= aliveSet.size &&
+      projectedAlive - (Array.isArray(a.killed) ? a.killed.length : 0) >= 1;
     let usingPhaseOnly = false;
     let pool;
     if (isExclusiveSpecial) {
-      pool = phasePool.filter((a) => a.tributes <= aliveSet.size);
+      pool = phasePool.filter(fits);
       if (pool.length) {
         usingPhaseOnly = true;
       } else {
-        pool = genericPool.filter((a) => a.tributes <= aliveSet.size);
+        pool = genericPool.filter(fits);
       }
     } else {
-      pool = [...phasePool, ...genericPool].filter(
-        (a) => a.tributes <= aliveSet.size
-      );
+      pool = [...phasePool, ...genericPool].filter(fits);
+    }
+    return { pool, phasePoolSet, usingPhaseOnly };
+  };
+
+  while (aliveSet.size > 0) {
+    const roll = Math.floor(Math.random() * 11);
+    const useFatal = roll < factor && projectedAlive > 1;
+    let { pool, phasePoolSet, usingPhaseOnly } = buildPool(useFatal);
+    if (!pool.length && useFatal) {
+      ({ pool, phasePoolSet, usingPhaseOnly } = buildPool(false));
     }
     if (!pool.length) break;
 
@@ -467,6 +475,7 @@ async function runEvents(evObj) {
       killer: action.killer || [],
       hidden: action.hidden === true,
     });
+    projectedAlive -= killsCount;
   }
 
   for (const m of msgs) {
