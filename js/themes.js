@@ -136,6 +136,6 @@ const themes = {
   },
 };
 
-const defaultTheme = "hungergames";
+const defaultTheme = "fridge";
 
 export { themes, defaultTheme };
