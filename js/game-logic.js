@@ -436,13 +436,7 @@ async function runEvents(evObj) {
           list = (itemsData[cat] || []).filter(
             (w) => w.max_kills >= killsCount
           );
-        } else if (
-          cat.startsWith("material_") ||
-          cat.startsWith("liquid_") ||
-          cat.startsWith("sand_") ||
-          cat.startsWith("food_") ||
-          cat.startsWith("hazard_")
-        ) {
+        } else if (Object.prototype.hasOwnProperty.call(materialsData, cat)) {
           list = materialsData[cat] || [];
         } else {
           list = itemsData[cat] || [];

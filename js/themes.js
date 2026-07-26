@@ -121,6 +121,10 @@ const themes = {
         "food_neutral",
         "hazard_cold",
         "hazard_slippery",
+        "location_any",
+        "container_any",
+        "creature_insect",
+        "creature_mold",
       ],
 
       nightPhaseColor: "#88ccff",
