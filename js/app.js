@@ -395,9 +395,8 @@ function initializeData() {
       storedValue === null ? true : storedValue === "true";
     useTwitchAvatarsToggle.addEventListener("change", (e) => {
       localStorage.setItem("useTwitchAvatars", e.target.checked);
-      let updatePromise = Promise.resolve();
       if (typeof window.updateAllAvatars === "function") {
-        updatePromise = window.updateAllAvatars(e.target.checked);
+        window.updateAllAvatars(e.target.checked);
       }
     });
   }
@@ -509,7 +508,7 @@ if (themeSelector) {
                   .replace(" Simulator", "")
                   .replace(" Hunger Games", "")
               : themeKey.charAt(0).toUpperCase() + themeKey.slice(1);
-        } catch (e) {
+        } catch {
           option.textContent =
             themeKey.charAt(0).toUpperCase() + themeKey.slice(1);
         }
