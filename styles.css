@@ -459,10 +459,18 @@ select:focus:not(:focus-visible) {
 }
 
 .event:not(.revealed) {
-  filter: blur(8px);
   cursor: pointer;
   user-select: none;
   padding-top: calc(60px + 1em);
+  overflow: hidden;
+}
+
+.event:not(.revealed) .text {
+  filter: blur(8px);
+}
+
+.event:not(.revealed) .text span {
+  color: var(--text-secondary) !important;
 }
 
 .event:not(.revealed)::before {
@@ -479,16 +487,23 @@ select:focus:not(:focus-visible) {
 }
 
 .event:not(.revealed):hover {
-  filter: blur(6px);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.event:not(.revealed):hover .text {
+  filter: blur(6px);
+}
+
+.event:not(.revealed):hover::after {
+  filter: blur(6px);
 }
 
 .event:not(.revealed):hover::before {
   background: rgba(0, 0, 0, 0.6);
 }
 
-.event.revealed {
-  filter: blur(0);
+.event.revealed .text {
+  filter: none;
 }
 
 .event.revealed::before {
@@ -511,11 +526,43 @@ select:focus:not(:focus-visible) {
   border-radius: 4px;
   font-size: 1.5em;
   color: rgba(255, 255, 255, 0.3);
-  z-index: 2;
+  z-index: 0;
+  filter: blur(8px);
 }
 
 .event.revealed::after {
   display: none;
+}
+
+@keyframes event-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.event.shake {
+  animation: event-shake 0.3s ease;
+}
+
+@keyframes event-hint-next {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+  40% {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55);
+  }
+}
+
+.event.hint-next {
+  animation: event-hint-next 0.3s ease;
 }
 
 .avatars {

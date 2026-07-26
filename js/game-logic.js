@@ -761,6 +761,16 @@ async function runEvents(evObj) {
 
       evEl.addEventListener("click", (e) => {
         if (!evEl.classList.contains("revealed")) {
+          const next = eventLog.querySelector(".event:not(.revealed)");
+          if (next !== evEl) {
+            evEl.classList.remove("shake");
+            void evEl.offsetWidth;
+            evEl.classList.add("shake");
+            next.classList.remove("hint-next");
+            void next.offsetWidth;
+            next.classList.add("hint-next");
+            return;
+          }
           evEl.classList.add("revealed");
           const killed = JSON.parse(evEl.dataset.killedUsernames || "[]");
           const participants = JSON.parse(
