@@ -473,8 +473,7 @@ function renderLeaderboard() {
 
   updateLeaderboardHeaders(isGameActive);
 
-  let list = [];
-  let dataSource = [];
+  let list;
 
   if (isGameActive) {
     const participants = window.participants || [];
@@ -495,7 +494,7 @@ function renderLeaderboard() {
       }
     });
 
-    dataSource = filteredParticipants.map((p) => {
+    list = filteredParticipants.map((p) => {
       const username = p.username;
       const globalStat = globalStats[username] || {
         wins: 0,
@@ -517,8 +516,6 @@ function renderLeaderboard() {
         participant: p,
       };
     });
-
-    list = dataSource;
   } else {
     list = Object.entries(globalStats).map(([username, stats]) => ({
       username,
@@ -717,7 +714,6 @@ function clearLeaderboard() {
 }
 
 function addPlayer(u, c) {
-  const globalStats = window.globalStats || {};
   const globalColors = window.globalColors || {};
   const players = window.players;
   const playersGrid = document.getElementById("playersGrid");
@@ -732,7 +728,6 @@ function addPlayer(u, c) {
   const backgroundColor = "#121212";
   if (!isAccessibleContrast(globalColors[u], backgroundColor, false)) {
     globalColors[u] = ensureContrast(globalColors[u], backgroundColor, 4.5);
-    c = globalColors[u];
   }
 
   if (typeof window.saveGlobalColors === "function") {
@@ -811,7 +806,6 @@ function addFakePlayer(u, c) {
   const backgroundColor = "#121212";
   if (!isAccessibleContrast(globalColors[u], backgroundColor, false)) {
     globalColors[u] = ensureContrast(globalColors[u], backgroundColor, 4.5);
-    c = globalColors[u];
   }
 
   if (typeof window.saveGlobalColors === "function") {
