@@ -107,6 +107,22 @@
 		{
 			"name": "a walnut shell fragment",
 			"max_kills": 1
+		},
+		{
+			"name": "a lost AirPod",
+			"max_kills": 1
+		},
+		{
+			"name": "a LEGO brick",
+			"max_kills": 2
+		},
+		{
+			"name": "a Monopoly thimble",
+			"max_kills": 1
+		},
+		{
+			"name": "a Game Boy cartridge",
+			"max_kills": 2
 		}
 	],
 	"weapon_cutting": [
@@ -212,6 +228,18 @@
 		},
 		{
 			"name": "a cracked pistachio shell blade",
+			"max_kills": 1
+		},
+		{
+			"name": "a credit card edge",
+			"max_kills": 1
+		},
+		{
+			"name": "a Pokemon card corner",
+			"max_kills": 1
+		},
+		{
+			"name": "a guitar pick",
 			"max_kills": 1
 		}
 	],
@@ -323,6 +351,18 @@
 		{
 			"name": "a cocktail olive spear",
 			"max_kills": 1
+		},
+		{
+			"name": "a golf tee",
+			"max_kills": 1
+		},
+		{
+			"name": "an IKEA Allen key",
+			"max_kills": 2
+		},
+		{
+			"name": "a ballpoint pen",
+			"max_kills": 1
 		}
 	],
 	"weapon_projectile": [
@@ -429,6 +469,18 @@
 		{
 			"name": "a grape tomato mortar",
 			"max_kills": 2
+		},
+		{
+			"name": "a Nerf dart",
+			"max_kills": 1
+		},
+		{
+			"name": "a Matchbox car",
+			"max_kills": 2
+		},
+		{
+			"name": "a fidget spinner",
+			"max_kills": 1
 		}
 	],
 	"weapon_fire": [
@@ -535,6 +587,14 @@
 		{
 			"name": "a caramelized onion burn paste",
 			"max_kills": 1
+		},
+		{
+			"name": "a birthday candle",
+			"max_kills": 1
+		},
+		{
+			"name": "a laser pointer",
+			"max_kills": 2
 		}
 	],
 	"weapon_cold": [
@@ -636,6 +696,14 @@
 		},
 		{
 			"name": "a frost-rimed deli bag",
+			"max_kills": 1
+		},
+		{
+			"name": "a reusable gel ice pack",
+			"max_kills": 2
+		},
+		{
+			"name": "a cryotherapy wand tip",
 			"max_kills": 1
 		}
 	],
@@ -743,6 +811,14 @@
 		{
 			"name": "a mildew rinse runoff",
 			"max_kills": 2
+		},
+		{
+			"name": "a hand-sanitizer spritz",
+			"max_kills": 1
+		},
+		{
+			"name": "a laundry-pod drip",
+			"max_kills": 2
 		}
 	],
 	"weapon_explosive": [
@@ -848,6 +924,18 @@
 		},
 		{
 			"name": "a ruptured frozen juice pouch",
+			"max_kills": 2
+		},
+		{
+			"name": "a party popper",
+			"max_kills": 3
+		},
+		{
+			"name": "a Pop Rocks packet",
+			"max_kills": 2
+		},
+		{
+			"name": "a can of Silly String",
 			"max_kills": 2
 		}
 	]
